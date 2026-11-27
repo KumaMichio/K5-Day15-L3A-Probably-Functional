@@ -24,6 +24,8 @@ REASK_WINDOW = 180           # giây: hỏi lại cùng video trong 3 phút sau 
 REWIND_WINDOW = 120          # giây: tua lùi cùng video trong 2 phút sau câu trả lời
 REWIND_MIN = 5               # giây: tua lùi ít nhất 5 giây mới tính
 SHORT_Q = 10                 # ký tự: câu hỏi <= 10 ký tự coi là quá ngắn
+SESSION_GAP = 1800           # giây: hai câu cách nhau > 30 phút thì tính là hai phiên khác nhau
+CAL_DAYS = 21                # ngày lịch 05/11 → 25/11, dùng quy ra tháng (× 30 / 21)
 
 
 def rows(name):
@@ -114,6 +116,25 @@ print(f"[I] Số câu hỏi trợ giảng / học viên ({len(ta_users)} ngườ
       {k: b[k] for k in ["1", "2-5", "6-15", "16+"]})
 vals = sorted(ta_users.values())
 print(f"    trung vị {vals[len(vals) // 2]} câu / người · nhiều nhất {vals[-1]}")
+
+# ---- 7. Persona chi phí: phiên / tháng và câu / phiên theo nhóm ở [I]
+def bucket(v):
+    return "1" if v == 1 else "2-5" if v <= 5 else "6-15" if v <= 15 else "16+"
+
+
+ta_by_user = C.defaultdict(list)
+for r in TA:
+    ta_by_user[r["hv"]].append(ts(r["asked_at"]))
+print(f"[J] Persona (phiên = chuỗi câu cách nhau <= {SESSION_GAP // 60} phút; quy tháng × 30/{CAL_DAYS}):")
+for k in ["1", "2-5", "6-15", "16+"]:
+    us = [u for u, v in ta_users.items() if bucket(v) == k]
+    n_sess = n_q = 0
+    for u in us:
+        t = sorted(ta_by_user[u])
+        n_sess += 1 + sum((b - a).total_seconds() > SESSION_GAP for a, b in zip(t, t[1:]))
+        n_q += len(t)
+    print(f"    {k:>4} câu: {len(us)} người ({len(us) / len(ta_users):.1%}) · "
+          f"{n_sess / len(us) * 30 / CAL_DAYS:.1f} phiên / người / tháng · {n_q / n_sess:.1f} câu / phiên")
 
 # ---- Ví dụ (mã lượt chat, không có mã học viên)
 if SHOW_EXAMPLES:

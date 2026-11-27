@@ -25,13 +25,20 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 
 | Hướng | Bao nhiêu người gặp | Bao nhiêu lần / tháng | Mỗi lần tốn gì | Impact / tháng | Làm kịp không | Chọn? |
 |---|---|---|---|---|---|---|
-| A1 · Trợ giảng dưới video trả lời có căn cứ (mã đoạn) hoặc nói "không có trong bài" | 145 học viên đã hỏi AI (data), trên 436 có hoạt động | ~1.800 lượt hỏi / tháng (1.260 lượt trong 21 ngày × 30/21, data); trong đó ~8% thiếu ngữ cảnh ≈ 145 lượt | ~10 phút tua lại / hỏi chỗ khác mỗi lần câu trả lời không dùng được *(tự ước tính, kiểm bằng phỏng vấn)* + rủi ro học sai | ≈ 145 × 10 phút ≈ 24 giờ học viên / tháng chỉ tính lượt bị cờ *(nháp)* | Kịp: data có sẵn, cả lớp là người dùng, một quyết định AI | **Chọn** |
+| A1 · Trợ giảng dưới video trả lời có căn cứ (mã đoạn) hoặc nói "không có trong bài" | 143 học viên đã hỏi trợ giảng dưới video (33% của 436 học viên có hoạt động, data) | ~1.560 câu hỏi trợ giảng / tháng (1.090 câu / 21 ngày × 30, data); trong đó 9,1% bị cờ thiếu ngữ cảnh ≈ **140 câu / tháng**, và 99% số đó vẫn được trả lời dài (data) | ~10 phút tua lại / hỏi chỗ khác mỗi lần câu trả lời không dùng được *(tự ước tính — thay bằng số từ phỏng vấn P1–P4)* + rủi ro vào lớp với hiểu sai | ≈ 140 × 10 phút ≈ **23 giờ học viên / tháng**, chỉ tính câu bị cờ; cận trên ≈ 108 giờ nếu tính cả ~650 câu / tháng không dẫn mốc nào *(tự ước tính phút / lần)* | Kịp: data có sẵn, cả lớp là người dùng, một quyết định AI | **Chọn** |
 | A2 · Trợ lý Discord trả lời hạn nộp / lịch từ thông báo chính thức | chưa có số *(tự ước tính: phần lớn lớp)* | dồn quanh hạn nộp *(tự ước tính)* | hỏi lại, chờ TA, nhầm hạn | chưa tính được | Khó: không có data Discord BTC cấp, phải tự quan sát kênh | Không |
 | A5 · Soạn thông báo phòng lab cho key coach | ~vài key coach / buổi *(tự ước tính)* | mỗi tối trước buổi lab | thời gian soạn + báo nhầm phòng | chưa tính được | Kịp, nhưng data training-ops là giả lập, không phải bằng chứng pain | Không |
 
-- **Impact / tháng** của hướng chọn = ~145 lượt thiếu ngữ cảnh × ~10 phút = ~24 giờ / tháng — nguồn: số lượt từ `data/preclass/` (`evidence/scripts/count_preclass.py`); 10 phút / lần *(tự ước tính — thay bằng số từ phỏng vấn trước CP3)*. Chưa tính lượt trả lời không bị cờ nhưng vẫn thiếu căn cứ.
+- **Impact / tháng** của hướng chọn = ~140 câu thiếu ngữ cảnh × ~10 phút ≈ **23 giờ học viên / tháng** (≈ 10 phút / người / tháng trên 143 người hỏi). Nguồn: số câu từ `data/preclass/`, đếm bằng `evidence/scripts/count_preclass.py` [B], [C] (cách đếm: `evidence/data-mining.md`); chỉ đếm câu hỏi dưới video gửi trợ giảng, khớp lát cắt (số cũ 101/1.245 = 8,1% đếm trên mọi lượt trả lời AI). 10 phút / lần *(tự ước tính — thay bằng số từ phỏng vấn trước CP3)*. Chưa tính: ~41,5% câu trả lời không dẫn mốc nào trong bài [D] ≈ 650 câu / tháng — học viên không tự kiểm được, nhưng không chắc mỗi câu đều tốn thời gian.
 - Hướng ĐÃ LOẠI + vì sao (giữ lại, đừng xoá): A2 — không có data đếm được, bằng chứng phải tự thu từ đầu. A5 — data là giả lập nên không làm bằng chứng pain; người dùng (key coach, ban đào tạo) ít và phải hẹn.
-- Số lần / tháng của từng kiểu người dùng (dùng cho persona ở §8): trong 145 học viên đã nhắn AI (21 ngày): 38 người 1 lượt · 42 người 2–5 · 42 người 6–15 · 23 người ≥16 — quy đổi / tháng ở CP4.
+- Số lần / tháng của từng kiểu người dùng (dùng cho persona ở §8), đếm bằng `count_preclass.py` [I], [J] trên 143 học viên đã hỏi trợ giảng (phiên = chuỗi câu cách nhau ≤ 30 phút, quy tháng × 30/21):
+
+  | Kiểu | Số câu trong 21 ngày | Số người | Tỉ lệ | Phiên / người / tháng | Câu / phiên |
+  |---|---|---:|---:|---:|---:|
+  | hỏi ít | 1 | 38 | 26,6% | 1,4 | 1,0 |
+  | hỏi vừa | 2–5 | 46 | 32,2% | 2,4 | 2,0 |
+  | hỏi nhiều | 6–15 | 43 | 30,1% | 3,3 | 4,0 |
+  | hỏi dồn | ≥16 | 16 | 11,2% | 8,8 | 5,1 |
 
 ## §3. Giải pháp tương tự *(guide 2.1)*
 - [sản phẩm / tính năng gần giống]: một điều đáng học · một điều đáng né · mình khác gì
