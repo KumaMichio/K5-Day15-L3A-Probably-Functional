@@ -52,6 +52,25 @@ RETRY_STATUS = (429, 500, 502, 503, 504, 529)   # lỗi tạm thời: thử lạ
 MAX_RETRIES = 2
 
 
+def _retry_wait(header, attempt):
+    """Số giây chờ trước khi thử lại. retry-after có thể là số giây hoặc ngày giờ (HTTP-date);
+    không đọc được thì chờ 2, 4 giây. Giới hạn 30 giây để eval không treo lâu."""
+    fallback = 2 * (attempt + 1)
+    if not header:
+        return fallback
+    try:
+        return min(max(float(header), 0.0), 30.0)
+    except ValueError:
+        pass
+    try:
+        from email.utils import parsedate_to_datetime
+        from datetime import datetime, timezone
+        delta = (parsedate_to_datetime(header) - datetime.now(timezone.utc)).total_seconds()
+        return min(max(delta, 0.0), 30.0)
+    except (TypeError, ValueError):
+        return fallback
+
+
 def post_json(url, headers, body, timeout=60):
     """Gửi POST JSON, trả về JSON phản hồi. Chỉ dùng thư viện chuẩn (urllib).
     Lỗi tạm thời (429 hết lượt, 5xx, 529 quá tải) thử lại tối đa MAX_RETRIES lần, chờ theo retry-after.
@@ -66,7 +85,7 @@ def post_json(url, headers, body, timeout=60):
             break
         except urllib.error.HTTPError as e:
             if e.code in RETRY_STATUS and attempt < MAX_RETRIES:
-                time.sleep(float(e.headers.get("retry-after") or 2 * (attempt + 1)))
+                time.sleep(_retry_wait(e.headers.get("retry-after"), attempt))
                 continue
             raise RuntimeError("HTTP %d: %s" % (e.code, e.read().decode("utf-8", "replace")[:300]))
     if SHOW_RAW:
@@ -103,8 +122,9 @@ def call_claude(system, user):
 
 # --- OpenRouter (định dạng OpenAI chat/completions) -------------------------------------------------
 # MODEL_NAME = slug của OpenRouter, chép đúng từ https://openrouter.ai/models (vd model Claude Haiku 5.5).
-# Token lấy từ usage của phản hồi (prompt_tokens / completion_tokens). Giá OpenRouter không có trong bảng giá
-# của đề → cost/ tính theo giá chính thức của Anthropic, ghi "đo token qua OpenRouter, tính giá Anthropic".
+# Token lấy từ usage của phản hồi (prompt_tokens / completion_tokens). Bảng giá của đề không có dòng OpenRouter,
+# nhưng giá Claude Haiku 5.5 trên OpenRouter (0.10 / 0.50 USD mỗi 1M token, xem https://openrouter.ai/api/v1/models
+# ngày 28/11/2026) bằng giá Anthropic trong bảng → cost/ dùng thẳng giá trong bảng, ghi nguồn OpenRouter + ngày xem.
 URL_OPENROUTER = "https://openrouter.ai/api/v1/chat/completions"
 
 
