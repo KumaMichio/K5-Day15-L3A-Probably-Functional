@@ -82,7 +82,7 @@ tr.isdone td.t { text-decoration: line-through; color: var(--muted) }
 .cards { display: flex; flex-direction: column; gap: 10px }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px }
 .card.isdone { opacity: 0.62 }
-.card .check { grid-row: 1 / span 3; padding-top: 2px }
+.card .check { grid-row: 1 / span 4; padding-top: 2px }
 .card input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--done); cursor: pointer }
 .card .top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px }
 .card .top .tid { font-family: var(--font-mono); color: var(--muted); font-size: 0.82rem }
@@ -102,6 +102,12 @@ tr.isdone td.t { text-decoration: line-through; color: var(--muted) }
 .rule.wide { grid-column: 1 / -1 }
 pre { margin: 0; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.84rem; line-height: 1.5 }
 @media (max-width: 720px) { .rules { grid-template-columns: minmax(0, 1fr) } }
+.deps { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; font-size: 0.82rem; color: var(--muted) }
+.depchip { font-family: var(--font-mono); font-size: 0.78rem; padding: 0 6px; border-radius: 5px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); text-decoration: none; white-space: nowrap }
+.depchip.isdone { text-decoration: line-through; color: var(--muted) }
+.blocking { color: var(--warn); font-weight: 600 }
+.critical { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px }
+.critical .path { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-size: 0.85rem }
 .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 0.85rem; color: var(--muted) }
 @media (prefers-reduced-motion: no-preference) { nav a, .card { transition: border-color .15s, opacity .15s } }
 </style>
@@ -159,123 +165,123 @@ const TASKS = [
     out: "evidence/data-mining.md", done: "Người khác chạy lại script ra cùng số", step: "1.2" },
   { id: "T06", p: "cp1", owner: "all", due: "16:45 T6", title: "Đi lại câu chuyện 15 phút trước CP1",
     body: "Pain → Impact → Giải pháp → Đánh giá → Chi phí. Chỗ nào lệch thì sửa ngay.", out: "—", done: "Ai cũng kể lại được lát cắt", step: "Cách chia việc" },
-  { id: "T07", p: "cp1", owner: "hung", due: "17:00 T6", title: "Nộp CP1",
+  { id: "T07", dep: ["T06"], p: "cp1", owner: "hung", due: "17:00 T6", title: "Nộp CP1",
     body: "Track A · bài toán 1–2 câu (không có chữ AI) · lát cắt 1 câu · link canvas.md · link repo (kiểm bằng cửa sổ ẩn danh).",
     out: "Form CP1", done: "Đã nộp đúng hạn", step: "1.4" },
 
   // CP2
-  { id: "T08", p: "cp2", owner: "all", lead: "hue", due: "18:00 T6", title: "Mỗi người phỏng vấn 1 học viên ngoài nhóm",
+  { id: "T08", dep: ["T04"], p: "cp2", owner: "all", lead: "hue", due: "18:00 T6", title: "Mỗi người phỏng vấn 1 học viên ngoài nhóm",
     body: "10–15 phút, hỏi lần gần nhất họ không hiểu một ý trong video: đã làm gì, mất bao lâu, có tin câu trả lời trợ giảng không. Ghi P1–P4, không ghi tên, mã học viên.",
     out: "evidence/interviews/P1.md … P4.md", done: "4 file ghi chép, mỗi file có ≥1 trích dẫn nguyên văn", step: "1.2" },
-  { id: "T09", p: "cp2", owner: "all", lead: "hue", due: "18:20 T6", title: "20 phút tổng hợp pain, chốt lát cắt",
+  { id: "T09", dep: ["T03", "T05", "T08"], p: "cp2", owner: "all", lead: "hue", due: "18:20 T6", title: "20 phút tổng hợp pain, chốt lát cắt",
     body: "Đặt số phỏng vấn cạnh số data. Giả thuyết đúng, sai hay phải đổi? Lát cắt phải đi ra từ pain đã thấy.",
     out: "canvas.md dòng 5", done: "Cả nhóm đồng ý lát cắt một câu", step: "1.2, 2.1" },
   { id: "T10", p: "cp2", owner: "hue", due: "18:45 T6", title: "spec §3: giải pháp tương tự",
     body: "Mỗi người thử nhanh 1 sản phẩm 10 phút (trợ giảng hiện tại trên pre-class, NotebookLM, ChatGPT…). Ghi một điều đáng học, một điều đáng né, mình khác gì.",
     out: "spec.md §3", done: "3–4 dòng, mỗi dòng một sản phẩm", step: "2.1" },
-  { id: "T11", p: "cp2", owner: "hung", with: ["tan"], due: "19:00 T6", title: "spec §4: thiết kế và sơ đồ kiến trúc",
+  { id: "T11", dep: ["T09"], p: "cp2", owner: "hung", with: ["tan"], due: "19:00 T6", title: "spec §4: thiết kế và sơ đồ kiến trúc",
     body: "Sơ đồ Mermaid. Workflow cố định: tra đoạn bài → có đoạn liên quan thì model trả lời kèm mã đoạn, không có thì nói \"không có trong bài\". Ghi rõ:<ul><li>lý do không chọn agent</li><li>bảng công cụ (tên · input · output · có tác động ra ngoài không)</li><li>mức tự động, chỗ chặn rủi ro, chỗ người duyệt</li><li>≥3 nguyên tắc (G10 bắt buộc, G11, G1/G2) chỉ vào chỗ cụ thể</li><li>≥3 điều không làm</li></ul>",
     out: "spec.md §4", done: "Người ngoài nhóm nhìn sơ đồ kể lại được luồng", step: "2.2" },
-  { id: "T12", p: "cp2", owner: "tan", due: "19:00 T6", title: "Dựng dữ liệu bài có mã đoạn + công cụ tra bài",
+  { id: "T12", dep: ["T11"], p: "cp2", owner: "tan", due: "19:00 T6", title: "Dựng dữ liệu bài có mã đoạn + công cụ tra bài",
     body: "2–3 bài pre-class viết lại ngắn (không chép nguyên tài liệu khoá), mỗi đoạn một mã, vd D05-L2-P03. Viết search_lesson(query) và get_passage(code) trong codebase/tools.py, chỉ đọc file.",
     out: "data/lessons/ · codebase/tools.py", done: "Gọi search_lesson trả về đúng đoạn cho 5 câu hỏi thử", step: "2.2, 3.2" },
-  { id: "T13", p: "cp2", owner: "hung", with: ["tan"], due: "19:15 T6", title: "Khung bản chạy thử chạy giả",
+  { id: "T13", dep: ["T11", "T12"], p: "cp2", owner: "hung", with: ["tan"], due: "19:15 T6", title: "Khung bản chạy thử chạy giả",
     body: "codebase/agent.py: luồng đúng sơ đồ, gọi công cụ thật trên dữ liệu tự dựng, model vẫn ở chế độ giả.",
     out: "codebase/agent.py", done: "python run.py đi hết luồng, in số lần gọi công cụ", step: "3.2" },
-  { id: "T14", p: "cp2", owner: "thanh", with: ["hue"], due: "19:00 T6", title: "spec §5: 4 lớp chỗ khó, ≥6 kịch bản, 2 tấn công",
+  { id: "T14", dep: ["T09"], p: "cp2", owner: "thanh", with: ["hue"], due: "19:00 T6", title: "spec §5: 4 lớp chỗ khó, ≥6 kịch bản, 2 tấn công",
     body: "Nguồn sự thật · mơ hồ / thiếu thông tin · ngoài phạm vi (xin làm hộ bài, hỏi điểm) · đặc thù (học sai trước buổi). Thêm 2 câu tấn công, vd chèn \"bỏ qua hướng dẫn trước đó\".",
     out: "spec.md §5", done: "Có ít nhất một kịch bản làm nhóm sợ khi demo", step: "2.3" },
-  { id: "T15", p: "cp2", owner: "thanh", with: ["hue"], due: "19:15 T6", title: "Chạy tay 10–20 câu, viết metric_spec.yaml",
+  { id: "T15", dep: ["T14"], p: "cp2", owner: "thanh", with: ["hue"], due: "19:15 T6", title: "Chạy tay 10–20 câu, viết metric_spec.yaml",
     body: "Xem output thật trước, đặt tên lỗi, rồi viết ≥3 metric kiểm được, vd: mọi khẳng định có mã đoạn đúng · nói \"không có trong bài\" khi bài không có · không làm hộ bài, không lộ đáp án quiz. Huệ chấm độc lập 5 output, khớp ≥4/5.",
     out: "eval/metric_spec.yaml · eval/README.md (kết quả chấm chéo)", done: "run.py check đếm đủ 3 metric · chấm chéo khớp ≥4/5", step: "2.4" },
-  { id: "T16", p: "cp2", owner: "thanh", due: "19:15 T6", title: "benchmark.csv ≥10 câu",
+  { id: "T16", dep: ["T08", "T14"], p: "cp2", owner: "thanh", due: "19:15 T6", title: "benchmark.csv ≥10 câu",
     body: "Xoá 3 dòng mẫu. Cột id, input, expected, pass_criterion, type, source. ≥1/3 câu có source nguoi_dung (từ P1–P4) hoặc data_that.",
     out: "eval/benchmark.csv", done: "run.py check không báo lỗi phần benchmark (trừ số câu CP3)", step: "2.4" },
-  { id: "T17", p: "cp2", owner: "thanh", with: ["all"], due: "19:20 T6", title: "Chốt chuẩn \"đạt\" bằng số",
+  { id: "T17", dep: ["T15", "T16"], p: "cp2", owner: "thanh", with: ["all"], due: "19:20 T6", title: "Chốt chuẩn \"đạt\" bằng số",
     body: "\"Đạt khi ≥ __% câu qua, và 100% câu tu_choi qua\". Cả nhóm đồng ý. Sau 19:30 không sửa nữa.",
     out: "spec.md §7", done: "Đã merge vào main trước 19:30", step: "2.4" },
-  { id: "T18", p: "cp2", owner: "tan", due: "19:15 T6", title: "DATA_CARD bản đầu",
+  { id: "T18", dep: ["T12"], p: "cp2", owner: "tan", due: "19:15 T6", title: "DATA_CARD bản đầu",
     body: "Hai bộ: data/preclass (BTC cấp, chỉ dùng số tổng hợp) và data/lessons (tự dựng, nhãn synthetic, cách viết lại).",
     out: "data/DATA_CARD.md", done: "Đủ: nguồn · xử lý · số dòng · phiên bản", step: "2.4" },
-  { id: "T19", p: "cp2", owner: "tan", with: ["hue"], due: "19:15 T6", title: "Số bằng chứng đầu vào canvas dòng 4",
+  { id: "T19", dep: ["T05", "T08"], p: "cp2", owner: "tan", with: ["hue"], due: "19:15 T6", title: "Số bằng chứng đầu vào canvas dòng 4",
     body: "x/N và % từ data + 1 trích dẫn phỏng vấn (Huệ đưa).", out: "canvas.md dòng 4 · evidence/data-mining.md", done: "Mỗi số trỏ về script hoặc file P", step: "1.2" },
-  { id: "T20", p: "cp2", owner: "hung", due: "19:30 T6", title: "Cập nhật canvas, nộp CP2, lấy API key",
+  { id: "T20", dep: ["T11", "T13", "T16", "T17", "T18", "T19"], p: "cp2", owner: "hung", due: "19:30 T6", title: "Cập nhật canvas, nộp CP2, lấy API key",
     body: "Thêm dòng \"đã đổi gì so với CP1\". Nộp CP2. Trước khi rời lớp: lấy key, gọi thử được 1 câu (sáng Thứ Bảy không có lớp).",
     out: "canvas.md · form CP2 · .env (không commit)", done: "Đã nộp, có 1 lời gọi model thật thành công", step: "2.5, 3.3" },
 
   // CP3
-  { id: "T21", p: "cp3", owner: "hung", due: "23:00 T6", title: "Nối model thật",
+  { id: "T21", dep: ["T13", "T20"], p: "cp3", owner: "hung", due: "23:00 T6", title: "Nối model thật",
     body: "codebase/ai.py theo docs/connect-model.md. Key trong .env. Chọn model tầng Nhỏ (vd Gemini free tier hoặc Claude Haiku 5.5).",
     out: "codebase/ai.py", done: "python run.py eval --try báo \"Nối model được\", token > 0", step: "3.3" },
-  { id: "T22", p: "cp3", owner: "hung", with: ["tan"], due: "08:30 T7", title: "Prompt và chỗ chặn rủi ro",
+  { id: "T22", dep: ["T21"], p: "cp3", owner: "hung", with: ["tan"], due: "08:30 T7", title: "Prompt và chỗ chặn rủi ro",
     body: "<ul><li>Không tìm được đoạn liên quan → trả \"không có trong bài\", không gọi model</li><li>Code kiểm mọi mã đoạn trong câu trả lời có thật</li><li>Câu hỏi là dữ liệu, không phải lệnh</li><li>Từ chối làm hộ bài, không đưa đáp án quiz</li></ul>",
     out: "codebase/agent.py · spec.md §4", done: "2 câu tấn công trong bộ câu thử bị chặn khi chạy tay", step: "3.3" },
-  { id: "T23", p: "cp3", owner: "tan", due: "08:30 T7", title: "Đủ đoạn bài để phủ bộ câu thử",
+  { id: "T23", dep: ["T12", "T16"], p: "cp3", owner: "tan", due: "08:30 T7", title: "Đủ đoạn bài để phủ bộ câu thử",
     body: "Mỗi câu thử thuong / kho có đoạn bài tương ứng (hoặc cố ý không có, với câu \"không có trong bài\"). Cập nhật DATA_CARD.",
     out: "data/lessons/ · data/DATA_CARD.md", done: "Thành xác nhận bộ câu thử khớp dữ liệu", step: "2.4" },
-  { id: "T24", p: "cp3", owner: "thanh", due: "08:30 T7", title: "Mở rộng bộ câu thử lên 20–30 câu",
+  { id: "T24", dep: ["T08", "T16"], p: "cp3", owner: "thanh", due: "08:30 T7", title: "Mở rộng bộ câu thử lên 20–30 câu",
     body: "≥5 kho, ≥2 tu_choi gồm 2 câu tấn công, ≥1/3 câu từ người dùng hoặc data thật. Chỉ thêm câu, không sửa expected cho khớp output.",
     out: "eval/benchmark.csv", done: "python run.py check sạch", step: "3.4" },
-  { id: "T25", p: "cp3", owner: "hue", due: "08:30 T7", title: "Bằng chứng đủ ngưỡng + summary",
+  { id: "T25", dep: ["T08"], p: "cp3", owner: "hue", due: "08:30 T7", title: "Bằng chứng đủ ngưỡng + summary",
     body: "≥3 phỏng vấn ngoài nhóm (ghi \"x/n người\", không ghi %), ≥5 trích dẫn nguyên văn có nguồn. Kết luận giả thuyết đúng / sai / phải đổi. Cập nhật spec §1.",
     out: "evidence/summary.md · spec.md §1", done: "Đủ ngưỡng ≥1 nguồn + 5 trích dẫn", step: "1.2" },
-  { id: "T26", p: "cp3", owner: "tan", with: ["hue"], due: "09:00 T7", title: "Bảng impact bản chốt",
+  { id: "T26", dep: ["T05", "T25"], p: "cp3", owner: "tan", with: ["hue"], due: "09:00 T7", title: "Bảng impact bản chốt",
     body: "Thay số (tự ước tính) bằng số từ phỏng vấn (mỗi lần mất bao lâu). Kiểm chéo data với phỏng vấn, giải thích chỗ lệch.",
     out: "spec.md §2", done: "Mỗi thừa số trong công thức impact có nguồn", step: "1.3" },
-  { id: "T27", p: "cp3", owner: "all", lead: "thanh", due: "09:40 T7", title: "Chạy lượt 1 cùng nhau",
+  { id: "T27", dep: ["T15", "T22", "T23", "T24"], p: "cp3", owner: "all", lead: "thanh", due: "09:40 T7", title: "Chạy lượt 1 cùng nhau",
     body: "Hùng chạy python run.py eval trên main mới nhất → Thành chấm cột pass theo metric_spec, Huệ chấm chéo → python run.py score eval/run-1.csv.",
     out: "eval/run-1.csv · traces/run-1.jsonl", done: "score in ra % đạt, đã commit qua PR", step: "3.4" },
-  { id: "T28", p: "cp3", owner: "hung", due: "09:45 T7", title: "Video 30 giây AI thật",
+  { id: "T28", dep: ["T22"], p: "cp3", owner: "hung", due: "09:45 T7", title: "Video 30 giây AI thật",
     body: "Thao tác thật, AI trả kết quả thật. YouTube \"Không công khai\" hoặc Drive \"Bất kỳ ai có đường liên kết\". Mở thử bằng cửa sổ ẩn danh.",
     out: "Link video", done: "Link mở được khi chưa đăng nhập", step: "3.4" },
-  { id: "T29", p: "cp3", owner: "tan", due: "09:45 T7", title: "Thử mô phỏng chi phí 10 phiên",
+  { id: "T29", dep: ["T05", "T21"], p: "cp3", owner: "tan", due: "09:45 T7", title: "Thử mô phỏng chi phí 10 phiên",
     body: "Điền cost/personas.yaml bản nháp từ phân bố số lượt / học viên trong data. Chạy python run.py simulate --try.",
     out: "cost/personas.yaml", done: "simulate --try chạy không lỗi", step: "4.2" },
-  { id: "T30", p: "cp3", owner: "hung", due: "10:00 T7", title: "spec §0–§7 đủ, nộp CP3",
+  { id: "T30", dep: ["T24", "T25", "T27", "T28"], p: "cp3", owner: "hung", due: "10:00 T7", title: "spec §0–§7 đủ, nộp CP3",
     body: "Nộp: link evidence/summary.md, bộ câu thử, video, kết quả lượt 1 (x/N) + run ID, link spec.md, phần chưa xong.",
     out: "Form CP3", done: "Đã nộp đúng hạn", step: "3.4" },
 
   // CP4
-  { id: "T31", p: "cp4", owner: "all", lead: "thanh", due: "10:30 T7", title: "Đọc câu trượt cùng nhau, chọn 1 cải tiến",
+  { id: "T31", dep: ["T27"], p: "cp4", owner: "all", lead: "thanh", due: "10:30 T7", title: "Đọc câu trượt cùng nhau, chọn 1 cải tiến",
     body: "Gom câu trượt thành nhóm lỗi có tên. Chọn nhóm lỗi đau nhất với người dùng.", out: "Ghi chú cho eval/report.md", done: "Có 1 cải tiến được chọn, ghi lý do", step: "4.1" },
-  { id: "T32", p: "cp4", owner: "hung", with: ["thanh"], due: "11:30 T7", title: "Cải tiến → lượt 2",
+  { id: "T32", dep: ["T31"], p: "cp4", owner: "hung", with: ["thanh"], due: "11:30 T7", title: "Cải tiến → lượt 2",
     body: "Sửa đúng nhóm lỗi đã chọn. Chạy lại trọn bộ câu thử → run-2.csv → Thành chấm → score. Ghi changelog spec §10.",
     out: "eval/run-2.csv · spec.md §10", done: "Có % lượt 1 → lượt 2", step: "4.1" },
-  { id: "T33", p: "cp4", owner: "thanh", due: "12:30 T7", title: "eval/report.md + eval/README.md",
+  { id: "T33", dep: ["T32"], p: "cp4", owner: "thanh", due: "12:30 T7", title: "eval/report.md + eval/README.md",
     body: "Report: % lượt 1 và 2 so với chuẩn, ≥3 lỗi (input · output · vì sao sai), đã sửa gì, lỗi còn lại. README: hồ sơ một trang dataset → bộ câu thử → metric → bảng các lượt → lỗi chính.",
     out: "eval/report.md · eval/README.md", done: "Người ngoài nhóm đọc hiểu nhóm đo gì, ra số nào", step: "4.1" },
-  { id: "T34", p: "cp4", owner: "tan", due: "12:30 T7", title: "Persona + mô phỏng ≥50 phiên",
-    body: "≥3 persona (dùng ít · vừa · nhiều) với số lần / tháng có nguồn. Giá ≥2 mức model từ bảng giá BTC. python run.py simulate --rate-from eval/run-2.csv.",
+  { id: "T34", dep: ["T27", "T29"], p: "cp4", owner: "tan", due: "12:30 T7", title: "Persona + mô phỏng ≥50 phiên",
+    body: "≥3 persona (dùng ít · vừa · nhiều) với số lần / tháng có nguồn. Giá ≥2 mức model từ bảng giá BTC. Chạy python run.py simulate ngay khi có lượt 1 (không chờ lượt 2), rồi chạy lại với --rate-from eval/run-2.csv khi T32 xong.",
     out: "cost/personas.yaml · cost/simulate-1.csv", done: "≥50 phiên, seed cố định, chạy thật", step: "4.2" },
-  { id: "T35", p: "cp4", owner: "tan", due: "13:00 T7", title: "cost-estimate.md + spec §8",
-    body: "Chi phí / task thành công (dùng tỉ lệ đạt lượt 2), 3 kịch bản thấp · cơ sở · cao, ≥2 mức model, giá có link + ngày xem, một dòng so với impact / người / tháng.",
+  { id: "T35", dep: ["T26", "T32", "T34"], p: "cp4", owner: "tan", due: "13:00 T7", title: "cost-estimate.md + spec §8",
+    body: "Lấy lượt simulate chạy với tỉ lệ đạt lượt 2. Chi phí / task thành công (dùng tỉ lệ đạt lượt 2), 3 kịch bản thấp · cơ sở · cao, ≥2 mức model, giá có link + ngày xem, một dòng so với impact / người / tháng.",
     out: "cost/cost-estimate.md · spec.md §8", done: "Mọi số truy được về file mô phỏng", step: "4.2" },
-  { id: "T36", p: "cp4", owner: "hue", with: ["all"], due: "13:45 T7", title: "Slide 8 trang → demo-slides.pdf",
+  { id: "T36", dep: ["T25", "T26", "T33", "T35"], p: "cp4", owner: "hue", with: ["all"], due: "13:45 T7", title: "Slide 8 trang → demo-slides.pdf",
     body: "Theo slides/outline.md. Mỗi trang ≥1 con số / trích dẫn có nguồn. Mỗi người gửi số phần mình trước 13:00.",
     out: "demo-slides.pdf (thư mục gốc)", done: "Có trang \"Đánh giá thế nào\" và \"Chi phí khi dùng thật\"", step: "5.1" },
-  { id: "T37", p: "cp4", owner: "hue", due: "13:00 T7", title: "Người dùng thử 2–3 người (bonus +5)",
+  { id: "T37", dep: ["T22"], p: "cp4", owner: "hue", due: "13:00 T7", title: "Người dùng thử 2–3 người (bonus +5)",
     body: "5 nhịp theo guide 4.3. Ghi vai · việc giao · quan sát · trích nguyên văn · mức nghiêm trọng. Rút ≥1 thay đổi vào changelog.",
     out: "validation/log.md", done: "≥2 người ngoài nhóm có log đủ cột", step: "4.3" },
-  { id: "T38", p: "cp4", owner: "hung", due: "14:00 T7", title: "spec §6, §9, §10 + README + video dự phòng",
+  { id: "T38", dep: ["T32"], p: "cp4", owner: "hung", due: "14:00 T7", title: "spec §6, §9, §10 + README + video dự phòng",
     body: "Bốn đường đi trải nghiệm, rủi ro & an toàn, changelog. README: bảng thật / giả, link video. Quay video demo dự phòng (1 trường hợp thường + 1 khó).",
     out: "spec.md · README.md · link video", done: "spec đủ §0–§10", step: "4.4" },
-  { id: "T39", p: "cp4", owner: "all", due: "14:15 T7", title: "Go / iterate / stop + tập demo",
+  { id: "T39", dep: ["T36"], p: "cp4", owner: "all", due: "14:15 T7", title: "Go / iterate / stop + tập demo",
     body: "Mỗi người nói 1 phần. Ai cũng trả lời được: vì sao chọn hình dạng này · lỗi nguy hiểm nhất · chi phí / task thành công tính thế nào · phần mình làm là gì.",
     out: "—", done: "Tập trọn 1 lượt demo dưới 5 phút", step: "5.2" },
-  { id: "T40", p: "cp4", owner: "hung", due: "14:30 T7", title: "Checklist 7 hạng mục, nộp CP4",
+  { id: "T40", dep: ["T33", "T35", "T36", "T38"], p: "cp4", owner: "hung", due: "14:30 T7", title: "Checklist 7 hạng mục, nộp CP4",
     body: "Phòng demo, link repo, lượt 1 → lượt 2, chi phí / task thành công + tên model, demo-slides.pdf, link video dự phòng, phần chưa xong.",
     out: "Form CP4", done: "Đã nộp đúng hạn", step: "4.4" },
 
   // Final
-  { id: "T41", p: "fin", owner: "all", due: "14:30–18:00 T7", title: "Demo Zone và Demo Phòng",
+  { id: "T41", dep: ["T40"], p: "fin", owner: "all", due: "14:30–18:00 T7", title: "Demo Zone và Demo Phòng",
     body: "Sẵn sàng chạy câu thử lạ giám khảo đưa. Mạng hỏng thì chiếu video dự phòng.", out: "—", done: "Đã demo", step: "5.3" },
-  { id: "T42", p: "fin", owner: "hung", due: "23:00 T7", title: "Sửa theo góp ý, ghi changelog",
+  { id: "T42", dep: ["T41"], p: "fin", owner: "hung", due: "23:00 T7", title: "Sửa theo góp ý, ghi changelog",
     body: "Mọi thay đổi sau 14:30 ghi spec §10 (giờ · đổi gì · vì sao). Chạy thêm thì thành lượt mới (run-3). Không sửa chuẩn \"đạt\", câu thử, số bằng chứng, kết quả lượt cũ.",
     out: "spec.md §10", done: "Changelog đủ", step: "5.3" },
-  { id: "T43", p: "fin", owner: "all", due: "23:00 T7", title: "Reflection cá nhân",
+  { id: "T43", dep: ["T32"], p: "fin", owner: "all", due: "23:00 T7", title: "Reflection cá nhân",
     body: "Mỗi người 1 file: vai trò và phần mình làm · AI hỗ trợ thế nào · một bài học từ một câu thử trượt của nhóm.",
     out: "reflection/hung.md · hue.md · tan.md · thanh.md", done: "Đủ 4 file đã merge", step: "5.3" },
-  { id: "T44", p: "fin", owner: "hung", due: "23:45 T7", title: "Khoá repo bản cuối",
+  { id: "T44", dep: ["T42", "T43"], p: "fin", owner: "hung", due: "23:45 T7", title: "Khoá repo bản cuối",
     body: "Merge hết PR. Kiểm không có API key, không có dữ liệu cá nhân thật, không có nguyên file data BTC.",
     out: "main", done: "Commit cuối trước 23:59", step: "5.2" }
 ];
@@ -396,6 +402,22 @@ function ownersOf(t) {
 function involves(t, key) {
   return t.owner === "all" || t.owner === key || (t.with || []).includes(key) || (t.with || []).includes("all");
 }
+const BY_ID = Object.fromEntries(TASKS.map(t => [t.id, t]));
+const BLOCKS = {};
+TASKS.forEach(t => (t.dep || []).forEach(d => { (BLOCKS[d] = BLOCKS[d] || []).push(t.id); }));
+const ISSUE_URL = "https://github.com/KumaMichio/K5-Day15-L3A-Probably-Functional/issues/";
+function issueNo(id) { return parseInt(id.slice(1), 10); }
+function depChip(id) {
+  const t = BY_ID[id];
+  const who = t.owner === "all" ? "Cả nhóm" : MEMBERS[t.owner].short;
+  return `<a class="depchip ${doneSet.has(id) ? "isdone" : ""}" href="${ISSUE_URL}${issueNo(id)}" target="_blank" rel="noopener" title="${t.title} · ${who}">${id} · ${who}</a>`;
+}
+function depsLine(t) {
+  const parts = [];
+  if ((t.dep || []).length) parts.push(`<span>Chờ:</span>${t.dep.map(depChip).join("")}`);
+  if ((BLOCKS[t.id] || []).length) parts.push(`<span class="blocking">Đang được chờ bởi:</span>${BLOCKS[t.id].map(depChip).join("")}`);
+  return parts.length ? `<div class="deps">${parts.join('<span aria-hidden="true">·</span>')}</div>` : "";
+}
 function chipsFor(t) {
   let h = chip(t.owner, "lead");
   if (t.owner === "all" && t.lead) {
@@ -434,14 +456,16 @@ function renderOverview() {
     <div><dt>Cặp Y · bằng chứng + đánh giá</dt><dd>${chip("hue")} ${chip("thanh")}</dd></div>
     <div class="full"><dt>Cách dùng trang này</dt><dd>Bấm tên mình ở hàng trên để xem việc của mình. Gửi link kèm <code>#hue</code>, <code>#tan</code>, <code>#thanh</code>, <code>#hung</code> để mở thẳng trang của từng người. Ô "xong" chỉ lưu trên trình duyệt của bạn.</dd></div>
   </div>`;
+  const CRIT = ["T04", "T08", "T09", "T11", "T13", "T21", "T22", "T27", "T31", "T32", "T35", "T36", "T40"];
+  const critical = `<div class="critical"><h3>Đường găng</h3><p class="note">Chuỗi dài nhất: trễ ở đâu thì mọi việc sau đều trễ. Hùng giữ 5 mắt xích (T11, T13, T21, T22, T32), kẹt quá 20 phút thì báo cả nhóm.</p><div class="path">${CRIT.map(depChip).join('<span aria-hidden="true">→</span>')}</div></div>`;
   const legend = `<div class="legend"><span>Viền đậm = người chịu trách nhiệm chính</span><span>Chữ mờ = người hỗ trợ</span></div>`;
   const groups = PHASES.map(p => {
     const rows = TASKS.filter(t => t.p === p.id).map(t => `
-      <tr class="${doneSet.has(t.id) ? "isdone" : ""}"><td class="id">${t.id}</td><td class="t">${t.title}</td><td>${chipsFor(t)}</td><td class="due">${t.due}</td><td><code>${t.out}</code></td></tr>`).join("");
+      <tr class="${doneSet.has(t.id) ? "isdone" : ""}"><td class="id"><a class="depchip" href="${ISSUE_URL}${issueNo(t.id)}" target="_blank" rel="noopener">${t.id}</a></td><td class="t">${t.title}</td><td>${chipsFor(t)}</td><td class="due">${t.due}</td><td><div class="deps">${(t.dep || []).map(depChip).join("") || "—"}</div></td></tr>`).join("");
     return `<section><div class="sechead"><h2>${p.name}</h2><span class="when">${p.when} · ${p.note}</span></div>
-      <div class="tablewrap"><table><thead><tr><th>Mã</th><th>Việc</th><th>Ai</th><th>Hạn</th><th>Ra file</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+      <div class="tablewrap"><table><thead><tr><th>Issue</th><th>Việc</th><th>Ai</th><th>Hạn</th><th>Chờ</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
   }).join("");
-  return `<section>${intro}${legend}</section>` + groups;
+  return `<section>${intro}${critical}${legend}</section>` + groups;
 }
 
 function card(t, key) {
@@ -452,7 +476,8 @@ function card(t, key) {
     <div class="check"><input type="checkbox" id="chk-${key}-${t.id}" data-id="${t.id}" ${doneSet.has(t.id) ? "checked" : ""} aria-label="Đánh dấu ${t.id} đã xong"></div>
     <div class="top"><span class="tid">${t.id}</span><h3>${t.title}</h3><span class="due">${t.due}</span></div>
     <div class="body">${t.body}</div>
-    <div class="meta"><span><b>${roleNote}</b></span><span>Ra file: <code>${t.out}</code></span><span>Xong khi: ${t.done}</span><span>Guide: ${t.step}</span></div>
+    ${depsLine(t)}
+    <div class="meta"><span><b>${roleNote}</b></span><span><a href="${ISSUE_URL}${issueNo(t.id)}" target="_blank" rel="noopener">Issue #${issueNo(t.id)}</a></span><span>Ra file: <code>${t.out}</code></span><span>Xong khi: ${t.done}</span><span>Guide: ${t.step}</span></div>
   </div>`;
 }
 
