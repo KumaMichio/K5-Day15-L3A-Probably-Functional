@@ -34,9 +34,13 @@
 **Hợp đồng chung với `codebase/`:**
 ```
 data/lessons/<bai>.json = {"lesson_id", "title", "video", "passages": [{"code", "text"}]}
-search_lesson(query, k=3) -> [{"code", "text", "score"}]   # [] nếu không đoạn nào có score >= MIN_SCORE (0.3)
+search_lesson(query, k=3) -> [{"code", "text", "score"}]   # [] nếu đoạn tốt nhất có score < MIN_SCORE (0.3); đoạn sau giữ nếu score >= 1/3 đoạn đầu
 get_passage(code)         -> {"code", "text"} | None
 ```
-`score` = tỉ lệ trọng số idf các từ (và cặp âm tiết) của câu hỏi có trong đoạn. Tìm theo từ khoá, không dùng embedding: đủ cho 24 đoạn, chỉ dùng thư viện chuẩn. Tự kiểm: `python codebase/tools.py`.
+`score` = tỉ lệ trọng số idf các từ (và cặp âm tiết) của câu hỏi có trong đoạn; từ không có trong bài nào tính trọng số cố định 1,5, từ đệm ("thầy nói ở phút…", "em chưa hiểu lắm…") bỏ qua. Tìm theo từ khoá, không dùng embedding: đủ cho 24 đoạn, chỉ dùng thư viện chuẩn. Tự kiểm: `python codebase/tools.py`.
+
+**Độ phủ với bộ câu thử** (24 câu, PR #57, 27/11): mọi mã đoạn trong cột `expected` đều có trong `data/lessons/`; `search_lesson` tìm đủ đoạn cho 23/24 câu. Còn sót: B03 (câu hai ý, đoạn D07-L1-P01 chỉ đạt 0,094). 5 câu ra `[]` đúng ý đồ (B05, B07, B08, B20, B21: ngoài bài hoặc quá ngắn).
+
+**Giới hạn của `search_lesson`:** câu chỉ có một từ khoá (vd "Token là gì?") cho nhiều đoạn cùng điểm 1,0; khi đó đoạn có từ khoá xuất hiện sớm nhất (thường là đoạn định nghĩa) đứng đầu. Câu hai ý mà cả hai đoạn đều yếu vẫn có thể ra `[]`.
 
 Data `synthetic` **không phải bằng chứng pain**: chỉ dùng làm nguồn cho bản chạy thử.
