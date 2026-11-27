@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probably-Functional — Trợ giảng dưới video có căn cứ trong bài</title>
+<!--
+  Khung 8 trang cho demo-slides.pdf (#36, phụ trách: Dương Thị Huệ).
+  Xuất PDF: mở file trong Chrome → Ctrl+P → Đích: Lưu dưới dạng PDF · Khổ: tự động · Lề: Không · bật "Đồ hoạ nền"
+  → lưu thành demo-slides.pdf ở thư mục gốc repo.
+  Luật: mỗi trang ≥1 số / trích dẫn có nguồn. Ô có class "todo" = chờ số từ việc khác, PHẢI thay trước khi xuất PDF.
+-->
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  :root {
+    --ink: #1b1f24; --muted: #5a6575; --line: #d9dee5; --bg: #ffffff; --soft: #f4f6f9;
+    --accent: #b02e66; --ok: #2c7a4b; --todo-bg: #fff4d6; --todo-ink: #8a5a00;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #e9ecf0; color: var(--ink);
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+  .slide { width: 1280px; height: 720px; margin: 24px auto; background: var(--bg);
+    padding: 56px 72px 48px; position: relative; display: flex; flex-direction: column;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08); page-break-after: always; break-after: page; overflow: hidden; }
+  @media print { html, body { background: #fff; } .slide { margin: 0; box-shadow: none; } }
+  .kicker { font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 10px; }
+  h1 { font-size: 44px; line-height: 1.15; margin: 0 0 18px; font-weight: 700; }
+  h2 { font-size: 22px; margin: 0 0 8px; }
+  p, li { font-size: 21px; line-height: 1.45; }
+  ul { margin: 6px 0; padding-left: 26px; }
+  .grid { display: grid; gap: 22px; flex: 1; align-content: start; }
+  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); }
+  .card { background: var(--soft); border-radius: 10px; padding: 20px 22px; }
+  .big { font-size: 54px; font-weight: 700; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .big small { font-size: 22px; color: var(--muted); font-weight: 500; }
+  .cap { font-size: 17px; color: var(--muted); margin-top: 8px; line-height: 1.35; }
+  blockquote { margin: 0; font-size: 22px; line-height: 1.45; border-left: 4px solid var(--accent); padding: 4px 0 4px 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 18px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 15px; text-transform: uppercase; letter-spacing: .04em; }
+  .todo { background: var(--todo-bg); color: var(--todo-ink); border-radius: 4px; padding: 0 6px; font-weight: 600; }
+  .src { position: absolute; left: 72px; right: 72px; bottom: 20px; font-size: 13px; color: var(--muted);
+    border-top: 1px solid var(--line); padding-top: 8px; display: flex; justify-content: space-between; gap: 20px; }
+  .flow { display: flex; gap: 14px; align-items: stretch; margin: 10px 0 18px; }
+  .flow .step { flex: 1; background: var(--soft); border-radius: 10px; padding: 14px 16px; font-size: 18px; line-height: 1.35; }
+  .flow .arrow { align-self: center; color: var(--muted); font-size: 26px; }
+  .tag { display: inline-block; font-size: 14px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #fbe3ee; color: var(--accent); }
+  .tag.ok { background: #dff1e6; color: var(--ok); }
+</style>
+</head>
+<body>
+
+<!-- 1 · Người dùng & pain -->
+<section class="slide">
+  <p class="kicker">1 · Người dùng &amp; pain</p>
+  <h1>Học viên L3 hỏi dưới video pre-class — trợ giảng vẫn trả lời cả khi bài không có căn cứ</h1>
+  <div class="grid g3">
+    <div class="card"><div class="big">97<small>/98</small></div>
+      <div class="cap">câu trả lời bị trợ giảng tự gắn cờ thiếu ngữ cảnh vẫn trả lời dài ≥100 ký tự</div></div>
+    <div class="card"><div class="big">231<small>/557</small></div>
+      <div class="cap">câu trả lời (từ 13/11, 41,5%) không dẫn mốc nào trong bài — không có chỗ để tự kiểm</div></div>
+    <div class="card"><div class="big"><span class="todo">__/__</span></div>
+      <div class="cap">học viên L3 ngoài nhóm được phỏng vấn gặp chỗ đau này <span class="todo">chờ #25</span></div></div>
+  </div>
+  <blockquote><span class="todo">"Trích nguyên văn từ P1–P4 — chờ #25"</span> — P_</blockquote>
+  <div class="src"><span>Nguồn: evidence/data-mining.md (count_preclass.py, data pre-class 05–25/11/2026) · evidence/summary.md</span><span>1/8</span></div>
+</section>
+
+<!-- 2 · Vì sao chọn bài này -->
+<section class="slide">
+  <p class="kicker">2 · Vì sao chọn bài này</p>
+  <h1>A1 có data đếm được và chạm cả lớp; A2, A5 thì không</h1>
+  <table>
+    <tr><th>Hướng</th><th>Người gặp</th><th>Lần / tháng</th><th>Impact / tháng</th><th>Chọn?</th></tr>
+    <tr><td>A1 · Trợ giảng trả lời có căn cứ hoặc "không có trong bài"</td><td>145/436 học viên đã hỏi AI</td><td>~1.560 câu hỏi · ~140 bị cờ thiếu ngữ cảnh</td><td><span class="todo">chờ #26 (Tân)</span></td><td><span class="tag ok">Chọn</span></td></tr>
+    <tr><td>A2 · Trợ lý Discord hạn nộp / lịch</td><td>chưa có số</td><td>chưa có số</td><td>chưa tính được</td><td>Không — không có data Discord</td></tr>
+    <tr><td>A5 · Soạn thông báo phòng lab</td><td>vài key coach <i>(tự ước tính)</i></td><td>mỗi tối</td><td>chưa tính được</td><td>Không — data giả lập</td></tr>
+  </table>
+  <div class="src"><span>Nguồn: spec.md §2 · evidence/data-mining.md (quy ra tháng: 1.090 câu / 21 ngày × 30)</span><span>2/8</span></div>
+</section>
+
+<!-- 3 · Giải pháp -->
+<section class="slide">
+  <p class="kicker">3 · Giải pháp</p>
+  <h1>Có đoạn bài thì trả lời kèm mã đoạn; không có thì nói "không có trong bài"</h1>
+  <p><b>Lát cắt:</b> một học viên L3 · hỏi một câu dưới video pre-class · AI quyết định trả lời kèm mã đoạn hay nói "không có trong bài" · học viên tự kiểm bằng cách mở đúng đoạn.</p>
+  <div class="flow">
+    <div class="step">Câu hỏi dưới video<br><span class="cap">là dữ liệu, không phải lệnh</span></div><div class="arrow">→</div>
+    <div class="step">Tra đoạn bài<br><span class="cap">search_lesson</span></div><div class="arrow">→</div>
+    <div class="step">Có đoạn → model trả lời kèm mã<br>Không có → "không có trong bài", gợi ý hỏi TA, <b>không gọi model</b></div><div class="arrow">→</div>
+    <div class="step">Code kiểm mọi mã đoạn có thật</div>
+  </div>
+  <p><b>AI tự làm đến đâu:</b> tự trả lời khi có căn cứ — sai thì học viên tự kiểm được nhờ mã đoạn; không chạm điểm số, không gửi gì ra ngoài. <span class="todo">Thay bằng sơ đồ spec §4 khi #11 xong</span></p>
+  <div class="src"><span>Nguồn: spec.md §4 · canvas.md dòng 5–6</span><span>3/8</span></div>
+</section>
+
+<!-- 4 · Demo live -->
+<section class="slide">
+  <p class="kicker">4 · Demo live</p>
+  <h1>Hai câu thử: một câu thường, một câu khó</h1>
+  <div class="grid g2">
+    <div class="card"><span class="tag ok">thường</span>
+      <h2 style="margin-top:10px">Câu hỏi có trong bài</h2>
+      <p><span class="todo">câu thử id __ từ eval/benchmark.csv</span></p>
+      <p class="cap">Kỳ vọng: trả lời ngắn + mã đoạn, mở đoạn thấy đúng ý</p></div>
+    <div class="card"><span class="tag">khó</span>
+      <h2 style="margin-top:10px">Câu hỏi bài không nói tới</h2>
+      <p><span class="todo">câu thử id __ từ eval/benchmark.csv</span></p>
+      <p class="cap">Kỳ vọng: "không có trong bài" + gợi ý hỏi TA, không bịa</p></div>
+  </div>
+  <p class="cap">Mạng hỏng → video dự phòng: <span class="todo">link video (#38)</span></p>
+  <div class="src"><span>Nguồn: eval/benchmark.csv · README.md (link video)</span><span>4/8</span></div>
+</section>
+
+<!-- 5 · Đánh giá thế nào -->
+<section class="slide">
+  <p class="kicker">5 · Đánh giá thế nào</p>
+  <h1>Bộ câu thử → metric → lượt 1 → lượt 2, so với chuẩn "đạt"</h1>
+  <div class="grid g3">
+    <div class="card"><div class="big"><span class="todo">__</span></div><div class="cap">câu thử (thường · khó · từ chối), ≥1/3 từ người dùng / data thật</div></div>
+    <div class="card"><div class="big"><span class="todo">__%</span></div><div class="cap">lượt 1 (run ID <span class="todo">__</span>)</div></div>
+    <div class="card"><div class="big"><span class="todo">__%</span></div><div class="cap">lượt 2 (run ID <span class="todo">__</span>) · chuẩn "đạt": <span class="todo">spec §7</span></div></div>
+  </div>
+  <p><b>Lỗi chính đã sửa:</b> <span class="todo">từ eval/report.md (#33)</span></p>
+  <div class="src"><span>Nguồn: eval/README.md · eval/report.md · eval/run-1.csv · eval/run-2.csv · eval/metric_spec.yaml</span><span>5/8</span></div>
+</section>
+
+<!-- 6 · Chi phí khi dùng thật -->
+<section class="slide">
+  <p class="kicker">6 · Chi phí khi dùng thật</p>
+  <h1>Chi phí / câu trả lời đạt, so với thời gian học viên tiết kiệm</h1>
+  <table>
+    <tr><th>Kịch bản</th><th>Model nhỏ</th><th>Model lớn</th><th>So với impact</th></tr>
+    <tr><td>Thấp</td><td><span class="todo">__</span></td><td><span class="todo">__</span></td><td rowspan="3"><span class="todo">chờ #26</span></td></tr>
+    <tr><td>Cơ sở</td><td><span class="todo">__</span></td><td><span class="todo">__</span></td></tr>
+    <tr><td>Cao</td><td><span class="todo">__</span></td><td><span class="todo">__</span></td></tr>
+  </table>
+  <p class="cap">Chi phí / task thành công: <span class="todo">__</span> · persona: 1 câu 38 · 2–5 câu 46 · 6–15 câu 43 · ≥16 câu 16 học viên (20 ngày)</p>
+  <div class="src"><span>Nguồn: cost/cost-estimate.md · cost/simulate-N.csv · cost/personas.yaml · evidence/data-mining.md mục I</span><span>6/8</span></div>
+</section>
+
+<!-- 7 · Kết luận -->
+<section class="slide">
+  <p class="kicker">7 · Kết luận</p>
+  <h1><span class="todo">Go / iterate / stop</span> — vì sao</h1>
+  <ul>
+    <li>Pain: <span class="todo">số trang 1</span></li>
+    <li>Đánh giá: <span class="todo">lượt 2 __% so với chuẩn __% (trang 5)</span></li>
+    <li>Chi phí: <span class="todo">__ / task thành công so với impact (trang 6)</span></li>
+  </ul>
+  <div class="src"><span>Nguồn: trang 1, 5, 6</span><span>7/8</span></div>
+</section>
+
+<!-- 8 · Nếu có thêm 1 tuần -->
+<section class="slide">
+  <p class="kicker">8 · Nếu có thêm 1 tuần</p>
+  <h1>Ba việc tiếp theo, trỏ về lỗi còn lại và phản hồi người dùng</h1>
+  <ol>
+    <li><span class="todo">lỗi còn lại — eval/report.md mục 4</span></li>
+    <li><span class="todo">phản hồi người dùng thử — validation/log.md</span></li>
+    <li><span class="todo">__</span></li>
+  </ol>
+  <div class="src"><span>Nguồn: eval/report.md · validation/log.md</span><span>8/8</span></div>
+</section>
+
+</body>
+</html>

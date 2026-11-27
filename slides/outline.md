@@ -2,6 +2,9 @@
 
 > Làm ở guide bước 5.1. Luật: **không có bằng chứng thì không có slide** — mỗi trang ≥1 con số / trích dẫn có nguồn / kết quả đo.
 > Xuất PDF thành `demo-slides.pdf` ở thư mục gốc repo, nộp tại CP4 14:30 Thứ Bảy 28/11. Nộp PDF, không nộp link.
+>
+> **Khung slide:** [`slides/deck.html`](deck.html) — 8 trang đúng bảng dưới. Ô vàng = chờ số từ việc khác, thay hết trước khi xuất. Xuất: mở bằng Chrome → Ctrl+P → Lưu dưới dạng PDF · Lề: Không · bật Đồ hoạ nền → `demo-slides.pdf`.
+> Mỗi người gửi số phần mình cho Huệ **trước 10:30 T7** (Tân: impact + chi phí · Thành: lượt 1, lượt 2, lỗi chính · Hùng: sơ đồ §4, 2 câu demo, link video).
 
 | # | Trang | Có gì | Số lấy từ | Xong |
 |---|---|---|---|---|
@@ -18,6 +21,13 @@
 
 Ai nói trang nào (mỗi người ≥1 phần):
 
+*Đề xuất theo phần mỗi người phụ trách — chốt khi tập demo 12:30 T7:*
+
 | Trang | Người nói |
 |---|---|
-| | |
+| 1 Người dùng & pain | Huệ |
+| 2 Vì sao chọn bài này | Tân |
+| 3 Giải pháp · 4 Demo live | Hùng |
+| 5 Đánh giá thế nào | Thành |
+| 6 Chi phí khi dùng thật | Tân |
+| 7 Kết luận · 8 Nếu có thêm 1 tuần | Hùng |
