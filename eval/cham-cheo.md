@@ -2,7 +2,7 @@
 
 > Thực hiện theo `02-guide.md` bước 2.4 và Rubric R4: người thứ hai trong nhóm (không phải người viết `eval/metric_spec.yaml`) chấm độc lập 5 output mẫu theo định nghĩa trong `eval/metric_spec.yaml` để kiểm tra định nghĩa metric có rõ ràng, không mơ hồ hay không (ngưỡng đạt độ rõ: khớp ≥ 4/5).
 > - **Người soạn metric & chấm cột 1:** Nguyễn Bá Thành (`@Nguyen-Ba-Thanh`)
-> - **Người chấm độc lập cột 2:** Dương Thị Huệ (`@dhuee10` — xác nhận trực tiếp tại bình luận trên PR #60)
+> - **Người chấm độc lập cột 2:** Dương Thị Huệ (`@dhuee10` — gửi kết quả chấm độc lập qua kênh nhóm lúc 17:21 ngày 27/11, trích nguyên văn bên dưới và trên PR #60)
 > - **Thời điểm thực hiện:** Chiều Thứ Sáu 27/11/2026 (trước mốc khoá CP2 19:30).
 
 ---
