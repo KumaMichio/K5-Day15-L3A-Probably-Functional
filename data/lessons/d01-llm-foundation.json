@@ -1,0 +1,15 @@
+{
+  "lesson_id": "program-day01:ai-llm-foundation",
+  "title": "Nền tảng AI và mô hình ngôn ngữ lớn (LLM)",
+  "video": "Day01 (bài viết lại, synthetic — không phải transcript thật)",
+  "passages": [
+    {"code": "D01-L1-P01", "text": "Mô hình ngôn ngữ lớn (LLM) là mô hình học từ rất nhiều văn bản để dự đoán token tiếp theo. Khi trả lời, LLM sinh từng token một, mỗi bước chọn token có xác suất cao dựa trên toàn bộ phần chữ đứng trước. LLM không tra cứu sự thật trong cơ sở dữ liệu nào cả, nó chỉ sinh chữ nghe hợp lý."},
+    {"code": "D01-L1-P02", "text": "Token là đơn vị chữ mà mô hình đọc và sinh ra, có thể là một từ, một phần của từ hoặc một dấu câu. Tiếng Anh trung bình khoảng 4 ký tự một token. Tiếng Việt có dấu thường bị tách thành nhiều token hơn, nên cùng một ý viết bằng tiếng Việt tốn nhiều token hơn tiếng Anh."},
+    {"code": "D01-L1-P03", "text": "Cửa sổ ngữ cảnh (context window) là số token tối đa mô hình xem được trong một lần gọi, gồm cả hướng dẫn hệ thống, lịch sử hội thoại, tài liệu đưa vào và câu trả lời. Vượt quá cửa sổ thì phần cũ bị cắt hoặc lời gọi bị từ chối. Mô hình không nhớ gì giữa các lần gọi, muốn nhớ thì phải gửi lại."},
+    {"code": "D01-L1-P04", "text": "Temperature điều chỉnh độ ngẫu nhiên khi chọn token. Temperature thấp (gần 0) cho câu trả lời ổn định, lặp lại được, hợp với trích xuất và trả lời theo tài liệu. Temperature cao cho câu trả lời đa dạng hơn, hợp với viết sáng tạo nhưng dễ lệch khỏi sự thật hơn."},
+    {"code": "D01-L1-P05", "text": "Ảo giác (hallucination) là khi mô hình nói một điều sai nhưng giọng rất chắc chắn, ví dụ bịa tên tài liệu, số liệu hay trích dẫn. Lý do là mô hình được huấn luyện để sinh chữ trôi chảy chứ không để kiểm sự thật. Cách giảm: đưa tài liệu nguồn vào ngữ cảnh, yêu cầu trích nguồn, và cho phép mô hình nói 'không biết'."},
+    {"code": "D01-L1-P06", "text": "Một LLM thường qua ba giai đoạn: tiền huấn luyện (pre-training) trên kho văn bản lớn để học ngôn ngữ; tinh chỉnh theo chỉ dẫn (instruction tuning) để biết làm theo yêu cầu; và học từ phản hồi của người (RLHF) để câu trả lời hữu ích, an toàn hơn. Fine-tuning thêm trên dữ liệu riêng chỉ nên làm khi viết prompt và đưa tài liệu vào không đủ."},
+    {"code": "D01-L1-P07", "text": "Chi phí gọi API tính theo số token: token vào (prompt, tài liệu, lịch sử) và token ra (câu trả lời), giá token ra thường đắt hơn token vào nhiều lần. Muốn ước chi phí, nhân số token trung bình mỗi lượt với số lượt mỗi tháng và giá mỗi triệu token của model."},
+    {"code": "D01-L1-P08", "text": "Embedding là một dãy số (vector) biểu diễn ý nghĩa của một đoạn chữ. Hai đoạn có ý gần nhau thì vector gần nhau, kể cả khi dùng chữ khác nhau. Embedding là nền của tìm kiếm theo ngữ nghĩa và RAG, sẽ học kỹ ở Day07."}
+  ]
+}
