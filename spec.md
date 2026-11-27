@@ -19,7 +19,14 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 - Việc họ cố làm xong (`động từ + đối tượng + bối cảnh`, không có chữ AI): hiểu đúng một ý trong video bài giảng trước buổi học, ngay lúc đang xem buổi tối.
 - Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ: hỏi trợ giảng ngay dưới video (nhanh, ngay tại chỗ — lý do chưa bỏ); hỏng khi câu trả lời không chỉ ra đoạn nào trong bài để tự kiểm, hoặc trả lời khi bài không có thông tin (*giả thuyết, kiểm bằng phỏng vấn*). Cách khác: tua lại video, hỏi bạn / Discord, ChatGPT riêng (*chưa kiểm*).
 - Pain (KHÔNG chữ AI): học viên L3 xem video pre-class buổi tối — muốn hiểu một ý trong bài — câu trả lời nhận được không chỉ ra đoạn nào để tự kiểm, có lúc bài không có thông tin mà vẫn được trả lời — phải tua lại video, hỏi chỗ khác, hoặc vào lớp với hiểu sai.
-- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`, đang làm): số đầu từ data (05/11–25/11/2026): 145/436 học viên có hoạt động (33,3%) đã nhắn AI, tổng 1.260 lượt, 1.108 là câu hỏi dưới video · 101/1.245 lượt trả lời (8,1%) bị gắn cờ `missing_context = true`. Kết luận: chưa đủ — cần phỏng vấn ≥3 học viên để biết thiếu căn cứ có thật là chỗ đau không.
+- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`, đang làm). Data 05/11–25/11/2026, đếm bằng `evidence/scripts/count_preclass.py` (cách đếm: `evidence/data-mining.md`):
+  - 145/436 học viên có hoạt động (33,3%) đã nhắn AI; 1.090/1.260 lượt nhắn (86,5%) là câu hỏi dưới video gửi trợ giảng.
+  - 98/1.075 câu trả lời (9,1%) bị trợ giảng tự gắn cờ thiếu ngữ cảnh — **97/98 vẫn trả lời dài ≥100 ký tự**.
+  - 231/557 câu trả lời từ 13/11 (41,5%) không dẫn mốc nào trong bài → học viên không có chỗ để tự kiểm.
+  - 530/1.090 (48,6%) hỏi tiếp cùng video trong 3 phút hoặc tua lùi trong 2 phút — tín hiệu yếu, chưa biết là không hài lòng.
+  - Khảo sát (form 27/11/2026, 17 học viên L3 ngoài nhóm — **chưa đủ ngưỡng 20**, dùng làm nguồn phụ; `evidence/survey/results.csv` đã ẩn danh, đếm bằng `evidence/survey/summarize.py`): 9/12 học viên đã hỏi trợ giảng đọc xong vẫn không chắc, hoặc phải hỏi chỗ khác / tua lại để kiểm · 12/17 hỏi ChatGPT / AI bên ngoài khi gặp chỗ chưa hiểu · lần gần nhất thường mất 5–15 phút (9/17) và chỉ hiểu một phần (10/17) · 6/11 người kể cách kiểm là hỏi AI khác / Google, không ai kể là mở lại đúng đoạn trong bài. Có vài phiếu mâu thuẫn (chi tiết `evidence/summary.md`).
+  - Phỏng vấn: __/__ học viên L3 ngoài nhóm gặp chỗ đau *(điền sau P1–P4, `evidence/interviews/`, câu hỏi: `evidence/interviews/questions.md`)*.
+  - Kết luận tạm: data và khảo sát **ủng hộ một phần** — trợ giảng trả lời cả khi thiếu căn cứ và thường không chỉ ra đoạn nào; học viên nói họ không tự xác nhận được câu trả lời và phải kiểm bằng AI khác. Còn phải phỏng vấn để nghe chuyện cụ thể (tốn bao lâu, có hiểu sai vào lớp không).
 
 ## §2. Impact & quyết định chọn *(guide 1.3)*
 
@@ -41,7 +48,15 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
   | hỏi dồn | ≥16 | 16 | 11,2% | 8,8 | 5,1 |
 
 ## §3. Giải pháp tương tự *(guide 2.1)*
-- [sản phẩm / tính năng gần giống]: một điều đáng học · một điều đáng né · mình khác gì
+> Bản đầu dựa trên tài liệu công khai (xem ngày 27/11/2026). Theo kế hoạch #8, mỗi thành viên tự thử 1 sản phẩm rồi bổ sung "đã thử thấy gì" vào dòng tương ứng.
+
+| Sản phẩm | Một điều đáng học | Một điều đáng né | Mình khác gì | Nguồn (xem 27/11/2026) |
+|---|---|---|---|---|
+| **Google NotebookLM** — hỏi đáp trên tài liệu người dùng tải lên | Câu trả lời chỉ lấy từ nguồn đã tải, kèm trích dẫn bấm vào mở đúng đoạn; bài không có thì không trả lời | Người dùng phải tự tải tài liệu và tự mở một công cụ riêng, rời khỏi lúc đang xem video | Đặt ngay dưới video pre-class, nguồn là bài giảng của khoá (không phải tài liệu tự tải), mã đoạn ổn định để học viên mở lại | [NotebookLM Help — FAQ](https://support.google.com/notebooklm/answer/16269187), [Use chat in NotebookLM](https://support.google.com/notebooklm/answer/16179559) |
+| **Coursera Coach** — trợ lý AI trong khoá học Coursera | Hỏi ngay trong lúc học, tóm tắt bài và chỉ ra đoạn video nên xem lại | Theo một bài review bên thứ ba, chỉ có ở một số khoá và không trả lời ngoài tài liệu khoá — nhưng không rõ nó báo cho người học thế nào khi bài không có | Nói rõ "không có trong bài" + gợi ý hỏi TA, và code kiểm mọi mã đoạn được dẫn có thật | [Coursera blog — 2023](https://blog.coursera.org/new-products-tools-and-features-2023), [Coursera Coach](https://www.coursera.org/explore/coach), [BuildFastWithAI review](https://buildfastwithai.com/ai-tools/coursera-coach) |
+| **Khanmigo** (Khan Academy) — gia sư AI không đưa đáp án | Không làm hộ bài: hỏi gợi mở, cho bước tiếp theo thay vì đáp án | Học viên ít dùng khi tutor từ chối trả lời và chỉ hỏi lại; Khan Academy đã chuyển Khanmigo vào ngay luồng làm bài | Trả lời thẳng câu hỏi hiểu bài (có căn cứ), chỉ từ chối khi bị đòi làm hộ bài / lộ đáp án quiz | [Hechinger Report](https://hechingerreport.org/proof-points-khanmigo-math-ai-tutor/), [KQED MindShift](https://www.kqed.org/mindshift/66662/students-didnt-get-answers-from-khanmigo-they-didnt-want-its-questions-either) |
+| **Trợ giảng hiện tại trên trang pre-class** (đối chiếu) | Ngay dưới video, có ngữ cảnh lời giảng quanh lúc hỏi; từ 13/11 có ghi mốc giây | Vẫn trả lời khi tự gắn cờ thiếu ngữ cảnh (97/98); 41,5% câu không dẫn mốc nào | Chính là điểm nhóm tối ưu: không có đoạn thì không trả lời, có đoạn thì bắt buộc kèm mã | `evidence/data-mining.md` |
+| Thử thêm (mỗi người 1 sản phẩm): ChatGPT riêng · Perplexity · … | | | | |
 
 ## §4. Thiết kế *(guide 2.2, 3.2)*
 - **Lát cắt MỘT CÂU** (1 người dùng · 1 việc · 1 quyết định AI · 1 kết quả): Một học viên L3 · hỏi một câu dưới video pre-class · AI quyết định trả lời kèm mã đoạn bài hay nói "không có trong bài" · học viên tự kiểm được bằng cách mở đúng đoạn.
