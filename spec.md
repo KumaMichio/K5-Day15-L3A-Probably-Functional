@@ -1,33 +1,37 @@
-# AI SPEC — [Tên lát cắt] · Nhóm Probably-Functional · Phòng [XXX] · Zone [X]
+# AI SPEC — Trợ giảng dưới video có căn cứ trong bài · Nhóm Probably-Functional · Phòng __ · Zone __
 
 > Mốc nộp: §7 chốt chuẩn "đạt" tại **CP2 19:30 Thứ Sáu 27/11** · §0–§7 nộp **CP3 10:00 Thứ Bảy 28/11** · đủ §0–§10 **CP4 14:30 Thứ Bảy 28/11** · §10 changelog ghi tiếp đến **23:59 Thứ Bảy 28/11**.
-> Đầu mỗi mục ghi bước guide (`02-guide.md` trong repo đề) chỉ cách điền. Mỗi mục ngắn, có số và nguồn; chi tiết để ở file được trỏ tới. Xoá dòng hướng dẫn trong ngoặc vuông khi điền xong.
+> Bản CP1: §0–§2 là bản nháp đầu, cập nhật đến CP3 khi có thêm bằng chứng.
 
-Track: [ ] A · [ ] B · [ ] C · [ ] D · [ ] E — bài toán: [đề gợi ý trong file track, hoặc bài toán nhóm tự mở rộng] __
-Data BTC cấp đã dùng (nếu có — không commit nguyên file): __
+Track: [x] A · [ ] B · [ ] C · [ ] D · [ ] E — bài toán: hướng A1 (tutor cho trang pre-class), tối ưu một điểm trợ giảng dưới video đang làm chưa tốt: trả lời kèm căn cứ trong bài, hoặc nói "không có trong bài"
+Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/preclass/` (`chat.csv`, `events.csv`) — chỉ số tổng hợp, đếm bằng `evidence/scripts/count_preclass.py`
 
 ## §0. Hiện tại việc này diễn ra thế nào *(guide 1.1)*
-- Luồng hiện tại của việc này, trong khoá hoặc trên app thật (3–5 bước; ảnh chụp từ tài khoản của mình, đã che thông tin):
-- Công cụ / AI đang được dùng cho việc này (nếu có) + nguồn. Không kiểm được thì ghi "chưa kiểm":
+- Luồng hiện tại (theo mô tả track A + cột dữ liệu trong `data/preclass/`; ảnh chụp tài khoản: chưa chụp, bổ sung trước CP3):
+  1. Học viên mở bài trên trang pre-class (preclass-online.com), xem video.
+  2. Gặp chỗ không hiểu → gõ câu hỏi dưới video (`chat.csv` kênh `video_question`) hoặc bôi đen chữ trên slide để hỏi (`slide_text_asked`).
+  3. Trợ giảng AI trả lời, dựa vào đoạn lời giảng quanh lúc hỏi (`ngu_canh = hep`) hoặc lời giảng cả ngày (`ca_ngay`); có thể dẫn mốc giây trong video (`moc_trich_dan`).
+  4. Học viên đọc câu trả lời rồi xem tiếp, hỏi lại, tua lại video, hoặc hỏi nơi khác (Discord, bạn, ChatGPT riêng) — phần này **chưa kiểm**, sẽ hỏi trong phỏng vấn.
+- Công cụ / AI đang được dùng: trợ giảng AI và các bạn học AI trên trang pre-class (nguồn: `tracks/track-a-edtech.md`, `data/preclass/README.md`). Model ghi chung `model_chinh` / `fallback`; prompt và cách tra bài cụ thể: chưa kiểm.
 
 ## §1. Người dùng & bằng chứng *(guide 1.1, 1.2)*
-- Người dùng chính (một vai cụ thể):
-- Việc họ cố làm xong (`động từ + đối tượng + bối cảnh`, không có chữ AI):
-- Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ:
-- Pain (KHÔNG chữ AI): ai — đang làm gì — vướng đâu — hậu quả gì:
-- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): __
+- Người dùng chính (một vai cụ thể): học viên L3 đi làm, tối mới xem video pre-class, gặp chỗ không hiểu ngay khi đang xem.
+- Việc họ cố làm xong (`động từ + đối tượng + bối cảnh`, không có chữ AI): hiểu đúng một ý trong video bài giảng trước buổi học, ngay lúc đang xem buổi tối.
+- Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ: hỏi trợ giảng ngay dưới video (nhanh, ngay tại chỗ — lý do chưa bỏ); hỏng khi câu trả lời không chỉ ra đoạn nào trong bài để tự kiểm, hoặc trả lời khi bài không có thông tin (*giả thuyết, kiểm bằng phỏng vấn*). Cách khác: tua lại video, hỏi bạn / Discord, ChatGPT riêng (*chưa kiểm*).
+- Pain (KHÔNG chữ AI): học viên L3 xem video pre-class buổi tối — muốn hiểu một ý trong bài — câu trả lời nhận được không chỉ ra đoạn nào để tự kiểm, có lúc bài không có thông tin mà vẫn được trả lời — phải tua lại video, hỏi chỗ khác, hoặc vào lớp với hiểu sai.
+- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`, đang làm): số đầu từ data (05/11–25/11/2026): 145/436 học viên có hoạt động (33,3%) đã nhắn AI, tổng 1.260 lượt, 1.108 là câu hỏi dưới video · 101/1.245 lượt trả lời (8,1%) bị gắn cờ `missing_context = true`. Kết luận: chưa đủ — cần phỏng vấn ≥3 học viên để biết thiếu căn cứ có thật là chỗ đau không.
 
 ## §2. Impact & quyết định chọn *(guide 1.3)*
 
 | Hướng | Bao nhiêu người gặp | Bao nhiêu lần / tháng | Mỗi lần tốn gì | Impact / tháng | Làm kịp không | Chọn? |
 |---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |
+| A1 · Trợ giảng dưới video trả lời có căn cứ (mã đoạn) hoặc nói "không có trong bài" | 145 học viên đã hỏi AI (data), trên 436 có hoạt động | ~1.800 lượt hỏi / tháng (1.260 lượt trong 21 ngày × 30/21, data); trong đó ~8% thiếu ngữ cảnh ≈ 145 lượt | ~10 phút tua lại / hỏi chỗ khác mỗi lần câu trả lời không dùng được *(tự ước tính, kiểm bằng phỏng vấn)* + rủi ro học sai | ≈ 145 × 10 phút ≈ 24 giờ học viên / tháng chỉ tính lượt bị cờ *(nháp)* | Kịp: data có sẵn, cả lớp là người dùng, một quyết định AI | **Chọn** |
+| A2 · Trợ lý Discord trả lời hạn nộp / lịch từ thông báo chính thức | chưa có số *(tự ước tính: phần lớn lớp)* | dồn quanh hạn nộp *(tự ước tính)* | hỏi lại, chờ TA, nhầm hạn | chưa tính được | Khó: không có data Discord BTC cấp, phải tự quan sát kênh | Không |
+| A5 · Soạn thông báo phòng lab cho key coach | ~vài key coach / buổi *(tự ước tính)* | mỗi tối trước buổi lab | thời gian soạn + báo nhầm phòng | chưa tính được | Kịp, nhưng data training-ops là giả lập, không phải bằng chứng pain | Không |
 
-- **Impact / tháng** của hướng chọn = __ người × __ lần × __ phút = __ — nguồn từng thừa số: __ (không có nguồn thì ghi rõ *(tự ước tính)*)
-- Hướng ĐÃ LOẠI + vì sao (giữ lại, đừng xoá):
-- Số lần / tháng của từng kiểu người dùng (dùng cho persona ở §8):
+- **Impact / tháng** của hướng chọn = ~145 lượt thiếu ngữ cảnh × ~10 phút = ~24 giờ / tháng — nguồn: số lượt từ `data/preclass/` (`evidence/scripts/count_preclass.py`); 10 phút / lần *(tự ước tính — thay bằng số từ phỏng vấn trước CP3)*. Chưa tính lượt trả lời không bị cờ nhưng vẫn thiếu căn cứ.
+- Hướng ĐÃ LOẠI + vì sao (giữ lại, đừng xoá): A2 — không có data đếm được, bằng chứng phải tự thu từ đầu. A5 — data là giả lập nên không làm bằng chứng pain; người dùng (key coach, ban đào tạo) ít và phải hẹn.
+- Số lần / tháng của từng kiểu người dùng (dùng cho persona ở §8): trong 145 học viên đã nhắn AI (21 ngày): 38 người 1 lượt · 42 người 2–5 · 42 người 6–15 · 23 người ≥16 — quy đổi / tháng ở CP4.
 
 ## §3. Giải pháp tương tự *(guide 2.1)*
 - [sản phẩm / tính năng gần giống]: một điều đáng học · một điều đáng né · mình khác gì
@@ -88,7 +92,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): __
 
 ## §10. Phân công & changelog
 - Phân công có tên (theo chặng, chia cặp — guide "Cách chia việc"): Cặp X (build) — Phan Sỹ Hùng, Dương Minh Tân · Cặp Y (bằng chứng + đánh giá) — Dương Thị Huệ, Nguyễn Bá Thành. Chính: Hùng — codebase/ + nối model · Huệ — phỏng vấn + evidence/ · Tân — đào data + impact + cost/ · Thành — eval/ + data card. Mỗi người phỏng vấn ≥1 học viên ngoài nhóm. Đổi cặp ở chặng sau theo guide
-- Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`): Claude Code dựng repo từ khung và soạn nháp tài liệu; người phụ trách từng phần kiểm lại trước khi commit.
+- Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`): Claude Code dựng repo, viết script đếm data, soạn nháp tài liệu CP1; người phụ trách từng phần kiểm lại trước khi commit.
 - Nhật ký thay đổi — **mọi thay đổi sau CP2 19:30 Thứ Sáu 27/11 phải có dòng ở đây**:
 
 **CP2 → CP4** (vd thu hẹp lát cắt, hỏi thêm người dùng, lần cải tiến trước lượt 2)

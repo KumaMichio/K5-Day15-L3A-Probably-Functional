@@ -1,7 +1,9 @@
-> Repo nộp bài hackathon AI20K khoá 5 · L3A.
+> Repo nộp bài hackathon AI20K khoá 5 · L3A · Track A.
 > Giờ, mốc, luật, rubric: xem `README.md`, `02-guide.md`, `03-rubric.md` trong repo đề (bộ đề BTC phát).
 
-# Probably-Functional — [Tên lát cắt]
+# Probably-Functional — Trợ giảng dưới video có căn cứ trong bài
+
+**Lát cắt:** một học viên L3 · hỏi một câu dưới video pre-class · AI quyết định trả lời kèm mã đoạn bài hay nói "không có trong bài" · học viên tự kiểm được bằng cách mở đúng đoạn.
 
 **Thành viên, lớp, track:** xem [TEAMS.md](TEAMS.md). **Điền TEAMS.md đúng format**: khi chấm và đánh giá, BTC quét file này để ghép điểm cho từng người.
 
@@ -84,14 +86,15 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm | **Thật** (bắt buộc từ CP3) | Model: ____ |
-|  |  |  |
+| Lời gọi AI ở quyết định trung tâm | **Giả** (đến CP2) → **Thật** (bắt buộc từ CP3) | Model: chưa chọn (dự kiến model tầng Nhỏ, xem `cost/`) |
+| Bài học có mã đoạn để tra | Giả — nhóm tự dựng | Trích ngắn / viết lại từ bài khoá, không commit nguyên tài liệu |
+| Số liệu bằng chứng từ `data/preclass/` | Thật (đã ẩn danh, BTC cấp) | Chỉ số tổng hợp, script ở `evidence/scripts/` |
 
 ## Dùng AI vào việc gì
 
 Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
 
-Nhóm dùng Claude Code để dựng repo từ khung và soạn nháp tài liệu (TEAMS.md, phân công). Đội trưởng (Phan Sỹ Hùng) kiểm lại từng file trước khi commit.
+Nhóm dùng Claude Code để dựng repo từ khung, viết script đếm số tổng hợp trên `data/preclass/` và soạn nháp canvas, giả thuyết, `spec.md` §0–§2. Đội trưởng (Phan Sỹ Hùng) kiểm lại từng file trước khi commit; số trong bằng chứng được chạy lại bằng `evidence/scripts/count_preclass.py`.
 
 ## File mẫu — điền ở bước nào
 

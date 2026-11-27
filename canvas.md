@@ -1,16 +1,15 @@
-# Canvas — Probably-Functional · Track [A–F]
+# Canvas — Probably-Functional · Track A
 
 > Điền ở guide bước 1.4. CP1 17:00 Thứ Sáu 27/11: nộp bản đầu, đủ 7 dòng (dòng 4 được ghi giả thuyết + nguồn sẽ kiểm).
 > CP2 19:30 Thứ Sáu 27/11: cập nhật (số bằng chứng đầu, lát cắt đã chốt) và điền dòng "Đã đổi gì so với CP1".
-> Track F: chép thêm thẻ đề của nhóm (khung trong file track F) xuống dưới bảng này.
 
 | # | Dòng | Nhóm điền |
 |---|---|---|
-| 1 | Track + lát cắt dự kiến | |
-| 2 | Người dùng chính (một vai cụ thể — không phải "học viên nói chung") | |
-| 3 | Pain một câu: ai — đang làm gì — vướng đâu — hậu quả | |
-| 4 | Bằng chứng đầu — CP1: giả thuyết + nguồn sẽ kiểm · CP2: số đầu tiên + 1 trích dẫn | |
-| 5 | **Lát cắt MỘT CÂU** (1 người dùng · 1 việc · 1 quyết định AI · 1 kết quả) | |
-| 6 | AI tự làm đến đâu + 1 dòng lý do: sai thì ai chịu gì | |
-| 7 | Phân công có tên | Phan Sỹ Hùng (đội trưởng): khung bản chạy thử + nối model · Dương Thị Huệ: phỏng vấn + tổng hợp bằng chứng · Dương Minh Tân: đào data + bảng impact + chi phí · Nguyễn Bá Thành: bộ câu thử + metric + data card. Mỗi người tự phỏng vấn ≥1 người dùng ngoài nhóm |
+| 1 | Track + lát cắt dự kiến | Track A (EdTech), hướng A1 (cách 1 — tối ưu một điểm trợ giảng đang làm chưa tốt): trợ giảng dưới video pre-class trả lời có căn cứ trong bài — kèm mã đoạn, hoặc nói "không có trong bài" |
+| 2 | Người dùng chính (một vai cụ thể — không phải "học viên nói chung") | Học viên L3 đi làm, tối mới xem video pre-class, gặp chỗ không hiểu ngay khi đang xem |
+| 3 | Pain một câu: ai — đang làm gì — vướng đâu — hậu quả | Học viên L3 xem video pre-class buổi tối — muốn hiểu một ý trong bài — câu trả lời nhận được không chỉ ra đoạn nào trong bài để tự kiểm, có lúc bài không có thông tin mà vẫn được trả lời — phải tua lại video, hỏi chỗ khác, hoặc vào lớp với hiểu sai |
+| 4 | Bằng chứng đầu — CP1: giả thuyết + nguồn sẽ kiểm · CP2: số đầu tiên + 1 trích dẫn | Giả thuyết: `evidence/hypothesis.md`. Nguồn: đào `data/preclass/` + phỏng vấn ≥3 học viên ngoài nhóm. Số xem nhanh (chưa kiểm lại, cách đếm sẽ ghi ở `evidence/data-mining.md`): 145/436 học viên có hoạt động (33%) đã nhắn AI, 1.108/1.260 tin là câu hỏi dưới video; 101/1.245 lượt trả lời (8,1%) bị gắn cờ `missing_context = true` |
+| 5 | **Lát cắt MỘT CÂU** (1 người dùng · 1 việc · 1 quyết định AI · 1 kết quả) | Một học viên L3 · hỏi một câu dưới video pre-class · AI quyết định trả lời kèm mã đoạn bài hay nói "không có trong bài" · học viên tự kiểm được bằng cách mở đúng đoạn |
+| 6 | AI tự làm đến đâu + 1 dòng lý do: sai thì ai chịu gì | AI tự trả lời khi tìm thấy căn cứ trong bài; không thấy thì nói "không có trong bài" và gợi ý hỏi TA. Lý do: sai thì học viên học sai trước buổi, nhưng mỗi câu kèm mã đoạn nên học viên tự kiểm được — không chạm điểm số hay gửi gì ra ngoài |
+| 7 | Phân công có tên | Phan Sỹ Hùng (đội trưởng): khung bản chạy thử + nối model · Dương Thị Huệ: phỏng vấn + tổng hợp bằng chứng · Dương Minh Tân: đào data pre-class + bảng impact + chi phí · Nguyễn Bá Thành: bộ câu thử + metric + data card. Mỗi người tự phỏng vấn ≥1 học viên ngoài nhóm |
 | — | *(CP2)* Đã đổi gì so với CP1 | |

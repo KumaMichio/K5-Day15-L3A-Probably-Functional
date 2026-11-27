@@ -44,3 +44,7 @@ Khung chỉ dùng thư viện chuẩn của Python. Thêm thư viện thì ghi v
 - Phong cách code / đặt tên: Python chuẩn (PEP 8), tên hàm / biến tiếng Anh, chú thích tiếng Việt; chỉ dùng thư viện chuẩn nếu được
 - Ai duyệt thay đổi do agent tạo trước khi commit: Phan Sỹ Hùng (đội trưởng); phần eval do Nguyễn Bá Thành duyệt, phần bằng chứng do Dương Thị Huệ duyệt
 - Data BTC cấp đặt ở `data-btc/` (đã có trong `.gitignore`), không chép vào thư mục khác
+
+## Quy trình git và phân quyền file
+
+Đọc `CLAUDE.md` mục 2–5 (áp dụng cho mọi coding agent, không riêng Claude): không push thẳng `main`, mỗi task một nhánh `<ten>/<Txx-viec>` + Pull Request, chỉ đội trưởng Phan Sỹ Hùng merge. Kế hoạch và mã task: `plan/index.html`.

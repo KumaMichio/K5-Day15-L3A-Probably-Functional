@@ -8,11 +8,11 @@ README của nhóm có mục "Dùng AI vào việc gì" (2–3 dòng, bắt bu�
 |---|---|---|---|---|
 | Code bản chạy thử | | | | |
 | Prompt / thiết kế lời gọi mô hình | | | | |
-| Đào data (viết script đếm, gợi ý nhãn) | | | Kiểm tay __ dòng, khớp __ | |
+| Đào data (viết script đếm, gợi ý nhãn) | Claude Code | Viết `evidence/scripts/count_preclass.py` đếm số tổng hợp trên `data/preclass/` | Chạy lại script, đối chiếu số với file CSV; kiểm tay __ dòng, khớp __ | Dương Minh Tân |
 | Rà câu hỏi phỏng vấn / khảo sát | | Chỉ rà câu dẫn dắt | | |
 | Viết câu thử (benchmark) | | | Mỗi câu thử có `source`; câu thử AI viết được ghi rõ | |
 | Sinh data `synthetic` (nếu có) | | | Seed __ · kiểm tay __ dòng | |
 | Chấm cột `pass` bằng LLM (nếu có) | | | Kiểm tra thủ công __ câu thử, khớp __/__ | |
-| Slide, văn bản | Claude Code | Dựng repo từ khung; soạn nháp `TEAMS.md`, phân công trong `canvas.md` dòng 7 và `spec.md` §10 | Đội trưởng đọc lại trước khi commit | Phan Sỹ Hùng |
+| Slide, văn bản | Claude Code | Dựng repo từ khung; soạn nháp `canvas.md`, `evidence/hypothesis.md`, `spec.md` §0–§2, `TEAMS.md` | Cả nhóm đọc lại, sửa lát cắt / pain cho khớp ý nhóm trước CP1 | Phan Sỹ Hùng |
 
 **Không dùng AI để:** tạo người được phỏng vấn, trích dẫn, câu trả lời khảo sát; sửa kết quả các lượt đã chạy (`eval/run-*.csv`, `cost/simulate-*.csv`, `traces/`).
