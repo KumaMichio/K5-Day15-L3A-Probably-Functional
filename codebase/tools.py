@@ -16,7 +16,8 @@ from pathlib import Path
 from tracing import tool, TOOLS  # noqa: F401  (TOOLS: danh sách công cụ đã đăng ký, dùng khi viết vòng lặp agent)
 
 LESSONS_DIR = Path(__file__).resolve().parent.parent / "data" / "lessons"
-MIN_SCORE = 0.3  # dưới ngưỡng này coi như bài không có (guide: nói "không có trong bài")
+MIN_SCORE = 0.3  # đoạn tốt nhất dưới ngưỡng này → coi như bài không có (guide: nói "không có trong bài")
+RELATIVE = 1 / 3  # đoạn thứ 2, 3 chỉ cần đạt 1/3 điểm đoạn tốt nhất (câu hỏi hai ý)
 # Từ chức năng tiếng Việt hay gặp trong câu hỏi, không mang nội dung bài
 STOPWORDS = set("""
 là gì của và có không được cho với trong khi thì mà này đó các những một để từ theo
@@ -55,7 +56,8 @@ def _idf(word):
 @tool
 def search_lesson(query: str, k: int = 3) -> list:
     """search_lesson · Input: câu hỏi của học viên (str), k = số đoạn tối đa (int, mặc định 3).
-    Output: danh sách {"code", "text", "score"} xếp điểm giảm dần; [] nếu không đoạn nào đạt MIN_SCORE.
+    Output: danh sách {"code", "text", "score"} xếp điểm giảm dần; [] nếu đoạn tốt nhất chưa đạt MIN_SCORE.
+    Các đoạn sau đoạn đầu được giữ nếu điểm >= RELATIVE × điểm đoạn đầu.
     score = tỉ lệ trọng số (idf) các từ của câu hỏi có mặt trong đoạn, 0–1.
     Chỉ đọc file data/lessons/*.json, không tác động ra ngoài."""
     q = _words(query)
@@ -64,12 +66,18 @@ def search_lesson(query: str, k: int = 3) -> list:
         return []
     hits = []
     for p, ws in zip(PASSAGES, _INDEX):
-        score = sum(_idf(w) for w in q & ws) / total
-        if score >= MIN_SCORE:
+        common = q & ws
+        if common:
+            score = sum(_idf(w) for w in common) / total
             # phân hạng khi bằng điểm: từ khoá xuất hiện sớm hơn (đoạn định nghĩa "X là…") đứng trước
-            first = min(p["text"].lower().find(w) for w in q & ws)
+            first = min(p["text"].lower().find(w) for w in common)
             hits.append((-score, first, {"code": p["code"], "text": p["text"], "score": round(score, 3)}))
-    return [h for _, _, h in sorted(hits, key=lambda t: t[:2])][:k]
+    hits.sort(key=lambda t: t[:2])
+    if not hits or -hits[0][0] < MIN_SCORE:
+        return []
+    # câu hỏi nhiều ý: đoạn đầu đạt MIN_SCORE thì giữ thêm đoạn có điểm >= RELATIVE × điểm đoạn đầu
+    floor = -hits[0][0] * RELATIVE
+    return [h for s, _, h in hits if -s >= floor][:k]
 
 
 @tool
@@ -95,5 +103,7 @@ if __name__ == "__main__":
     assert search_lesson("RAG là gì", k=1)[0]["code"] == "D07-L1-P01"
     assert search_lesson("cách nấu phở bò") == [] and search_lesson("?") == []
     assert len(search_lesson("token", k=2)) <= 2
+    # câu hai ý: đoạn của ý thứ hai (0.27 < MIN_SCORE) vẫn được giữ nhờ RELATIVE
+    assert {h["code"] for h in search_lesson("few-shot và chain-of-thought dùng khi nào")} == {"D04-L1-P03", "D04-L1-P04"}
     assert get_passage("d07-l1-p03")["code"] == "D07-L1-P03" and get_passage("D99-L1-P01") is None
     print("tools.py: OK ·", len(PASSAGES), "đoạn")
