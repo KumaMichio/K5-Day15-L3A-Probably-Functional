@@ -11,9 +11,9 @@ Repo nộp bài hackathon AI20K K5 · L3A · Track A (hướng A1) của nhóm P
 | Thành viên | git user.name (dự kiến) | Tiền tố nhánh | Quyền |
 |---|---|---|---|
 | Phan Sỹ Hùng | Phan Sỹ Hùng | `hung/` | Đội trưởng · reviewer · **được merge vào `main`**. Tài khoản GitHub chủ repo: `KumaMichio` |
-| Dương Thị Huệ | — | `hue/` | Mở Pull Request |
+| Dương Thị Huệ | — | `hue/` | Mở Pull Request. Tài khoản GitHub: `dhuee10` |
 | Dương Minh Tân | — | `tan/` | Mở Pull Request · reviewer · **được merge vào `main`**. Tài khoản GitHub: `mihtan05` |
-| Nguyễn Bá Thành | — | `thanh/` | Mở Pull Request |
+| Nguyễn Bá Thành | — | `thanh/` | Mở Pull Request. Tài khoản GitHub: `Nguyen-Ba-Thanh` |
 
 ## 2. Luật git — agent PHẢI làm theo
 
