@@ -210,25 +210,27 @@ const TASKS = [
 const CRIT = [11, 27, 32, 26, 2];
 
 // Tình trạng chụp từ GitHub (trang không tự cập nhật). state: done | review | doing | todo
-const SNAPSHOT = "14:50 Thứ Sáu 27/11";
-const PRS = {
-  45: { title: "Luật git + nội dung, kế hoạch 15 việc theo hạn nội bộ", by: "hung", wait: "Tân duyệt" },
-  46: { title: "[T05] Cách đếm và kết quả đào data pre-class", by: "tan", wait: "Tân tự kiểm lại, Hùng hoặc Tân duyệt", closes: 5 }
-};
+const SNAPSHOT = "15:00 Thứ Sáu 27/11";
+const PRS = {};
+const MERGED = [
+  { n: 45, title: "Luật git + nội dung, kế hoạch 15 việc theo hạn nội bộ" },
+  { n: 46, title: "[T05] Cách đếm và kết quả đào data pre-class", closes: 5 }
+];
 const STATUS = {
-  2:  { state: "doing", note: "Xong: mời đủ 4 người (Huệ đã nhận), bảo vệ nhánh main, chỉ cho phép Squash merge. Còn: nộp CP1 trước 17:00" },
-  5:  { state: "review", pr: 46, note: "PR #46 chờ duyệt. Tân điền dòng \"__ dòng khác\" trước khi merge" },
+  2:  { state: "doing", note: "Xong: mời đủ 4 người, bảo vệ nhánh main, chỉ Squash merge. Còn: nộp CP1 trước 17:00" },
+  5:  { state: "done", pr: 46, note: "Đã merge PR #46. Tân vẫn nên tự đối chiếu thêm vài dòng và điền dòng \"__ dòng khác\" trong evidence/data-mining.md (PR nhỏ)" },
   11: { state: "todo", note: "Sơ đồ §4 + khung chạy giả cần trước 19:15" },
   12: { state: "todo" }, 8: { state: "todo", note: "Hẹn người phỏng vấn ngay" }, 14: { state: "todo" },
-  24: { state: "todo" }, 25: { state: "todo" }, 26: { state: "todo" }, 27: { state: "todo" }, 32: { state: "todo" },
-  33: { state: "todo" }, 36: { state: "todo" }, 38: { state: "todo" }, 41: { state: "todo" }
+  24: { state: "todo" }, 25: { state: "todo" }, 26: { state: "todo", note: "Canvas dòng 4 và spec §1–§2 còn số cũ 8,1%; số khớp lát cắt là 9,1% (98/1.075)" },
+  27: { state: "todo" }, 32: { state: "todo" }, 33: { state: "todo" }, 36: { state: "todo" }, 38: { state: "todo" }, 41: { state: "todo" }
 };
 const STATE_LABEL = { done: "Xong", review: "Có PR chờ duyệt", doing: "Đang làm", todo: "Chưa bắt đầu" };
 const NEXT_UP = [
-  "<b>Tân:</b> duyệt và merge PR #45 (luật + kế hoạch 15 việc) — main vẫn còn kế hoạch 44 việc cũ",
-  "<b>Tân:</b> tự đối chiếu thêm vài dòng ở PR #46, rồi Hùng duyệt và merge (đóng #5)",
   "<b>Hùng:</b> nộp CP1 trước 17:00 rồi đánh dấu trong #2",
-  "<b>Huệ:</b> hẹn 4 người phỏng vấn cho #8 · <b>Thành:</b> bắt đầu #14 · <b>Hùng, Tân:</b> bắt đầu #11, #12 theo hợp đồng chung"
+  "<b>Huệ:</b> hẹn 4 người phỏng vấn cho #8",
+  "<b>Thành:</b> bắt đầu #14 (chỗ khó, metric, 10 câu thử) — chuẩn \"đạt\" phải merge trước 19:30",
+  "<b>Hùng, Tân:</b> bắt đầu #11, #12 theo hợp đồng chung",
+  "<b>Tân:</b> điền dòng \"__ dòng khác\" trong data-mining.md (PR nhỏ)"
 ];
 
 const BY_N = Object.fromEntries(TASKS.map(t => [t.n, t]));
@@ -333,7 +335,7 @@ get_passage(code: str) -> {"code", "text"} | None</pre></li>
   const counts = Object.values(STATUS).reduce((c, x) => (c[x.state] = (c[x.state] || 0) + 1, c), {});
   const status = `<div class="box"><div class="sechead"><h3>Tình trạng</h3><span class="when">chụp lúc ${SNAPSHOT} · trang không tự cập nhật, xem số mới nhất trên GitHub</span></div>
     <div class="chips">${["done", "review", "doing", "todo"].map(k => `<span class="badge ${k}">${STATE_LABEL[k]}: ${counts[k] || 0}</span>`).join("")}</div>
-    <div class="prs">${Object.entries(PRS).map(([n, p]) => `<div class="prrow">${prLink(n)}<span>${p.title}</span><span class="note">mở bởi ${MEMBERS[p.by].short} · chờ: ${p.wait}${p.closes ? " · đóng #" + p.closes : ""}</span></div>`).join("")}</div>
+    <div class="prs">${MERGED.map(m => `<div class="prrow">${prLink(m.n)}<span class="badge done">Đã merge</span><span>${m.title}</span>${m.closes ? `<span class="note">đóng #${m.closes}</span>` : ""}</div>`).join("")}${Object.entries(PRS).map(([n, p]) => `<div class="prrow">${prLink(n)}<span>${p.title}</span><span class="note">mở bởi ${MEMBERS[p.by].short} · chờ: ${p.wait}${p.closes ? " · đóng #" + p.closes : ""}</span></div>`).join("")}</div>
     <h3>Cần làm ngay</h3><ul>${NEXT_UP.map(x => `<li>${x}</li>`).join("")}</ul></div>`;
   return `<section>${status}${intro}${schedule}${parallel}${critical}</section>` + groups;
 }
