@@ -125,7 +125,7 @@ const MEMBERS = {
   hue:   { name: "Dương Thị Huệ",   short: "Huệ",   role: "Thành viên · cặp Y (bằng chứng + đánh giá)", color: "var(--m-hue)",
            focus: "Phỏng vấn người dùng, tổng hợp bằng chứng pain (evidence/), giải pháp tương tự (spec §3), người chấm thứ hai, slide, người dùng thử (bonus)." },
   tan:   { name: "Dương Minh Tân",  short: "Tân",   role: "Thành viên · cặp X (build)", color: "var(--m-tan)",
-           focus: "Đào data pre-class, bảng impact (spec §2), dựng dữ liệu bài có mã đoạn + công cụ tra bài, data card, mô phỏng chi phí (cost/)." },
+           focus: "Đào data pre-class, bảng impact (spec §2), dựng dữ liệu bài có mã đoạn + công cụ tra bài, data card, mô phỏng chi phí (cost/). Cùng Hùng duyệt và merge Pull Request." },
   thanh: { name: "Nguyễn Bá Thành", short: "Thành", role: "Thành viên · cặp Y (bằng chứng + đánh giá)", color: "var(--m-thanh)",
            focus: "Chỗ khó (spec §5), metric, chuẩn \"đạt\" (spec §7), bộ câu thử, chấm cột pass, báo cáo đánh giá (eval/)." },
   all:   { name: "Cả nhóm", short: "Cả nhóm", color: "var(--m-all)" }
@@ -287,7 +287,8 @@ const RULES_HTML = `
     <div class="rule wide">
       <h3>Nguyên tắc chính</h3>
       <ul>
-        <li><b>Chỉ Hùng merge vào <code>main</code>.</b> Huệ, Tân, Thành không push thẳng lên main: làm trên nhánh riêng rồi mở Pull Request.</li>
+        <li><b>Không ai push thẳng lên <code>main</code>.</b> Làm trên nhánh riêng rồi mở Pull Request.</li>
+        <li><b>Mỗi PR cần 1 lượt duyệt của Hùng hoặc Tân</b> (không tự duyệt PR của mình). <b>Chỉ Hùng hoặc Tân bấm merge.</b> GitHub tự chặn merge khi PR chưa được một trong hai người duyệt.</li>
         <li>Một PR cho một task (theo mã T01…T44). PR nhỏ, merge nhanh, ít xung đột.</li>
         <li>Không bao giờ <code>git push --force</code> lên nhánh người khác hay lên main.</li>
       </ul>
@@ -316,16 +317,16 @@ git push -u origin tan/T12-lessons-tools</pre>
       <ul>
         <li>Base <code>main</code>. Tiêu đề: <code>[T12] Dữ liệu bài có mã đoạn + công cụ tra bài</code></li>
         <li>Mô tả: làm gì · file nào · đã kiểm gì (<code>run.py check</code>, chạy thử).</li>
-        <li>Chọn Hùng làm reviewer. Nhắn nhóm khi PR gấp.</li>
-        <li>Hùng yêu cầu sửa → sửa trên cùng nhánh, push lại, không mở PR mới.</li>
+        <li>Reviewer: PR của Huệ, Thành → chọn cả Hùng và Tân (một người duyệt là đủ). PR của Tân → Hùng. PR của Hùng → Tân. Nhắn nhóm khi PR gấp.</li>
+        <li>Người duyệt yêu cầu sửa → sửa trên cùng nhánh, push lại, không mở PR mới.</li>
       </ul>
     </div>
     <div class="rule">
-      <h3>Hùng merge thế nào</h3>
+      <h3>Hùng và Tân duyệt, merge thế nào</h3>
       <ul>
         <li>Kiểm: đúng phạm vi task, không có <code>.env</code> / <code>data-btc/</code>, <code>run.py check</code> không lỗi mới.</li>
-        <li>Dùng <b>Squash and merge</b>, xoá nhánh sau khi merge.</li>
-        <li>Việc của chính Hùng cũng đi qua nhánh <code>hung/…</code> + PR. Chỉ khi sát giờ nộp mới commit thẳng main, ghi lý do trong commit.</li>
+        <li>Duyệt bằng Review → Approve, rồi <b>Squash and merge</b>, xoá nhánh sau khi merge.</li>
+        <li>Việc của chính Hùng cũng đi qua nhánh <code>hung/…</code> + PR cho Tân duyệt. Chỉ khi sát giờ nộp Hùng mới commit thẳng main (quyền chủ repo), ghi lý do trong commit.</li>
       </ul>
     </div>
     <div class="rule">

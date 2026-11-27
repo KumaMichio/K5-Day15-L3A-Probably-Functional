@@ -47,4 +47,4 @@ Khung chỉ dùng thư viện chuẩn của Python. Thêm thư viện thì ghi v
 
 ## Quy trình git và phân quyền file
 
-Đọc `CLAUDE.md` mục 2–5 (áp dụng cho mọi coding agent, không riêng Claude): không push thẳng `main`, mỗi task một nhánh `<ten>/<Txx-viec>` + Pull Request, chỉ đội trưởng Phan Sỹ Hùng merge. Kế hoạch và mã task: `plan/index.html`.
+Đọc `CLAUDE.md` mục 2–5 (áp dụng cho mọi coding agent, không riêng Claude): không push thẳng `main`, mỗi task một nhánh `<ten>/<Txx-viec>` + Pull Request, Phan Sỹ Hùng hoặc Dương Minh Tân duyệt (1 lượt) và merge. Kế hoạch và mã task: `plan/index.html`.

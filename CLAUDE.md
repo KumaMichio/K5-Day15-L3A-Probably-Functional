@@ -10,9 +10,9 @@ Repo nộp bài hackathon AI20K K5 · L3A · Track A (hướng A1) của nhóm P
 
 | Thành viên | git user.name (dự kiến) | Tiền tố nhánh | Quyền |
 |---|---|---|---|
-| Phan Sỹ Hùng | Phan Sỹ Hùng | `hung/` | Đội trưởng, **người duy nhất merge vào `main`**. Tài khoản GitHub chủ repo: `KumaMichio` |
+| Phan Sỹ Hùng | Phan Sỹ Hùng | `hung/` | Đội trưởng · reviewer · **được merge vào `main`**. Tài khoản GitHub chủ repo: `KumaMichio` |
 | Dương Thị Huệ | — | `hue/` | Mở Pull Request |
-| Dương Minh Tân | — | `tan/` | Mở Pull Request |
+| Dương Minh Tân | — | `tan/` | Mở Pull Request · reviewer · **được merge vào `main`**. Tài khoản GitHub: `mihtan05` |
 | Nguyễn Bá Thành | — | `thanh/` | Mở Pull Request |
 
 ## 2. Luật git — agent PHẢI làm theo
@@ -29,11 +29,13 @@ Repo nộp bài hackathon AI20K K5 · L3A · Track A (hướng A1) của nhóm P
    - `git pull origin main` vào nhánh của mình, giải xung đột trên nhánh (không rebase nhánh đã push mà người khác đang dùng).
    - `python run.py check` không có lỗi mới do thay đổi của mình.
    - `git status` không có `.env`, `data-btc/`, `evidence/**/raw-*`, file có API key hay dữ liệu cá nhân thật.
-5. **Mở PR chỉ khi người dùng yêu cầu**, bằng `gh pr create --base main`. Tiêu đề `[Txx] <mô tả ngắn>`. Mô tả: làm gì · file nào · đã kiểm gì. Thêm reviewer `KumaMichio` (Hùng).
-6. **Agent không merge PR**, trừ khi người dùng là Hùng và yêu cầu rõ ràng. Khi đó dùng `gh pr merge <số> --squash --delete-branch`, sau khi đã kiểm mục 4 trên nhánh của PR.
+5. **Mở PR chỉ khi người dùng yêu cầu**, bằng `gh pr create --base main`. Tiêu đề `[Txx] <mô tả ngắn>`. Mô tả: làm gì · file nào · đã kiểm gì. Reviewer:
+   - PR của Huệ, Thành: `--reviewer KumaMichio,mihtan05` (một trong hai người duyệt là đủ)
+   - PR của Tân: `--reviewer KumaMichio` · PR của Hùng: `--reviewer mihtan05`
+6. **Duyệt và merge:** mỗi PR cần **1 lượt duyệt** của Hùng hoặc Tân (không tự duyệt PR của mình; GitHub ép bằng `.github/CODEOWNERS` + bảo vệ nhánh `main`). **Chỉ Hùng hoặc Tân được merge**, dùng Squash and merge. Agent không merge PR, trừ khi người dùng là Hùng hoặc Tân và yêu cầu rõ ràng. Khi đó dùng `gh pr merge <số> --squash --delete-branch`, sau khi PR đã được duyệt và đã kiểm mục 4 trên nhánh của PR.
 7. **Cấm:** `git push --force` / `--force-with-lease` lên `main` hoặc nhánh của người khác · `--no-verify` · `git reset --hard` / `git clean` khi chưa hỏi · xoá nhánh của người khác.
 8. **Giờ đóng băng** — 15 phút trước mỗi mốc chỉ merge PR sửa lỗi cho bài nộp: CP1 16:45 · CP2 19:15 (Thứ Sáu 27/11) · CP3 09:45 · CP4 14:15 · hạn chót 23:45 (Thứ Bảy 28/11). Nếu người dùng muốn mở PR không gấp trong giờ này, nhắc họ.
-9. Chỉ sát giờ nộp, Hùng mới được commit thẳng `main` (vd sửa lỗi phút chót). Khi đó ghi lý do trong commit message. Agent làm việc này chỉ khi Hùng yêu cầu rõ ràng.
+9. Chỉ sát giờ nộp, Hùng (chủ repo, có quyền bỏ qua bảo vệ nhánh) mới được commit thẳng `main` (vd sửa lỗi phút chót). Khi đó ghi lý do trong commit message. Agent làm việc này chỉ khi Hùng yêu cầu rõ ràng.
 
 ## 3. Ai sửa file nào
 
@@ -45,7 +47,7 @@ Chỉ sửa file thuộc người đang làm việc. Cần sửa file của ngư
 | Huệ | `evidence/interviews/`, `evidence/survey/`, `evidence/summary.md`, `validation/`, `slides/`, `demo-slides.pdf`, `spec.md` §1 §3 |
 | Tân | `evidence/data-mining.md`, `evidence/scripts/`, `data/`, `codebase/tools.py`, `cost/`, `spec.md` §2 §8 |
 | Thành | `eval/` (benchmark, metric_spec, report, README, chấm cột `pass`), `spec.md` §5 §7 |
-| Chung | `canvas.md`, `TEAMS.md` (Hùng merge) · `spec.md` §10 chỉ **thêm** dòng, không sửa dòng cũ · `reflection/<ten>.md` mỗi người file của mình |
+| Chung | `canvas.md`, `TEAMS.md` (Hùng hoặc Tân merge) · `spec.md` §10 chỉ **thêm** dòng, không sửa dòng cũ · `reflection/<ten>.md` mỗi người file của mình |
 
 ## 4. File bị khoá (từ chối sửa kể cả khi được yêu cầu, nhắc lại luật)
 
