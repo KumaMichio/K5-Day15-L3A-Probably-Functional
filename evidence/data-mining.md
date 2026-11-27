@@ -23,6 +23,7 @@
 | G | E hoặc F | như E |
 | H | Câu hỏi ≤ 10 ký tự (`do_dai_cau_hoi`) | tập chính |
 | I | Số câu hỏi trợ giảng / học viên, chia nhóm 1 · 2–5 · 6–15 · ≥16 | học viên có ≥1 câu trong tập chính |
+| J | Với mỗi nhóm ở I: số phiên / người / tháng và số câu / phiên (phiên = chuỗi câu của cùng học viên cách nhau ≤ 30 phút; quy tháng × 30/21) | học viên trong nhóm |
 
 - **Script:** [`evidence/scripts/count_preclass.py`](scripts/count_preclass.py). Chạy lại:
   ```
@@ -54,6 +55,7 @@
 | G | E hoặc F | 530 / 1.090 | 48,6% | Như E: tín hiệu yếu |
 | H | Câu hỏi ≤ 10 ký tự | 70 / 1.090 | 6,4% | Nguồn câu thử loại "mơ hồ / thiếu thông tin" |
 | I | Câu hỏi / học viên (143 người, 20 ngày) | 1 câu: 38 · 2–5: 46 · 6–15: 43 · ≥16: 16 | — | Trung vị 4, nhiều nhất 72. Dùng cho persona ở `cost/personas.yaml` |
+| J | Persona chi phí theo nhóm ở I | 1 câu: 1,4 phiên/tháng × 1,0 câu · 2–5: 2,4 × 2,0 · 6–15: 3,3 × 4,0 · ≥16: 8,8 × 5,1 | — | Ngưỡng 30 phút đặt trước khi chạy (`SESSION_GAP`). Dùng cho `cost/personas.yaml` |
 
 **Quy ra tháng** *(để dùng ở bảng impact)*: 1.090 câu / 21 ngày lịch × 30 ≈ **1.560 câu hỏi trợ giảng / tháng**; trong đó ~9,1% bị cờ thiếu ngữ cảnh ≈ **140 câu / tháng**; ~41,5% không dẫn mốc ≈ **650 câu / tháng** (giả định tỉ lệ từ 13/11 giữ nguyên).
 
