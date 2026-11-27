@@ -80,7 +80,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 - Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
-- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
+- Persona + giá: `cost/personas.yaml` — 4 persona từ data (hỏi ít · vừa · nhiều · dồn, `count_preclass.py` [J], bảng ở §2 sau PR #53), người dùng 143 / 218 / 436, giá Claude Haiku 5.5 + Claude Sonnet 5.5 + gemini-3.1-flash-lite (model-prices.md, 25/11/2026) · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên) *(chờ model thật #11 và lượt 1 #27)*
 - Chi phí / task thành công: __ (model __) · __ (model __)
 - Chi phí / tháng ở quy mô thật: thấp __ · cơ sở __ · cao __ → chi tiết `cost/cost-estimate.md`
 - So với impact / người / tháng (§2): đáng làm không, vì sao:
