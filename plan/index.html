@@ -82,13 +82,19 @@ tr.isdone td.t { text-decoration: line-through; color: var(--muted) }
 .chip.support { font-weight: 500; border-color: var(--line) }
 .issue { font-family: var(--font-mono); font-size: 0.8rem; padding: 0 6px; border-radius: 5px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); text-decoration: none; white-space: nowrap }
 .issue.isdone { text-decoration: line-through; color: var(--muted) }
+.badge { display: inline-block; font-size: 0.74rem; font-weight: 600; padding: 1px 8px; border-radius: 999px; white-space: nowrap; border: 1px solid var(--line); color: var(--muted) }
+.badge.done { color: var(--done); border-color: var(--done) }
+.badge.review { color: var(--accent); border-color: var(--accent); background: var(--accent-soft) }
+.badge.doing { color: var(--warn); border-color: var(--warn); background: var(--warn-soft) }
+.prs { display: flex; flex-direction: column; gap: 6px }
+.prrow { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline }
 .blocking { color: var(--warn); font-weight: 600 }
 .free { color: var(--done); font-weight: 600 }
 
 .cards { display: flex; flex-direction: column; gap: 10px }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px }
 .card.isdone { opacity: 0.62 }
-.card .check { grid-row: 1 / span 4; padding-top: 2px }
+.card .check { grid-row: 1 / span 5; padding-top: 2px }
 .card input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--done); cursor: pointer }
 .card .top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px }
 .card .top .due { margin-left: auto; font-size: 0.85rem; font-variant-numeric: tabular-nums; color: var(--warn); background: var(--warn-soft); padding: 1px 8px; border-radius: 6px; white-space: nowrap }
@@ -148,7 +154,7 @@ const PHASES = [
 // n = số issue trên GitHub. dep = chặn thật. soft = làm ngay, cập nhật khi việc kia xong.
 const TASKS = [
   { n: 2, p: "p1", owner: "hung", with: ["all"], due: "mỗi mốc", title: "Nộp checkpoint + cài repo",
-    body: ["Mời Huệ, Tân, Thành làm collaborator; bật bảo vệ nhánh main", "15 phút trước mỗi mốc: cả nhóm đi lại câu chuyện Pain → Impact → Giải pháp → Đánh giá → Chi phí",
+    body: ["<s>Mời Huệ, Tân, Thành làm collaborator; bật bảo vệ nhánh main</s> (xong) · còn: chỉ cho phép Squash merge", "15 phút trước mỗi mốc: cả nhóm đi lại câu chuyện Pain → Impact → Giải pháp → Đánh giá → Chi phí",
            "Nộp CP1 17:00 T6 · CP2 19:30 T6 · CP3 <b>23:30 T6</b> · CP4 <b>13:45 T7</b>"],
     out: "Form nộp (không cần PR)", done: "Đủ 4 mốc đã nộp" },
   { n: 5, p: "p1", owner: "tan", due: "17:00 T6", title: "Đào data pre-class",
@@ -203,6 +209,29 @@ const TASKS = [
 ];
 const CRIT = [11, 27, 32, 26, 2];
 
+// Tình trạng chụp từ GitHub (trang không tự cập nhật). state: done | review | doing | todo
+const SNAPSHOT = "14:50 Thứ Sáu 27/11";
+const PRS = {
+  45: { title: "Luật git + nội dung, kế hoạch 15 việc theo hạn nội bộ", by: "hung", wait: "Tân duyệt" },
+  46: { title: "[T05] Cách đếm và kết quả đào data pre-class", by: "tan", wait: "Tân tự kiểm lại, Hùng hoặc Tân duyệt", closes: 5 }
+};
+const STATUS = {
+  2:  { state: "doing", note: "Xong: mời đủ 4 người (Huệ đã nhận), bảo vệ nhánh main. Còn: chỉ cho phép Squash merge, nộp CP1 trước 17:00" },
+  5:  { state: "review", pr: 46, note: "PR #46 chờ duyệt. Tân điền dòng \"__ dòng khác\" trước khi merge" },
+  11: { state: "todo", note: "Sơ đồ §4 + khung chạy giả cần trước 19:15" },
+  12: { state: "todo" }, 8: { state: "todo", note: "Hẹn người phỏng vấn ngay" }, 14: { state: "todo" },
+  24: { state: "todo" }, 25: { state: "todo" }, 26: { state: "todo" }, 27: { state: "todo" }, 32: { state: "todo" },
+  33: { state: "todo" }, 36: { state: "todo" }, 38: { state: "todo" }, 41: { state: "todo" }
+};
+const STATE_LABEL = { done: "Xong", review: "Có PR chờ duyệt", doing: "Đang làm", todo: "Chưa bắt đầu" };
+const NEXT_UP = [
+  "<b>Tân:</b> duyệt và merge PR #45 (luật + kế hoạch 15 việc) — main vẫn còn kế hoạch 44 việc cũ",
+  "<b>Tân:</b> tự đối chiếu thêm vài dòng ở PR #46, rồi Hùng duyệt và merge (đóng #5)",
+  "<b>Hùng:</b> Settings → General → Pull Requests: chỉ để Squash merging",
+  "<b>Hùng:</b> nộp CP1 trước 17:00 rồi đánh dấu trong #2",
+  "<b>Huệ:</b> hẹn 4 người phỏng vấn cho #8 · <b>Thành:</b> bắt đầu #14 · <b>Hùng, Tân:</b> bắt đầu #11, #12 theo hợp đồng chung"
+];
+
 const BY_N = Object.fromEntries(TASKS.map(t => [t.n, t]));
 const BLOCKS = {};
 TASKS.forEach(t => (t.dep || []).forEach(d => { (BLOCKS[d] = BLOCKS[d] || []).push(t.n); }));
@@ -227,6 +256,11 @@ function issue(n, bare) {
   const tip = t ? `${t.title} · ${who}` : "";
   return `<a class="issue ${doneSet.has(n) ? "isdone" : ""}" href="${REPO}${n}" target="_blank" rel="noopener" title="${tip}">#${n}${who && !bare ? " · " + who : ""}</a>`;
 }
+function badge(n) {
+  const st = (STATUS[n] || { state: "todo" }).state;
+  return `<span class="badge ${st}">${STATE_LABEL[st]}</span>`;
+}
+function prLink(n) { return `<a class="issue" href="${REPO.replace("/issues/", "/pull/")}${n}" target="_blank" rel="noopener">PR #${n}</a>`; }
 function depsLine(t) {
   const parts = [];
   if ((t.dep || []).length) parts.push(`<span class="blocking">Chờ:</span>${t.dep.map(n => issue(n)).join("")}`);
@@ -293,11 +327,16 @@ get_passage(code: str) -> {"code", "text"} | None</pre></li>
   const groups = PHASES.map(p => {
     const ts = TASKS.filter(t => t.p === p.id);
     if (!ts.length) return "";
-    const rows = ts.map(t => `<tr class="${doneSet.has(t.n) ? "isdone" : ""}"><td>${issue(t.n, 1)}</td><td class="t">${t.title}</td><td>${chipsFor(t)}</td><td class="due">${t.due}</td><td>${(t.dep || []).length ? `<div class="deps">${t.dep.map(n => issue(n)).join("")}</div>` : '<span class="free">làm ngay</span>'}</td></tr>`).join("");
+    const rows = ts.map(t => `<tr class="${doneSet.has(t.n) ? "isdone" : ""}"><td>${issue(t.n, 1)}</td><td class="t">${t.title}</td><td>${chipsFor(t)}</td><td class="due">${t.due}</td><td>${badge(t.n)}</td><td>${(t.dep || []).length ? `<div class="deps">${t.dep.map(n => issue(n)).join("")}</div>` : '<span class="free">làm ngay</span>'}</td></tr>`).join("");
     return `<section><div class="sechead"><h2>${p.name}</h2><span class="when">hạn ${p.when} · ${p.off}</span></div>
-      <div class="tablewrap"><table><thead><tr><th>Issue</th><th>Việc</th><th>Ai</th><th>Hạn</th><th>Chờ</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+      <div class="tablewrap"><table><thead><tr><th>Issue</th><th>Việc</th><th>Ai</th><th>Hạn</th><th>Tình trạng</th><th>Chờ</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
   }).join("");
-  return `<section>${intro}${schedule}${parallel}${critical}</section>` + groups;
+  const counts = Object.values(STATUS).reduce((c, x) => (c[x.state] = (c[x.state] || 0) + 1, c), {});
+  const status = `<div class="box"><div class="sechead"><h3>Tình trạng</h3><span class="when">chụp lúc ${SNAPSHOT} · trang không tự cập nhật, xem số mới nhất trên GitHub</span></div>
+    <div class="chips">${["done", "review", "doing", "todo"].map(k => `<span class="badge ${k}">${STATE_LABEL[k]}: ${counts[k] || 0}</span>`).join("")}</div>
+    <div class="prs">${Object.entries(PRS).map(([n, p]) => `<div class="prrow">${prLink(n)}<span>${p.title}</span><span class="note">mở bởi ${MEMBERS[p.by].short} · chờ: ${p.wait}${p.closes ? " · đóng #" + p.closes : ""}</span></div>`).join("")}</div>
+    <h3>Cần làm ngay</h3><ul>${NEXT_UP.map(x => `<li>${x}</li>`).join("")}</ul></div>`;
+  return `<section>${status}${intro}${schedule}${parallel}${critical}</section>` + groups;
 }
 
 function card(t, key) {
@@ -305,7 +344,8 @@ function card(t, key) {
              : (t.owner === key ? "Bạn chịu trách nhiệm chính" : "Bạn hỗ trợ " + MEMBERS[t.owner].short);
   return `<div class="card ${doneSet.has(t.n) ? "isdone" : ""}">
     <div class="check"><input type="checkbox" id="chk-${key}-${t.n}" data-n="${t.n}" ${doneSet.has(t.n) ? "checked" : ""} aria-label="Đánh dấu #${t.n} đã xong"></div>
-    <div class="top">${issue(t.n, 1)}<h3>${t.title}</h3><span class="due">${t.due}</span></div>
+    <div class="top">${issue(t.n, 1)}<h3>${t.title}</h3>${badge(t.n)}<span class="due">${t.due}</span></div>
+    ${STATUS[t.n] && STATUS[t.n].note ? `<p class="note"><b>Tình trạng ${SNAPSHOT}:</b> ${STATUS[t.n].note}${STATUS[t.n].pr ? " · " + prLink(STATUS[t.n].pr) : ""}</p>` : ""}
     <div class="body"><ul>${t.body.map(b => `<li>${b}</li>`).join("")}</ul></div>
     ${depsLine(t)}
     <div class="meta"><span><b>${note}</b></span><span>Ra file: <code>${t.out}</code></span><span>Xong khi: ${t.done}</span></div>
