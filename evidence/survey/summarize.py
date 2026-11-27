@@ -11,6 +11,7 @@ Chỉ dùng thư viện chuẩn.
 """
 import argparse
 import csv
+import re
 import sys
 from collections import Counter
 
@@ -49,9 +50,11 @@ def split_checkbox(cell, options):
         if opt in rest:
             picked.append(opt)
             rest = rest.replace(opt, "")
-    rest = rest.strip(" ,")
-    if rest:
-        picked.append("Khác: " + rest)
+    # Bản tải CSV của Google Form nối lựa chọn bằng ";", bản Google Sheets nối bằng ", "
+    for other in re.split(r"[;]|,\s", rest):
+        other = other.strip(" ,;")
+        if other:
+            picked.append("Khác: " + other)
     return picked
 
 
