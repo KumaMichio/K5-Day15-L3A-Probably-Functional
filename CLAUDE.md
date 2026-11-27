@@ -2,6 +2,8 @@
 
 @AGENTS.md
 
+> **Tình trạng mới nhất và cách cài máy mới:** đọc `docs/HANDOFF.md` trước khi làm việc.
+
 Repo nộp bài hackathon AI20K K5 · L3A · Track A (hướng A1) của nhóm Probably-Functional. Luật chung của repo (lệnh, cấu trúc code, những gì không được sửa) nằm ở `AGENTS.md`, đã được import ở trên. File này thêm **quy trình git** và **phân quyền file**. Kế hoạch và phân công: `plan/index.html` (15 việc = 15 issue trên GitHub).
 
 ## 1. Ai là ai
