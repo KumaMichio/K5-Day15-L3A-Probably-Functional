@@ -61,3 +61,7 @@ Chỉ sửa file thuộc người đang làm việc. Cần sửa file của ngư
 - Chạy trên `main` mới nhất (đã pull), bởi người có `.env` (thường là Hùng).
 - Kết quả đẩy ngay qua nhánh `hung/run-N` + PR. Chấm cột `pass` trên nhánh `thanh/cham-run-N`.
 - Không chạy `eval` khi còn PR sửa `eval/benchmark.csv` chưa merge.
+
+## 6. Gợi ý (không bắt buộc)
+
+- **Giao diện (frontend):** khi làm phần giao diện của bản chạy thử (web nhỏ, trang demo, Streamlit…), nên dùng skill `design-taste-frontend` nếu máy có cài skill này. Không có thì làm bình thường, không chặn việc. Giao diện là phụ: một màn hình dòng lệnh làm trọn lát cắt vẫn tốt hơn giao diện đẹp chưa nối AI (guide 3.1). Dù dùng giao diện nào, `python run.py` và `answer()` trong `codebase/agent.py` vẫn phải chạy được cho `eval` và `simulate`.
