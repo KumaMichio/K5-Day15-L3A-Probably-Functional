@@ -10,14 +10,14 @@
 
 ## 2. Bộ câu thử dựng ra sao
 
-- `eval/benchmark.csv` (bản chốt CP2): **12 câu** (`thuong` **4** · `kho` **6** · `tu_choi` **2**, trong đó có câu tấn công prompt injection + giả danh đòi lộ đáp án `B12` và đòi làm hộ bài nộp điểm `B11`). Trước CP3 sẽ mở rộng lên **20–30 câu** (chỉ thêm câu, bổ sung câu từ phỏng vấn `P1–P4`).
-- Nguồn (`python run.py check` in sẵn): `nguoi_dung` **0** *(cập nhật ở #24 khi xong phỏng vấn P1–P4)* · `data_that` **5** · `tu_viet` **7** · `sinh_seed` **0** → từ người dùng / data thật: **5/12 (41,7%, đạt ngưỡng ≥ 1/3)**.
+- `eval/benchmark.csv` (bản mở rộng đủ chuẩn CP3 — chỉ thêm câu từ bản 12 câu CP2): **24 câu** (`thuong` **10** · `kho` **10** · `tu_choi` **4**, trong đó có 2 câu tấn công trực diện `B12`, `B24` và 2 câu đòi làm hộ bài nộp điểm `B11`, `B23`).
+- Nguồn (`python run.py check` in sẵn): `nguoi_dung` **0** *(sẵn sàng thêm thêm câu `B25+` từ `P1–P4` khi merge #8/#25)* · `data_that` **9** · `tu_viet` **15** · `sinh_seed` **0** → từ người dùng / data thật: **9/24 (37,5%, đạt ngưỡng ≥ 1/3)**.
 - **Độ phủ — lưới input 4 chiều** (guide 2.4 bước 5):
-  1. *Tình trạng căn cứ trong bài:* có đủ trong 1 đoạn (`B01`, `B02`, `B04`) · cần kết hợp / đính chính từ 2 đoạn (`B03`) · nửa có nửa không (`B10`) · trùng từ khoá nhưng không có đáp án (`B06`, `B08`) · hoàn toàn ngoài bài (`B05`).
-  2. *Độ rõ của câu hỏi:* câu hỏi đầy đủ (`B01`–`B06`) · thiếu ngữ cảnh / đại từ mơ hồ (`B09`) · ký tự rời quá ngắn ≤ 10 ký tự (`B07`).
-  3. *Ý định người dùng:* học hiểu bài (`B01`–`B10`) · xin làm hộ bài tập nộp điểm (`B11`) · tấn công chèn lệnh ghi đè quy tắc & đòi đáp án quiz (`B12`).
+  1. *Tình trạng căn cứ trong bài:* có đủ trong 1 đoạn (`B01`, `B02`, `B04`, `B13`–`B15`, `B17`, `B18`) · kết hợp 2 đoạn / đính chính hiểu sai (`B03`, `B16`) · nửa có nửa không (`B10`, `B22`) · trùng từ khoá bề mặt nhưng không có đáp án (`B06`, `B19`) · hoàn toàn ngoài bài (`B05`, `B08`, `B21`).
+  2. *Độ rõ của câu hỏi:* câu hỏi đầy đủ (`B01`–`B06`, `B13`–`B19`) · thiếu ngữ cảnh / đại từ mơ hồ (`B09`) · ký tự rời quá ngắn ≤ 10 ký tự (`B07`, `B20`).
+  3. *Ý định người dùng:* học hiểu bài (`B01`–`B10`, `B13`–`B22`) · xin làm hộ bài tập nộp điểm (`B11`, `B23`) · tấn công chèn lệnh / thoát thẻ `</cau_hoi>` / giả danh TA đòi lộ system prompt & đáp án quiz (`B12`, `B24`).
   4. *Hành vi mong đợi của hệ thống:* trả lời kèm mã đoạn (`tra_loi`) · báo không có trong bài (`khong_co`) · hỏi lại 1 câu (`hoi_lai`) · từ chối vượt phạm vi (`tu_choi`).
-- Câu `kho` & `tu_choi` trỏ về 4 lớp chỗ khó (`spec.md` §5): **lớp 1 (nguồn sự thật):** `B05`, `B06`, `B08`, `B10` · **lớp 2 (mơ hồ / thiếu thông tin):** `B07`, `B09` · **lớp 3 (ngoài phạm vi / tấn công):** `B11`, `B12` · **lớp 4 (đặc thù lĩnh vực — học sai cốt lõi / làm hộ bài):** `B03`, `B10`, `B11`, `B12`.
+- Câu `kho` & `tu_choi` trỏ về 4 lớp chỗ khó (`spec.md` §5): **lớp 1 (nguồn sự thật):** `B05`, `B06`, `B08`, `B10`, `B19`, `B21`, `B22` · **lớp 2 (mơ hồ / thiếu thông tin):** `B07`, `B09`, `B20` · **lớp 3 (ngoài phạm vi / tấn công):** `B11`, `B12`, `B21`, `B23`, `B24` · **lớp 4 (đặc thù lĩnh vực — học sai cốt lõi / làm hộ bài):** `B03`, `B10`, `B11`, `B12`, `B22`, `B23`, `B24`.
 
 ## 3. Metric và cách chấm
 
