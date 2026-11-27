@@ -154,7 +154,7 @@ const PHASES = [
 // n = số issue trên GitHub. dep = chặn thật. soft = làm ngay, cập nhật khi việc kia xong.
 const TASKS = [
   { n: 2, p: "p1", owner: "hung", with: ["all"], due: "mỗi mốc", title: "Nộp checkpoint + cài repo",
-    body: ["<s>Mời Huệ, Tân, Thành làm collaborator; bật bảo vệ nhánh main</s> (xong) · còn: chỉ cho phép Squash merge", "15 phút trước mỗi mốc: cả nhóm đi lại câu chuyện Pain → Impact → Giải pháp → Đánh giá → Chi phí",
+    body: ["<s>Mời Huệ, Tân, Thành làm collaborator; bật bảo vệ nhánh main; chỉ cho phép Squash merge</s> (xong)", "15 phút trước mỗi mốc: cả nhóm đi lại câu chuyện Pain → Impact → Giải pháp → Đánh giá → Chi phí",
            "Nộp CP1 17:00 T6 · CP2 19:30 T6 · CP3 <b>23:30 T6</b> · CP4 <b>13:45 T7</b>"],
     out: "Form nộp (không cần PR)", done: "Đủ 4 mốc đã nộp" },
   { n: 5, p: "p1", owner: "tan", due: "17:00 T6", title: "Đào data pre-class",
@@ -216,7 +216,7 @@ const PRS = {
   46: { title: "[T05] Cách đếm và kết quả đào data pre-class", by: "tan", wait: "Tân tự kiểm lại, Hùng hoặc Tân duyệt", closes: 5 }
 };
 const STATUS = {
-  2:  { state: "doing", note: "Xong: mời đủ 4 người (Huệ đã nhận), bảo vệ nhánh main. Còn: chỉ cho phép Squash merge, nộp CP1 trước 17:00" },
+  2:  { state: "doing", note: "Xong: mời đủ 4 người (Huệ đã nhận), bảo vệ nhánh main, chỉ cho phép Squash merge. Còn: nộp CP1 trước 17:00" },
   5:  { state: "review", pr: 46, note: "PR #46 chờ duyệt. Tân điền dòng \"__ dòng khác\" trước khi merge" },
   11: { state: "todo", note: "Sơ đồ §4 + khung chạy giả cần trước 19:15" },
   12: { state: "todo" }, 8: { state: "todo", note: "Hẹn người phỏng vấn ngay" }, 14: { state: "todo" },
@@ -227,7 +227,6 @@ const STATE_LABEL = { done: "Xong", review: "Có PR chờ duyệt", doing: "Đan
 const NEXT_UP = [
   "<b>Tân:</b> duyệt và merge PR #45 (luật + kế hoạch 15 việc) — main vẫn còn kế hoạch 44 việc cũ",
   "<b>Tân:</b> tự đối chiếu thêm vài dòng ở PR #46, rồi Hùng duyệt và merge (đóng #5)",
-  "<b>Hùng:</b> Settings → General → Pull Requests: chỉ để Squash merging",
   "<b>Hùng:</b> nộp CP1 trước 17:00 rồi đánh dấu trong #2",
   "<b>Huệ:</b> hẹn 4 người phỏng vấn cho #8 · <b>Thành:</b> bắt đầu #14 · <b>Hùng, Tân:</b> bắt đầu #11, #12 theo hợp đồng chung"
 ];
