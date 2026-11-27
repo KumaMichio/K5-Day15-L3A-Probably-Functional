@@ -36,6 +36,7 @@ Repo nộp bài hackathon AI20K K5 · L3A · Track A (hướng A1) của nhóm P
 7. **Cấm:** `git push --force` / `--force-with-lease` lên `main` hoặc nhánh của người khác · `--no-verify` · `git reset --hard` / `git clean` khi chưa hỏi · xoá nhánh của người khác.
 8. **Giờ đóng băng** — 15 phút trước mỗi mốc chỉ merge PR sửa lỗi cho bài nộp: CP1 16:45 · CP2 19:15 (Thứ Sáu 27/11) · CP3 09:45 · CP4 14:15 · hạn chót 23:45 (Thứ Bảy 28/11). Nếu người dùng muốn mở PR không gấp trong giờ này, nhắc họ.
 9. Chỉ sát giờ nộp, Hùng (chủ repo, có quyền bỏ qua bảo vệ nhánh) mới được commit thẳng `main` (vd sửa lỗi phút chót). Khi đó ghi lý do trong commit message. Agent làm việc này chỉ khi Hùng yêu cầu rõ ràng.
+10. **Hạn mở PR trước mốc:** PR cần cho một checkpoint phải được mở **chậm nhất 30 phút trước mốc** (CP1 16:30 · CP2 19:00 · CP3 09:30 · CP4 14:00), để Hùng hoặc Tân kịp duyệt trước giờ đóng băng. Mở muộn hơn thì không chắc được merge cho mốc đó — báo người dùng.
 
 ## 3. Ai sửa file nào
 
@@ -62,6 +63,13 @@ Chỉ sửa file thuộc người đang làm việc. Cần sửa file của ngư
 - Kết quả đẩy ngay qua nhánh `hung/run-N` + PR. Chấm cột `pass` trên nhánh `thanh/cham-run-N`.
 - Không chạy `eval` khi còn PR sửa `eval/benchmark.csv` chưa merge.
 
-## 6. Gợi ý (không bắt buộc)
+## 6. Luật về nội dung
+
+- **Changelog sau lượt 1:** mọi thay đổi prompt hoặc code trong `codebase/` sau khi đã có `eval/run-1.csv` phải thêm một dòng vào changelog `spec.md` §10 (thời điểm · đổi gì · vì sao, trỏ về câu thử / lỗi) **trong cùng PR**. PR thiếu dòng này thì người duyệt yêu cầu bổ sung.
+- **Mã hoá CSV:** chỉ lưu `eval/benchmark.csv` và các CSV khác dạng **UTF-8** (Excel: *File → Save As → CSV UTF-8*; Google Sheets: *Tải xuống → CSV*). Agent sửa CSV bằng code thì ghi `encoding="utf-8"`, giữ nguyên 6 cột và thứ tự cột. Sau khi sửa chạy `python run.py check` để chắc tiếng Việt không bị vỡ.
+- **Số nào cũng có nguồn:** mọi con số trong `spec.md`, `canvas.md`, `README.md`, slide phải trỏ được về một script (`evidence/scripts/…`), một file lượt chạy (`eval/run-N.csv`, `cost/simulate-N.csv`), một file phỏng vấn (`evidence/interviews/P#.md`), hoặc một link có ngày xem. Không có nguồn thì ghi rõ *(tự ước tính)*. Agent không được đưa vào số không truy được.
+- **Kết thúc dòng:** repo dùng `.gitattributes` (`* text=auto eol=lf`) để máy Windows và Mac không làm cả file "đổi" vì khác ký tự xuống dòng. Không xoá file này.
+
+## 7. Gợi ý (không bắt buộc)
 
 - **Giao diện (frontend):** khi làm phần giao diện của bản chạy thử (web nhỏ, trang demo, Streamlit…), nên dùng skill `design-taste-frontend` nếu máy có cài skill này. Không có thì làm bình thường, không chặn việc. Giao diện là phụ: một màn hình dòng lệnh làm trọn lát cắt vẫn tốt hơn giao diện đẹp chưa nối AI (guide 3.1). Dù dùng giao diện nào, `python run.py` và `answer()` trong `codebase/agent.py` vẫn phải chạy được cho `eval` và `simulate`.

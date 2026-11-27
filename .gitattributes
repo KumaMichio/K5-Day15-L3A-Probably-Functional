@@ -1,0 +1,8 @@
+# Chuẩn hoá xuống dòng: lưu LF trong repo, tránh xung đột giả giữa Windows và Mac
+* text=auto eol=lf
+
+# File nhị phân
+*.pdf binary
+*.png binary
+*.jpg binary
+*.xlsx binary

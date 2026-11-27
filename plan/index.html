@@ -331,7 +331,7 @@ git push -u origin tan/T12-lessons-tools</pre>
     </div>
     <div class="rule">
       <h3>Giờ đóng băng</h3>
-      <p>15 phút trước mỗi mốc chỉ merge PR sửa lỗi cho bài nộp.</p>
+      <p><b>PR cần cho một mốc phải mở chậm nhất 30 phút trước mốc</b> (CP1 16:30 · CP2 19:00 · CP3 09:30 · CP4 14:00). 15 phút trước mỗi mốc chỉ merge PR sửa lỗi cho bài nộp.</p>
       <ul>
         <li>CP1 16:45 · CP2 19:15 (Thứ Sáu)</li>
         <li>CP3 09:45 · CP4 14:15 · hạn chót 23:45 (Thứ Bảy)</li>
@@ -356,6 +356,15 @@ git push -u origin tan/T12-lessons-tools</pre>
         <li>Sửa <code>eval/run-*.csv</code>, <code>cost/simulate-*.csv</code>, <code>traces/</code> đã chạy (trừ cột pass, ghi_chu).</li>
         <li>Sửa <code>expected</code> cho khớp output, xoá câu thử trượt, sửa chuẩn "đạt" sau CP2.</li>
         <li>Sửa <code>eval/benchmark.csv</code> trong lúc đang chạy eval.</li>
+      </ul>
+    </div>
+    <div class="rule">
+      <h3>Luật về nội dung</h3>
+      <ul>
+        <li><b>Sau lượt 1:</b> PR nào sửa prompt hoặc <code>codebase/</code> phải thêm 1 dòng changelog vào <code>spec.md</code> §10 ngay trong PR đó.</li>
+        <li><b>CSV chỉ lưu UTF-8</b> (Excel: Save As → CSV UTF-8). Lưu kiểu khác làm vỡ tiếng Việt. Sửa xong chạy <code>python run.py check</code>.</li>
+        <li><b>Số nào cũng có nguồn:</b> trỏ về script, file lượt chạy, file phỏng vấn P#, hoặc link có ngày xem. Không có thì ghi <i>(tự ước tính)</i>.</li>
+        <li>Không xoá <code>.gitattributes</code> (giữ xuống dòng LF, tránh xung đột giả giữa Windows và Mac).</li>
       </ul>
     </div>
     <div class="rule">
