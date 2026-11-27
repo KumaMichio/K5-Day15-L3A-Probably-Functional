@@ -1,0 +1,15 @@
+{
+  "lesson_id": "program-day04:prompt-engineering-tool-calling",
+  "title": "Prompt engineering và tool calling",
+  "video": "Day04 (bài viết lại, synthetic — không phải transcript thật)",
+  "passages": [
+    {"code": "D04-L1-P01", "text": "Một prompt tốt thường có bốn phần: vai trò (model là ai), nhiệm vụ (cần làm gì), ngữ cảnh (tài liệu, dữ liệu liên quan) và định dạng đầu ra (trả về dạng gì, dài bao nhiêu). Thiếu phần nào thì model tự đoán phần đó, và đoán thường lệch ý người viết."},
+    {"code": "D04-L1-P02", "text": "System prompt là hướng dẫn chung đặt ở đầu, áp dụng cho cả cuộc hội thoại: vai trò, phạm vi, luật không được vi phạm. User prompt là nội dung của từng lượt người dùng gửi. Luật quan trọng như 'chỉ trả lời từ tài liệu' nên đặt ở system prompt, không đặt trong user prompt."},
+    {"code": "D04-L1-P03", "text": "Few-shot là đưa vài ví dụ đầu vào và đầu ra mẫu vào prompt để model bắt chước cách làm. Zero-shot là không đưa ví dụ nào. Few-shot hữu ích khi định dạng đầu ra khó mô tả bằng lời; ví dụ nên đa dạng, nếu không model sẽ chép y nguyên một ví dụ."},
+    {"code": "D04-L1-P04", "text": "Chain-of-thought là yêu cầu model suy luận từng bước trước khi đưa ra kết luận. Cách này giúp các bài cần nhiều bước như tính toán hay so sánh, nhưng tốn thêm token ra, nên tốn tiền và chậm hơn. Với câu hỏi tra cứu đơn giản thì thường không cần."},
+    {"code": "D04-L1-P05", "text": "Structured output là yêu cầu model trả về đúng một cấu trúc, thường là JSON theo một schema cho trước. Code phía sau đọc được kết quả mà không phải đoán. Luôn kiểm lại JSON nhận được bằng code: thiếu trường hoặc sai kiểu thì gọi lại hoặc báo lỗi, không tin mù quáng."},
+    {"code": "D04-L1-P06", "text": "Tool calling (gọi công cụ) là khi model không tự trả lời mà trả về yêu cầu gọi một hàm, kèm tên hàm và tham số. Code của mình mới là bên thực sự chạy hàm, rồi gửi kết quả lại cho model để model viết câu trả lời. Model không tự chạy được gì, nên mình kiểm soát được hàm nào được phép chạy."},
+    {"code": "D04-L1-P07", "text": "Mô tả công cụ cho model gồm tên, công cụ làm gì, tham số đầu vào và kết quả trả về. Mô tả càng rõ thì model càng chọn đúng công cụ. Công cụ có tác động ra ngoài như gửi tin hay sửa dữ liệu nên chỉ tạo bản nháp chờ người duyệt, không tự thực hiện."},
+    {"code": "D04-L1-P08", "text": "Prompt injection là khi trong dữ liệu đầu vào có câu giả làm lệnh, ví dụ 'bỏ qua mọi hướng dẫn trước đó'. Cách phòng: coi nội dung người dùng và tài liệu là dữ liệu chứ không phải lệnh, tách rõ bằng dấu phân cách, và chặn bằng code những việc model không được làm thay vì chỉ dặn trong prompt."}
+  ]
+}

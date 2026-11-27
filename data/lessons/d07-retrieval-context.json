@@ -1,0 +1,15 @@
+{
+  "lesson_id": "program-day07:retrieval-context-engineering",
+  "title": "Retrieval và context engineering",
+  "video": "Day07 (bài viết lại, synthetic — không phải transcript thật)",
+  "passages": [
+    {"code": "D07-L1-P01", "text": "RAG (Retrieval-Augmented Generation) là cách tìm các đoạn tài liệu liên quan tới câu hỏi rồi đưa chúng vào ngữ cảnh để model trả lời dựa trên đó. RAG giúp model dùng được kiến thức riêng hoặc mới mà không cần fine-tuning, và giảm ảo giác vì câu trả lời có căn cứ."},
+    {"code": "D07-L1-P02", "text": "Chunking là chia tài liệu dài thành các đoạn nhỏ (chunk) trước khi đánh chỉ mục. Đoạn quá dài thì lẫn nhiều ý, tìm kém chính xác và tốn token; đoạn quá ngắn thì mất ngữ cảnh. Thường chia theo đoạn văn hoặc tiêu đề, có thể cho các đoạn gối lên nhau một ít."},
+    {"code": "D07-L1-P03", "text": "Tìm kiếm vector: mỗi đoạn được đổi thành embedding và lưu trong vector database. Câu hỏi cũng được đổi thành embedding, rồi hệ thống lấy các đoạn có vector gần nhất, thường đo bằng độ tương đồng cosine. Cách này tìm được đoạn cùng ý dù khác chữ."},
+    {"code": "D07-L1-P04", "text": "Tìm kiếm từ khoá như BM25 chấm điểm đoạn theo số từ trùng với câu hỏi, từ càng hiếm thì càng có trọng số. BM25 mạnh với tên riêng, mã lỗi, thuật ngữ chính xác. Hybrid search kết hợp điểm BM25 và điểm vector để lấy ưu điểm của cả hai."},
+    {"code": "D07-L1-P05", "text": "Reranking là bước xếp hạng lại: lấy khoảng 20–50 đoạn từ bước tìm đầu, rồi dùng một mô hình chấm kỹ hơn để chọn ra vài đoạn tốt nhất đưa vào ngữ cảnh. Reranking tăng độ chính xác nhưng thêm độ trễ và chi phí."},
+    {"code": "D07-L1-P06", "text": "Trích dẫn nguồn: mỗi đoạn tài liệu nên có một mã riêng, và câu trả lời ghi mã đoạn đã dùng. Người đọc mở đúng đoạn đó để tự kiểm. Code nên kiểm lại mọi mã được trích có thật sự nằm trong các đoạn đã đưa vào hay không, để bắt trường hợp model bịa mã."},
+    {"code": "D07-L1-P07", "text": "Khi bước tìm không ra đoạn nào đủ liên quan, hệ thống nên nói thẳng là tài liệu không có thông tin, thay vì để model tự trả lời bằng kiến thức chung. Đặt một ngưỡng điểm tối thiểu: dưới ngưỡng thì coi như không tìm thấy."},
+    {"code": "D07-L1-P08", "text": "Context engineering là quyết định đưa gì vào cửa sổ ngữ cảnh và đưa theo thứ tự nào: hướng dẫn, đoạn tài liệu, lịch sử, kết quả công cụ. Nhồi quá nhiều làm tốn token và model dễ bỏ sót thông tin nằm ở giữa ngữ cảnh (lost in the middle). Chỉ đưa những đoạn thật sự cần."}
+  ]
+}
