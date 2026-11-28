@@ -155,10 +155,10 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 - Kết quả: lượt 1 **29/30 (97%)** (`thuong` 11/11 · `kho` 14/15 · `tu_choi` 4/4) · lượt 2 **30/30 (100%)** (`thuong` 11/11 · `kho` 15/15 · `tu_choi` 4/4; đạt cả 3 điều kiện chuẩn "đạt") — run ID: `run-1@20261128-010652` / `run-2@20261128-080301` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
-- Persona + giá: `cost/personas.yaml` — 4 persona từ data (hỏi ít · vừa · nhiều · dồn, `count_preclass.py` [J], bảng ở §2 sau PR #53), người dùng 143 / 218 / 436, giá Claude Haiku 5.5 + Claude Sonnet 5.5 + gemini-3.1-flash-lite (model-prices.md, 25/11/2026) · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên) *(chờ model thật #11 và lượt 1 #27)*
-- Chi phí / task thành công: __ (model __) · __ (model __)
-- Chi phí / tháng ở quy mô thật: thấp __ · cơ sở __ · cao __ → chi tiết `cost/cost-estimate.md`
-- So với impact / người / tháng (§2): đáng làm không, vì sao:
+- Persona + giá: `cost/personas.yaml` — 4 persona từ data (hỏi ít · vừa · nhiều · dồn, `count_preclass.py` [J], bảng ở §2 sau PR #53), người dùng 143 / 218 / 436, giá Claude Haiku 5.5 + Claude Sonnet 5.5 + gemini-3.1-flash-lite (model-prices.md, 25/11/2026) · lượt mô phỏng: `cost/simulate-1.csv` (**50 phiên**, `simulate-1@20261128-102706`, token đo trên `anthropic/claude-haiku-5.5`, tỉ lệ đạt 30/30 từ `run-2`)
+- Chi phí / task thành công: **$0.00057** (Claude Haiku 5.5, model đang dùng) · $0.0115 (Claude Sonnet 5.5) · $0.0016 (gemini-3.1-flash-lite)
+- Chi phí / tháng ở quy mô thật (Claude Haiku 5.5): thấp $0.33 (143 người) · cơ sở $0.51 (218) · cao $1.02 (436) → chi tiết `cost/cost-estimate.md`
+- So với impact / người / tháng (§2): **đáng làm**. $0.0023 / người / tháng (cơ sở, Haiku 5.5) so với ≈ 10 phút học viên / người / tháng không bị trả lời thiếu căn cứ. Kể cả khi tỉ lệ đạt chỉ 80%, chi phí / task thành công vẫn ≈ $0.00071. Chi phí lớn hơn là giờ người soạn bài có mã đoạn, chưa ước tính.
 
 ## §9. Rủi ro & an toàn
 - **Dữ liệu:**

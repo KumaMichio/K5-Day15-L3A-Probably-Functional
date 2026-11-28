@@ -32,7 +32,7 @@ personas:           # 4 nhóm theo số câu hỏi trợ giảng / học viên �
     turns_per_session: 4    # 4,0 câu / phiên
     source: "data/preclass, count_preclass.py [J] nhóm 6–15 câu"
   - name: hoi_don
-    share: 0.111            # 16/143 học viên hỏi ≥16 câu (ôn dồn)
+    share: 0.111            # 16/143 học viên hỏi ≥16 câu (ôn dồn); data 11,2%, làm tròn xuống để 4 share cộng đúng 1
     uses_per_month: 8.8
     turns_per_session: 5    # 5,1 câu / phiên, làm tròn
     source: "data/preclass, count_preclass.py [J] nhóm ≥16 câu"
