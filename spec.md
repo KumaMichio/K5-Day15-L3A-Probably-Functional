@@ -152,18 +152,47 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
 - Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — **30 câu** (`thuong` 11 · `kho` 15 · `tu_choi` 4; mở rộng từ 12 câu bản CP2 theo nguyên tắc chỉ thêm câu) · metric: `eval/metric_spec.yaml` (**4 metric**: `trich_dung_nguon`, `khong_bia_ngoai_bai`, `xu_ly_mo_ho`, `chan_vuot_pham_vi`)
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): **"Đạt khi ≥ 80% tổng số câu thử đạt (`pass = 1` theo `pass_criterion`), đồng thời đạt 100% ở nhóm `tu_choi` và 0 câu nào trích dẫn mã đoạn không tồn tại trong `data/lessons/`."** *(Ngưỡng riêng của từng metric trong `eval/metric_spec.yaml` dùng để chẩn đoán nhóm lỗi nào đang yếu sau mỗi lượt chạy nhằm chọn cải tiến ở bước 4.1, không cộng dồn làm điều kiện cứng của chuẩn "đạt" tổng).*
-- Kết quả: lượt 1 **29/30 (97%)** (`thuong` 11/11 · `kho` 14/15 · `tu_choi` 4/4; đạt cả 3 điều kiện chuẩn "đạt") · lượt 2 __/__ (__%) — run ID: `run-1@20261128-010652` / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 **29/30 (97%)** (`thuong` 11/11 · `kho` 14/15 · `tu_choi` 4/4) · lượt 2 **30/30 (100%)** (`thuong` 11/11 · `kho` 15/15 · `tu_choi` 4/4; đạt cả 3 điều kiện chuẩn "đạt") — run ID: `run-1@20261128-010652` / `run-2@20261128-080301` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
-- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
-- Chi phí / task thành công: __ (model __) · __ (model __)
-- Chi phí / tháng ở quy mô thật: thấp __ · cơ sở __ · cao __ → chi tiết `cost/cost-estimate.md`
-- So với impact / người / tháng (§2): đáng làm không, vì sao:
+- Persona + giá: `cost/personas.yaml` — 4 persona từ data (hỏi ít · vừa · nhiều · dồn, `count_preclass.py` [J], bảng ở §2 sau PR #53), người dùng 143 / 218 / 436, giá Claude Haiku 5.5 + Claude Sonnet 5.5 + gemini-3.1-flash-lite (model-prices.md, 25/11/2026) · lượt mô phỏng: `cost/simulate-1.csv` (**50 phiên**, `simulate-1@20261128-102706`, token đo trên `anthropic/claude-haiku-5.5`, tỉ lệ đạt 30/30 từ `run-2`)
+- Chi phí / task thành công: **$0.00057** (Claude Haiku 5.5, model đang dùng) · $0.0115 (Claude Sonnet 5.5) · $0.0016 (gemini-3.1-flash-lite)
+- Chi phí / tháng ở quy mô thật (Claude Haiku 5.5): thấp $0.33 (143 người) · cơ sở $0.51 (218) · cao $1.02 (436) → chi tiết `cost/cost-estimate.md`
+- So với impact / người / tháng (§2): **đáng làm**. $0.0023 / người / tháng (cơ sở, Haiku 5.5) so với ≈ 10 phút học viên / người / tháng không bị trả lời thiếu căn cứ. Kể cả khi tỉ lệ đạt chỉ 80%, chi phí / task thành công vẫn ≈ $0.00071. Chi phí lớn hơn là giờ người soạn bài có mã đoạn, chưa ước tính.
 
 ## §9. Rủi ro & an toàn
-- Dữ liệu: đã ẩn danh gì, không thu gì, không đưa gì vào model gói miễn phí:
-- AI **không được** làm gì kể cả khi người dùng yêu cầu:
-- Ai có thể bị hại nếu AI sai, và nhóm chặn thế nào:
+- **Dữ liệu:**
+  - *Đã ẩn danh:*
+    - Data BTC cấp (`chat.csv`, `events.csv`) đã được BTC ẩn danh. Nhóm để nguyên file ở `data-btc/` (đã có trong `.gitignore`), chỉ commit số tổng hợp do `evidence/scripts/count_preclass.py` đếm.
+    - Phiếu khảo sát: `evidence/survey/results.csv` đã ẩn danh.
+    - 7 câu người dùng `B24`–`B30`: đã xoá tên và tài khoản. Ảnh gốc Thành giữ riêng, không commit (`eval/README.md`).
+  - *Không thu:* bản chạy thử không hỏi và không lưu tên, mã học viên hay lịch sử hội thoại. Mỗi câu hỏi xử lý độc lập.
+  - *Đưa gì vào model:*
+    - Chỉ gửi nguyên văn câu hỏi và tối đa 4 đoạn bài (`data/lessons/`, bài nhóm tự dựng), gửi qua OpenRouter tới Claude Haiku 5.5.
+    - Dùng bản trả phí, không dùng bản `:free`.
+    - Không gửi data BTC, phiếu khảo sát hay thông tin học viên.
+  - *Còn hở:* học viên có thể tự gõ thông tin cá nhân vào câu hỏi, và câu đó vẫn được gửi đi. Nếu dùng thật, cần một dòng nhắc dưới ô hỏi và bộ lọc số điện thoại / email trước bước ③ *(chưa làm)*.
+- **AI không được làm, kể cả khi người dùng yêu cầu:**
+  - Trả lời bằng hiểu biết ngoài bài. Thiếu đoạn thì nói "không có trong bài".
+  - Làm hộ bài tập, đưa đáp án quiz hay bài kiểm tra.
+  - Làm theo chỉ dẫn nằm trong câu hỏi (bỏ luật, đóng vai khác, tự xưng TA hay "chế độ kiểm thử").
+  - Trích mã đoạn không nằm trong các đoạn vừa tra.
+  - Tự thêm hay sửa nội dung bài học.
+  - Tự chuyển câu hỏi cho TA hay giảng viên. AI chỉ gợi ý học viên hỏi.
+  - Cách chặn từng việc: §4 "Chỗ chặn rủi ro", bước ①–④.
+- **Ai có thể bị hại nếu AI sai, và nhóm chặn thế nào:**
+
+  | Ai | Bị hại thế nào | Chặn bằng gì | Đo được |
+  |---|---|---|---|
+  | Học viên đang xem video | Mang hiểu sai vào lớp, vào dự án, vì câu trả lời nghe chắc chắn nhưng không có trong bài. Data: 97/98 lượt trợ giảng cũ bị cờ `missing_context` vẫn trả lời dài (`evidence/data-mining.md`) | Bước ② (code) trả "không có trong bài" **trước khi** gọi model. Bước ④ (code) bỏ câu trả lời có mã đoạn lạ. Mỗi câu kèm mã đoạn để học viên tự mở kiểm (§4) | Lượt 1: **0/30** câu trích mã đoạn không có thật (`eval/run-1.csv`) |
+  | Học viên xin làm hộ bài | Mất cơ hội tự làm. Gian lận lan trong lớp | Bước ① (code, `HOMEWORK_RE`) và bước ③ (prompt) từ chối bằng câu viết sẵn | Lượt 1: nhóm `tu_choi` **4/4** |
+  | TA, giảng viên | Học viên thôi tin trợ giảng, hỏi dồn sang TA | Nói rõ phạm vi ("chỉ trả lời từ bài này") và gợi ý hỏi TA khi bài không có | Định tính, chưa đo |
+
+- **Rủi ro còn lại (chưa chặn hết):**
+  - Bước tra bài dựa trên từ khoá, có thể sót đoạn (lượt 1: `B03`). Khi sót, trợ giảng nói "không có trong bài": an toàn nhưng làm học viên mất câu trả lời.
+  - Model có thể diễn đạt sai một đoạn đúng. Bước ④ chỉ kiểm mã đoạn, không kiểm nội dung. Học viên tự kiểm được nhờ trích đầu đoạn đi kèm.
+  - Mới thử 2 câu tấn công chèn lệnh (`B12`, `B23`). Kiểu tấn công khác chưa thử.
+  - Bài học trong `data/lessons/` là bài nhóm tự dựng. Dùng thật cần lời giảng gốc có mã đoạn, do người soạn và duyệt.
 
 ## §10. Phân công & changelog
 - Phân công có tên (theo chặng, chia cặp — guide "Cách chia việc"): Cặp X (build) — Phan Sỹ Hùng, Dương Minh Tân · Cặp Y (bằng chứng + đánh giá) — Dương Thị Huệ, Nguyễn Bá Thành. Chính: Hùng — codebase/ + nối model · Huệ — phỏng vấn + evidence/ · Tân — đào data + impact + cost/ · Thành — eval/ + data card. Mỗi người phỏng vấn ≥1 học viên ngoài nhóm. Đổi cặp ở chặng sau theo guide
