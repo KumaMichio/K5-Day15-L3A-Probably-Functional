@@ -161,9 +161,38 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 - So với impact / người / tháng (§2): đáng làm không, vì sao:
 
 ## §9. Rủi ro & an toàn
-- Dữ liệu: đã ẩn danh gì, không thu gì, không đưa gì vào model gói miễn phí:
-- AI **không được** làm gì kể cả khi người dùng yêu cầu:
-- Ai có thể bị hại nếu AI sai, và nhóm chặn thế nào:
+- **Dữ liệu:**
+  - *Đã ẩn danh:*
+    - Data BTC cấp (`chat.csv`, `events.csv`) đã được BTC ẩn danh. Nhóm để nguyên file ở `data-btc/` (đã có trong `.gitignore`), chỉ commit số tổng hợp do `evidence/scripts/count_preclass.py` đếm.
+    - Phiếu khảo sát: `evidence/survey/results.csv` đã ẩn danh.
+    - 7 câu người dùng `B24`–`B30`: đã xoá tên và tài khoản. Ảnh gốc Thành giữ riêng, không commit (`eval/README.md`).
+  - *Không thu:* bản chạy thử không hỏi và không lưu tên, mã học viên hay lịch sử hội thoại. Mỗi câu hỏi xử lý độc lập.
+  - *Đưa gì vào model:*
+    - Chỉ gửi nguyên văn câu hỏi và tối đa 4 đoạn bài (`data/lessons/`, bài nhóm tự dựng), gửi qua OpenRouter tới Claude Haiku 5.5.
+    - Dùng bản trả phí, không dùng bản `:free`.
+    - Không gửi data BTC, phiếu khảo sát hay thông tin học viên.
+  - *Còn hở:* học viên có thể tự gõ thông tin cá nhân vào câu hỏi, và câu đó vẫn được gửi đi. Nếu dùng thật, cần một dòng nhắc dưới ô hỏi và bộ lọc số điện thoại / email trước bước ③ *(chưa làm)*.
+- **AI không được làm, kể cả khi người dùng yêu cầu:**
+  - Trả lời bằng hiểu biết ngoài bài. Thiếu đoạn thì nói "không có trong bài".
+  - Làm hộ bài tập, đưa đáp án quiz hay bài kiểm tra.
+  - Làm theo chỉ dẫn nằm trong câu hỏi (bỏ luật, đóng vai khác, tự xưng TA hay "chế độ kiểm thử").
+  - Trích mã đoạn không nằm trong các đoạn vừa tra.
+  - Tự thêm hay sửa nội dung bài học.
+  - Tự chuyển câu hỏi cho TA hay giảng viên. AI chỉ gợi ý học viên hỏi.
+  - Cách chặn từng việc: §4 "Chỗ chặn rủi ro", bước ①–④.
+- **Ai có thể bị hại nếu AI sai, và nhóm chặn thế nào:**
+
+  | Ai | Bị hại thế nào | Chặn bằng gì | Đo được |
+  |---|---|---|---|
+  | Học viên đang xem video | Mang hiểu sai vào lớp, vào dự án, vì câu trả lời nghe chắc chắn nhưng không có trong bài. Data: 97/98 lượt trợ giảng cũ bị cờ `missing_context` vẫn trả lời dài (`evidence/data-mining.md`) | Bước ② (code) trả "không có trong bài" **trước khi** gọi model. Bước ④ (code) bỏ câu trả lời có mã đoạn lạ. Mỗi câu kèm mã đoạn để học viên tự mở kiểm (§4) | Lượt 1: **0/30** câu trích mã đoạn không có thật (`eval/run-1.csv`) |
+  | Học viên xin làm hộ bài | Mất cơ hội tự làm. Gian lận lan trong lớp | Bước ① (code, `HOMEWORK_RE`) và bước ③ (prompt) từ chối bằng câu viết sẵn | Lượt 1: nhóm `tu_choi` **4/4** |
+  | TA, giảng viên | Học viên thôi tin trợ giảng, hỏi dồn sang TA | Nói rõ phạm vi ("chỉ trả lời từ bài này") và gợi ý hỏi TA khi bài không có | Định tính, chưa đo |
+
+- **Rủi ro còn lại (chưa chặn hết):**
+  - Bước tra bài dựa trên từ khoá, có thể sót đoạn (lượt 1: `B03`). Khi sót, trợ giảng nói "không có trong bài": an toàn nhưng làm học viên mất câu trả lời.
+  - Model có thể diễn đạt sai một đoạn đúng. Bước ④ chỉ kiểm mã đoạn, không kiểm nội dung. Học viên tự kiểm được nhờ trích đầu đoạn đi kèm.
+  - Mới thử 2 câu tấn công chèn lệnh (`B12`, `B23`). Kiểu tấn công khác chưa thử.
+  - Bài học trong `data/lessons/` là bài nhóm tự dựng. Dùng thật cần lời giảng gốc có mã đoạn, do người soạn và duyệt.
 
 ## §10. Phân công & changelog
 - Phân công có tên (theo chặng, chia cặp — guide "Cách chia việc"): Cặp X (build) — Phan Sỹ Hùng, Dương Minh Tân · Cặp Y (bằng chứng + đánh giá) — Dương Thị Huệ, Nguyễn Bá Thành. Chính: Hùng — codebase/ + nối model · Huệ — phỏng vấn + evidence/ · Tân — đào data + impact + cost/ · Thành — eval/ + data card. Mỗi người phỏng vấn ≥1 học viên ngoài nhóm. Đổi cặp ở chặng sau theo guide
