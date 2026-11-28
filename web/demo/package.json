@@ -1,0 +1,7 @@
+{
+  "name": "demo-video",
+  "private": true,
+  "type": "module",
+  "description": "Quay video demo e2e — chỉ cần khi quay video, bản chạy thử không dùng",
+  "dependencies": { "playwright-core": "1.49.1" }
+}
