@@ -174,7 +174,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
-|  |  |  |
+| 08:01 T7 28/11 (sau lượt 1, trước lượt 2) | `codebase/agent.py`: (1) **tra thêm từng vế** — câu nhiều vế (tách theo dấu phẩy / "còn" / "hay"…) tra `search_lesson` thêm cho mỗi vế, chỉ giữ đoạn chung "từ chủ đề" (từ có trong ≤ 2 đoạn) với vế đó, tối đa 4 đoạn; (2) **prompt luật 3–4** — câu nhiều phần mà bài chỉ trả lời được một phần → `tra_loi` phần có căn cứ và nói rõ phần còn lại không có trong bài; câu đã nêu tên khái niệm (kể cả "A hay B") không phải câu mơ hồ; hỏi lại không được hứa trả lời sau | Nhóm lỗi "câu hỏi hai vế" ở lượt 1 (`eval/report.md` mục 2): `B30` trượt (hỏi lại lửng lơ thay vì trả lời phần RAG có trong `[D07-L1-P01]`), `B03` sót đoạn `D07-L1-P01` khi tra bài. Thử trước trên 10 câu: `B03`, `B30` trả lời đủ hai vế; `B06` đổi đường từ `khong_co` sang trả lời phần có trong bài và nói rõ LoRA không có trong bài |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 
