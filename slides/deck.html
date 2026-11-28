@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probably-Functional — Trợ giảng dưới video có căn cứ trong bài</title>
+<!--
+  Khung 8 trang cho demo-slides.pdf (#36, phụ trách: Dương Thị Huệ).
+  Xuất PDF: mở file trong Chrome → Ctrl+P → Đích: Lưu dưới dạng PDF · Khổ: tự động · Lề: Không · bật "Đồ hoạ nền"
+  → lưu thành demo-slides.pdf ở thư mục gốc repo.
+  Luật: mỗi trang ≥1 số / trích dẫn có nguồn. Ô có class "todo" = chờ số từ việc khác, PHẢI thay trước khi xuất PDF.
+-->
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  :root {
+    --ink: #1b1f24; --muted: #5a6575; --line: #d9dee5; --bg: #ffffff; --soft: #f4f6f9;
+    --accent: #b02e66; --ok: #2c7a4b; --todo-bg: #fff4d6; --todo-ink: #8a5a00;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #e9ecf0; color: var(--ink);
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+  .slide { width: 1280px; height: 720px; margin: 24px auto; background: var(--bg);
+    padding: 56px 72px 48px; position: relative; display: flex; flex-direction: column;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08); page-break-after: always; break-after: page; overflow: hidden; }
+  @media print { html, body { background: #fff; } .slide { margin: 0; box-shadow: none; } }
+  .kicker { font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 10px; }
+  h1 { font-size: 44px; line-height: 1.15; margin: 0 0 18px; font-weight: 700; }
+  h2 { font-size: 22px; margin: 0 0 8px; }
+  p, li { font-size: 21px; line-height: 1.45; }
+  ul { margin: 6px 0; padding-left: 26px; }
+  .grid { display: grid; gap: 22px; flex: 1; align-content: start; }
+  .g2 { grid-template-columns: 1fr 1fr; } .g3 { grid-template-columns: repeat(3, 1fr); }
+  .card { background: var(--soft); border-radius: 10px; padding: 20px 22px; }
+  .big { font-size: 54px; font-weight: 700; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .big small { font-size: 22px; color: var(--muted); font-weight: 500; }
+  .cap { font-size: 17px; color: var(--muted); margin-top: 8px; line-height: 1.35; }
+  blockquote { margin: 0; font-size: 22px; line-height: 1.45; border-left: 4px solid var(--accent); padding: 4px 0 4px 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 18px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 15px; text-transform: uppercase; letter-spacing: .04em; }
+  .todo { background: var(--todo-bg); color: var(--todo-ink); border-radius: 4px; padding: 0 6px; font-weight: 600; }
+  .src { position: absolute; left: 72px; right: 72px; bottom: 20px; font-size: 13px; color: var(--muted);
+    border-top: 1px solid var(--line); padding-top: 8px; display: flex; justify-content: space-between; gap: 20px; }
+  .flow { display: flex; gap: 14px; align-items: stretch; margin: 10px 0 18px; }
+  .flow .step { flex: 1; background: var(--soft); border-radius: 10px; padding: 14px 16px; font-size: 18px; line-height: 1.35; }
+  .flow .arrow { align-self: center; color: var(--muted); font-size: 26px; }
+  .tag { display: inline-block; font-size: 14px; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: #fbe3ee; color: var(--accent); }
+  .tag.ok { background: #dff1e6; color: var(--ok); }
+</style>
+</head>
+<body>
+
+<!-- 1 · Người dùng & pain -->
+<section class="slide">
+  <p class="kicker">1 · Người dùng &amp; pain</p>
+  <h1>Học viên L3 hỏi dưới video pre-class — trợ giảng vẫn trả lời cả khi bài không có căn cứ</h1>
+  <div class="grid g3" style="flex:0 0 auto; margin-bottom:26px">
+    <div class="card"><div class="big">97<small>/98</small></div>
+      <div class="cap">câu trả lời bị trợ giảng tự gắn cờ thiếu ngữ cảnh vẫn trả lời dài ≥100 ký tự</div></div>
+    <div class="card"><div class="big">231<small>/557</small></div>
+      <div class="cap">câu trả lời (từ 13/11, 41,5%) không dẫn mốc nào trong bài — không có chỗ để tự kiểm</div></div>
+    <div class="card"><div class="big">13<small>/16</small></div>
+      <div class="cap">học viên đã hỏi trợ giảng: đọc xong vẫn không chắc, hoặc phải hỏi chỗ khác / tua lại để kiểm (khảo sát, 23 học viên L3)</div></div>
+  </div>
+  <p class="cap" style="margin:0 0 18px; font-size:19px">Khảo sát 23 học viên L3: 14/23 hỏi ChatGPT / AI bên ngoài khi gặp chỗ chưa hiểu · lần đó thường mất 5–15 phút (11/23) · 13/23 chỉ hiểu một phần, 2/23 vào lớp mới thấy hiểu sai · không ai kể là mở đúng đoạn trong bài để kiểm.</p>
+  <blockquote>Khó chịu nhất: "chưa tự xác nhận được" · kiểm bằng cách nào: "Vào lớp mới thấy mình hiểu sai" — phiếu khảo sát #15, học viên L3A</blockquote>
+  <div class="src"><span>Nguồn: evidence/data-mining.md (count_preclass.py, data pre-class 05–25/11/2026) · evidence/survey/results.csv (form 27/11, 23 học viên L3) · evidence/summary.md</span><span>1/8</span></div>
+</section>
+
+<!-- 2 · Vì sao chọn bài này -->
+<section class="slide">
+  <p class="kicker">2 · Vì sao chọn bài này</p>
+  <h1>A1: ~140 câu / tháng thiếu căn cứ vẫn được trả lời ≈ 23 giờ học viên / tháng</h1>
+  <table>
+    <tr><th>Hướng</th><th>Người gặp</th><th>Lần / tháng</th><th>Impact / tháng</th><th>Chọn?</th></tr>
+    <tr><td>A1 · Trợ giảng trả lời có căn cứ hoặc "không có trong bài"</td><td>143/436 học viên đã hỏi trợ giảng dưới video</td><td>~1.560 câu hỏi · ~140 bị cờ thiếu ngữ cảnh, 99% vẫn được trả lời</td><td>≈ 140 × 10 phút ≈ <b>23 giờ</b> <i>(10 phút: tự ước tính)</i></td><td><span class="tag ok">Chọn</span></td></tr>
+    <tr><td>A2 · Trợ lý Discord hạn nộp / lịch</td><td>chưa có số</td><td>chưa có số</td><td>chưa tính được</td><td>Không — không có data Discord</td></tr>
+    <tr><td>A5 · Soạn thông báo phòng lab</td><td>vài key coach <i>(tự ước tính)</i></td><td>mỗi tối</td><td>chưa tính được</td><td>Không — data giả lập</td></tr>
+  </table>
+  <p class="cap" style="margin-top:16px">Kiểm lại "10 phút / lần" bằng khảo sát: lần gần nhất gặp chỗ chưa hiểu, 11/23 học viên mất 5–15 phút, 3/23 mất hơn 15 phút.</p>
+  <div class="src"><span>Nguồn: spec.md §2 · evidence/data-mining.md (1.090 câu / 21 ngày × 30) · evidence/survey/results.csv</span><span>2/8</span></div>
+</section>
+
+<!-- 3 · Giải pháp -->
+<section class="slide">
+  <p class="kicker">3 · Giải pháp</p>
+  <h1>Workflow cố định: code chặn trước, AI chỉ quyết một bước, code kiểm sau</h1>
+  <p><b>Lát cắt:</b> một học viên L3 · hỏi một câu dưới video pre-class · AI quyết định trả lời kèm mã đoạn hay nói "không có trong bài" · học viên tự kiểm bằng cách mở đúng đoạn.</p>
+  <div class="flow">
+    <div class="step"><b>① Code</b><br>câu quá ngắn → hỏi lại · xin làm hộ bài → từ chối</div><div class="arrow">→</div>
+    <div class="step"><b>② Tra bài</b><br>không có đoạn đủ gần → "không có trong bài", gợi ý hỏi TA</div><div class="arrow">→</div>
+    <div class="step"><b>③ AI</b><br>chỉ đọc đoạn vừa tra; câu hỏi là dữ liệu, không phải lệnh</div><div class="arrow">→</div>
+    <div class="step"><b>④ Code kiểm</b><br>mọi mã đoạn phải là đoạn vừa tra, sai → không đưa</div><div class="arrow">→</div>
+    <div class="step"><b>⑤ Trả lời</b><br>+ "Căn cứ trong bài: [mã đoạn]"</div>
+  </div>
+  <div class="grid g2" style="flex:0 0 auto">
+    <div class="card"><div class="big">12<small>/30</small></div><div class="cap">câu thử dừng ở bước ①–② bằng code, không gọi model, 0 token (lượt 1)</div></div>
+    <div class="card"><div class="big">0,6<small> lần</small></div><div class="cap">gọi model trung bình mỗi câu — tối đa 1 lần, vì không phải agent</div></div>
+  </div>
+  <div class="src"><span>Nguồn: spec.md §4 (sơ đồ) · codebase/agent.py · eval/report.md (thông số lượt 1)</span><span>3/8</span></div>
+</section>
+
+<!-- 4 · Demo live -->
+<section class="slide">
+  <p class="kicker">4 · Demo live</p>
+  <h1>Một câu thường, một câu khó từ học viên thật</h1>
+  <div class="grid g2" style="flex:0 0 auto; margin-bottom:22px">
+    <div class="card"><span class="tag ok">thường · B01</span>
+      <p style="margin:10px 0 6px"><b>"Token là gì và vì sao cùng một ý viết bằng tiếng Việt lại tốn nhiều token hơn tiếng Anh?"</b></p>
+      <p class="cap">Lượt 2: giải thích token và lý do tiếng Việt tốn hơn, mỗi ý kèm [D01-L1-P02]; cuối câu có "Căn cứ trong bài" để mở đúng đoạn.</p></div>
+    <div class="card"><span class="tag">khó · B30 · câu của học viên</span>
+      <p style="margin:10px 0 6px"><b>"Khi nào thì cần nhiều Agent hay RAG ạ?"</b></p>
+      <p class="cap">Lượt 2: trả lời phần RAG kèm [D07-L1-P01], nói rõ "phần về khi nào cần nhiều Agent thì bài học không đề cập". Lượt 1 câu này trượt.</p></div>
+  </div>
+  <p class="cap">Thêm nếu còn giờ: B08 (công thức Q, K, V) → "không có trong bài", không gọi model. Mạng hỏng → video 30 giây chạy thật: https://youtu.be/uJ8iUwmtczk · video dự phòng: đang cập nhật</p>
+  <div class="src"><span>Nguồn: eval/benchmark.csv · eval/run-2.csv · README.md (link video)</span><span>4/8</span></div>
+</section>
+
+<!-- 5 · Đánh giá thế nào -->
+<section class="slide">
+  <p class="kicker">5 · Đánh giá thế nào</p>
+  <h1>30 câu thử, 4 metric chấm tay: lượt 1 97% → lượt 2 100%, chuẩn "đạt" là 80%</h1>
+  <div class="grid g3" style="flex:0 0 auto; margin-bottom:20px">
+    <div class="card"><div class="big">30</div><div class="cap">câu thử: thường 11 · khó 15 · từ chối 4 · 10/30 từ người dùng / data thật</div></div>
+    <div class="card"><div class="big">29<small>/30</small></div><div class="cap">lượt 1 (97%) · run-1@20261128-010652 · Claude Haiku 5.5</div></div>
+    <div class="card"><div class="big">30<small>/30</small></div><div class="cap">lượt 2 (100%) · run-2@20261128-080301 · từ chối 4/4 · 0 mã đoạn bịa</div></div>
+  </div>
+  <p style="margin:0 0 8px"><b>Chuẩn "đạt" (khoá 19:30 T6):</b> ≥ 80% câu đạt, 100% câu từ chối, 0 mã đoạn không có thật.</p>
+  <p style="margin:0 0 8px"><b>Lỗi chính đã sửa:</b> câu hỏi hai vế — B30 bị hỏi lại lửng lơ, B03 sót đoạn RAG → tra thêm từng vế + sửa luật trong prompt.</p>
+  <p class="cap" style="margin:0"><b>Đánh đổi:</b> B06 (LoRA) dài dòng hơn trước khi nói "không có trong bài"; token vào +21% (665 → 804 / câu).</p>
+  <div class="src"><span>Nguồn: eval/README.md · eval/report.md · eval/run-1.csv · eval/run-2.csv · eval/metric_spec.yaml · spec.md §7</span><span>5/8</span></div>
+</section>
+
+<!-- 6 · Chi phí khi dùng thật -->
+<section class="slide">
+  <p class="kicker">6 · Chi phí khi dùng thật</p>
+  <h1>Cả khoá 436 người: khoảng $1 / tháng tiền model với Haiku 5.5</h1>
+  <table>
+    <tr><th>Chi phí (USD)</th><th>Claude Haiku 5.5 (đang dùng)</th><th>Claude Sonnet 5.5</th><th>gemini-3.1-flash-lite</th></tr>
+    <tr><td><b>/ task thành công</b></td><td><b>$0.00057</b></td><td>$0.0115</td><td>$0.0016</td></tr>
+    <tr><td>/ tháng — thấp (143 người)</td><td>$0.33</td><td>$6.68</td><td>$0.93</td></tr>
+    <tr><td>/ tháng — cơ sở (218 người)</td><td>$0.51</td><td>$10.19</td><td>$1.42</td></tr>
+    <tr><td>/ tháng — cao (436 người)</td><td>$1.02</td><td>$20.38</td><td>$2.85</td></tr>
+  </table>
+  <p style="margin:18px 0 8px"><b>So với impact:</b> $0.0023 / người / tháng (cơ sở, Haiku 5.5) để đổi lấy ≈ 10 phút học viên / người / tháng → <b>đáng làm</b>. Nếu tỉ lệ đạt chỉ 80% thì vẫn ≈ $0.00071 / task.</p>
+  <p class="cap" style="margin:0">Mô phỏng 50 phiên chạy thật qua agent.py, 4 persona từ data (hỏi ít 26,6% · vừa 32,2% · nhiều 30,1% · dồn 11,2%), tỉ lệ đạt 30/30 từ lượt 2. Chi phí lớn hơn là giờ người soạn bài có mã đoạn — chưa ước tính.</p>
+  <div class="src"><span>Nguồn: cost/cost-estimate.md · cost/simulate-1.csv (simulate-1@20261128-102706) · cost/personas.yaml · spec.md §8</span><span>6/8</span></div>
+</section>
+
+<!-- 7 · Kết luận -->
+<section class="slide">
+  <p class="kicker">7 · Kết luận</p>
+  <h1>Iterate: đạt chuẩn và rẻ, nhưng cần đủ bài 13 ngày trước khi dùng thật</h1>
+  <ul>
+    <li><b>Pain có thật:</b> 97/98 câu thiếu căn cứ vẫn được trả lời; 13/16 học viên đã hỏi trợ giảng vẫn phải kiểm ở chỗ khác (trang 1).</li>
+    <li><b>Bản chạy thử đạt chuẩn:</b> lượt 2 30/30 (100%) so với chuẩn 80%, 0 mã đoạn bịa (trang 5).</li>
+    <li><b>Chưa chắc:</b> mới 3/13 ngày học có bài gắn mã đoạn (synthetic); tìm theo từ khoá nên câu diễn đạt khác chữ trong bài bị báo nhầm "không có".</li>
+    <li><b>Rẻ:</b> $0.00057 / task thành công, khoảng $1 / tháng cho cả 436 học viên với Haiku 5.5 (trang 6).</li>
+    <li><b>Vì sao chưa Go:</b> thiếu bài có mã đoạn cho 10/13 ngày học là lý do lớn nhất — làm xong việc 1 ở trang 8 rồi chạy lại bộ câu thử với câu hỏi thật của các ngày đó.</li>
+  </ul>
+  <div class="src"><span>Nguồn: trang 1, 5, 6 · eval/report.md mục 4</span><span>7/8</span></div>
+</section>
+
+<!-- 8 · Nếu có thêm 1 tuần -->
+<section class="slide">
+  <p class="kicker">8 · Nếu có thêm 1 tuần</p>
+  <h1>Ba việc tiếp theo, trỏ về lỗi còn lại</h1>
+  <ol>
+    <li><b>Tìm kiếm lai (từ khoá + embedding), lọc theo đúng video đang xem,</b> và gắn mã đoạn + mốc giây cho cả 13 ngày học — 5/7 câu thật của học viên (B24–B28) hỏi bài chưa có dữ liệu.</li>
+    <li><b>Tách "bối cảnh dẫn nhập" khỏi ý hỏi chính</b> trong prompt, giữ dòng gợi ý hỏi TA khi còn vế ngoài bài — sửa chỗ dài dòng của B06.</li>
+    <li><b>Nhớ đúng 1 câu trước khi vừa hỏi lại,</b> và nút "Báo câu trả lời chưa khớp đoạn bài" gửi mã đoạn về hàng đợi của TA.</li>
+  </ol>
+  <div class="src"><span>Nguồn: eval/report.md mục 4</span><span>8/8</span></div>
+</section>
+
+</body>
+</html>
