@@ -25,8 +25,8 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
   - 231/557 câu trả lời từ 13/11 (41,5%) không dẫn mốc nào trong bài → học viên không có chỗ để tự kiểm.
   - 530/1.090 (48,6%) hỏi tiếp cùng video trong 3 phút hoặc tua lùi trong 2 phút — tín hiệu yếu, chưa biết là không hài lòng.
   - Khảo sát (form 27/11/2026, **23 học viên L3 ngoài nhóm — đạt ngưỡng ≥20**; 28 phiếu, 5 phiếu TA / khác bị loại; `evidence/survey/results.csv` đã ẩn danh, đếm bằng `evidence/survey/summarize.py`): **13/16 học viên đã hỏi trợ giảng đọc xong vẫn không chắc, hoặc phải hỏi chỗ khác / tua lại để kiểm** · 14/23 hỏi ChatGPT / AI bên ngoài khi gặp chỗ chưa hiểu · lần gần nhất thường mất 5–15 phút (11/23) và chỉ hiểu một phần (13/23); 2/23 vào lớp mới thấy mình hiểu sai · 9/17 người kể cách kiểm là hỏi AI khác / Google, 1/17 xem lại bài giảng cũ, không ai kể là mở đúng đoạn trong bài. Có vài phiếu mâu thuẫn (chi tiết `evidence/summary.md`).
-  - Phỏng vấn: __/__ học viên L3 ngoài nhóm gặp chỗ đau *(điền sau P1–P4, `evidence/interviews/`, câu hỏi: `evidence/interviews/questions.md`)*.
-  - Kết luận tạm: data và khảo sát **ủng hộ phần lớn** — trợ giảng trả lời cả khi thiếu căn cứ và thường không chỉ ra đoạn nào; học viên nói họ không tự xác nhận được câu trả lời và phải kiểm bằng AI khác. Còn phải phỏng vấn để nghe chuyện cụ thể (tốn bao lâu, có hiểu sai vào lớp không).
+  - Phỏng vấn: **chưa làm** — đến hạn chót 28/11 không có buổi phỏng vấn nào được ghi (`evidence/interviews/` chỉ có bộ câu hỏi `questions.md`, không có `P#.md`). Bằng chứng người dùng chỉ dựa vào khảo sát 23 học viên ở trên.
+  - Kết luận tạm: data và khảo sát **ủng hộ phần lớn** — trợ giảng trả lời cả khi thiếu căn cứ và thường không chỉ ra đoạn nào; học viên nói họ không tự xác nhận được câu trả lời và phải kiểm bằng AI khác. Chưa phỏng vấn để nghe chuyện cụ thể (tốn bao lâu, có hiểu sai vào lớp không).
 
 ## §2. Impact & quyết định chọn *(guide 1.3)*
 
@@ -209,4 +209,4 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 
 | Thời điểm | Đổi gì | Vì sao |
 |---|---|---|
-|  |  |  |
+| 23:10 T7 28/11 | Chỉ tài liệu, không đổi code / câu thử / kết quả lượt: §1 và `evidence/summary.md` ghi rõ **chưa phỏng vấn** (thay chỗ trống `__/__`, P1–P3); `evidence/data-mining.md` ghi chỉ đối chiếu tay 2 dòng; `docs/ai-usage.md` điền các dòng có nguồn | Dọn chỗ trống trước khi khoá repo (#41): không có file `evidence/interviews/P#.md`, nên không để chỗ trống trông như sắp có số |
