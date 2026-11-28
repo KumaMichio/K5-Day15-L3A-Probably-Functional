@@ -64,7 +64,7 @@
   </div>
   <p class="cap" style="margin:0 0 18px; font-size:19px">Khảo sát 23 học viên L3: 14/23 hỏi ChatGPT / AI bên ngoài khi gặp chỗ chưa hiểu · lần đó thường mất 5–15 phút (11/23) · 13/23 chỉ hiểu một phần, 2/23 vào lớp mới thấy hiểu sai · không ai kể là mở đúng đoạn trong bài để kiểm.</p>
   <blockquote>Khó chịu nhất: "chưa tự xác nhận được" · kiểm bằng cách nào: "Vào lớp mới thấy mình hiểu sai" — phiếu khảo sát #15, học viên L3A</blockquote>
-  <div class="src"><span>Nguồn: evidence/data-mining.md (count_preclass.py, data pre-class 05–25/11/2026) · evidence/survey/results.csv (form 27/11, 23 học viên L3) · evidence/summary.md</span><span>1/9</span></div>
+  <div class="src"><span>Nguồn: evidence/data-mining.md (count_preclass.py, data pre-class 05–25/11/2026) · evidence/survey/results.csv (form 27/11, 23 học viên L3) · evidence/summary.md</span><span>1/10</span></div>
 </section>
 
 <!-- 2 · Vì sao chọn bài này -->
@@ -78,7 +78,7 @@
     <tr><td>A5 · Soạn thông báo phòng lab</td><td>vài key coach <i>(tự ước tính)</i></td><td>mỗi tối</td><td>chưa tính được</td><td>Không — data giả lập</td></tr>
   </table>
   <p class="cap" style="margin-top:16px">Kiểm lại "10 phút / lần" bằng khảo sát: lần gần nhất gặp chỗ chưa hiểu, 11/23 học viên mất 5–15 phút, 3/23 mất hơn 15 phút.</p>
-  <div class="src"><span>Nguồn: spec.md §2 · evidence/data-mining.md (1.090 câu / 21 ngày × 30) · evidence/survey/results.csv</span><span>2/9</span></div>
+  <div class="src"><span>Nguồn: spec.md §2 · evidence/data-mining.md (1.090 câu / 21 ngày × 30) · evidence/survey/results.csv</span><span>2/10</span></div>
 </section>
 
 <!-- 3 · Giải pháp -->
@@ -97,28 +97,43 @@
     <div class="card"><div class="big">12<small>/30</small></div><div class="cap">câu thử dừng ở bước ①–② bằng code, không gọi model, 0 token (lượt 1)</div></div>
     <div class="card"><div class="big">0,6<small> lần</small></div><div class="cap">gọi model trung bình mỗi câu — tối đa 1 lần, vì không phải agent</div></div>
   </div>
-  <div class="src"><span>Nguồn: spec.md §4 (sơ đồ) · codebase/agent.py · eval/report.md (thông số lượt 1)</span><span>3/9</span></div>
+  <div class="src"><span>Nguồn: spec.md §4 (sơ đồ) · codebase/agent.py · eval/report.md (thông số lượt 1)</span><span>3/10</span></div>
 </section>
 
-<!-- 4 · Demo live -->
+<!-- 4 · Điểm mới -->
 <section class="slide">
-  <p class="kicker">4 · Demo live</p>
-  <h1>Một câu thường, một câu khó từ học viên thật</h1>
-  <div class="grid g2" style="flex:0 0 auto; margin-bottom:22px">
-    <div class="card"><span class="tag ok">thường · B01</span>
-      <p style="margin:10px 0 6px"><b>"Token là gì và vì sao cùng một ý viết bằng tiếng Việt lại tốn nhiều token hơn tiếng Anh?"</b></p>
-      <p class="cap">Lượt 2: giải thích token và lý do tiếng Việt tốn hơn, mỗi ý kèm [D01-L1-P02]; cuối câu có "Căn cứ trong bài" để mở đúng đoạn.</p></div>
-    <div class="card"><span class="tag">khó · B30 · câu của học viên</span>
-      <p style="margin:10px 0 6px"><b>"Khi nào thì cần nhiều Agent hay RAG ạ?"</b></p>
-      <p class="cap">Lượt 2: trả lời phần RAG kèm [D07-L1-P01], nói rõ "phần về khi nào cần nhiều Agent thì bài học không đề cập". Lượt 1 câu này trượt.</p></div>
-  </div>
-  <p class="cap">Thêm nếu còn giờ: B08 (công thức Q, K, V) → "không có trong bài", không gọi model. Mạng hỏng → video demo dự phòng (59 giây, model thật): https://youtu.be/G0yzc40KdWY · video 30 giây CP3: https://youtu.be/uJ8iUwmtczk</p>
-  <div class="src"><span>Nguồn: eval/benchmark.csv · eval/run-2.csv · README.md (link video)</span><span>4/9</span></div>
+  <p class="kicker">4 · Điểm mới so với trợ giảng hiện tại</p>
+  <h1>Không tin model tự khai căn cứ: code chặn trước, code kiểm sau</h1>
+  <table>
+    <tr><th style="width:22%">Tình huống</th><th style="width:36%">Trợ giảng hiện tại (data 05–25/11)</th><th>Của nhóm (đo trên 30 câu thử)</th></tr>
+    <tr><td><b>Bài không có thông tin</b></td><td><b style="color:#b02e66">97/98</b> câu tự gắn cờ thiếu ngữ cảnh vẫn trả lời dài</td><td>Code dừng ở bước ②, nói "không có trong bài", gợi ý hỏi TA, <b>không gọi model, $0</b> — 7/7 câu ngoài bài đạt</td></tr>
+    <tr><td><b>Dẫn căn cứ</b></td><td><b style="color:#b02e66">231/557</b> câu trả lời không dẫn mốc nào trong bài</td><td>Mỗi ý kèm <b>mã đoạn</b>, bấm là mở đúng đoạn; code kiểm mọi mã ở bước ④ → <b style="color:#2c7a4b">0/30</b> mã bịa ở cả hai lượt</td></tr>
+    <tr><td><b>Câu quá ngắn</b></td><td>Câu 2 ký tự vẫn nhận câu trả lời 171 ký tự (C01056)</td><td>Hỏi lại đúng một câu, không gọi model (B07, B18, B20)</td></tr>
+    <tr><td><b>Xin làm hộ bài · chèn lệnh</b></td><td>Không đo được (data không có câu chữ)</td><td>Code từ chối ở bước ①; lệnh chèn vào chỉ là dữ liệu → từ chối <b style="color:#2c7a4b">4/4</b></td></tr>
+  </table>
+  <blockquote style="margin-top:16px; font-size:20px"><b>Vì sao không chỉ sửa prompt?</b> Prompt tốt đến đâu model vẫn có thể bịa mã đoạn. Bước ④ là code, nên trích dẫn giả không bao giờ tới tay học viên.</blockquote>
+  <div class="src"><span>Nguồn: evidence/data-mining.md (C, C2, D, ví dụ C01056) · eval/report.md mục 1 · eval/run-2.csv · codebase/agent.py</span><span>4/10</span></div>
 </section>
 
-<!-- 5 · Đánh giá thế nào -->
+<!-- 5 · Demo live -->
 <section class="slide">
-  <p class="kicker">5 · Đánh giá thế nào</p>
+  <p class="kicker">5 · Demo live trên web</p>
+  <h1>5 nút câu mẫu, mỗi nút một đường đi trong luồng ①→⑤</h1>
+  <table>
+    <tr><th style="width:5%">#</th><th style="width:26%">Nút trên trang</th><th>Chỉ cho giám khảo thấy</th></tr>
+    <tr><td>1</td><td><b>Câu có trong bài</b></td><td>Câu trả lời có chip mã đoạn, bấm vào → mở đúng đoạn. Học viên tự kiểm trong vài giây.</td></tr>
+    <tr><td>2</td><td><b>Câu bài không có</b></td><td>Dừng ở bước ②, "không có trong bài", không gọi model — lỗi 97/98 của trợ giảng cũ đã được sửa.</td></tr>
+    <tr><td>3</td><td><b>Câu quá ngắn</b></td><td>Hỏi lại đúng một câu, không gọi model.</td></tr>
+    <tr><td>4</td><td><b>Xin làm hộ bài</b></td><td>Code từ chối bằng câu viết sẵn, không gọi model.</td></tr>
+    <tr><td>5</td><td><b>Chèn lệnh</b></td><td>Model chọn từ chối. Mở bảng luồng ①→⑤ để chỉ bước nào đã quyết định.</td></tr>
+  </table>
+  <p class="cap" style="margin-top:12px">Còn giờ: gõ câu hai vế "Chunking là gì và dùng LangChain code sao?" → trả lời phần có trong bài kèm mã, nói rõ phần LangChain không có (cải tiến ở trang 7). Mạng hỏng → nút "Phát lại lượt 2" trên trang, hoặc video dự phòng https://youtu.be/G0yzc40KdWY</p>
+  <div class="src"><span>Nguồn: web/ (python web/server.py) · eval/run-2.csv · README.md (link video)</span><span>5/10</span></div>
+</section>
+
+<!-- 6 · Đánh giá thế nào -->
+<section class="slide">
+  <p class="kicker">6 · Đánh giá thế nào</p>
   <h1>30 câu thử, 4 metric chấm tay: lượt 1 97% → lượt 2 100%, chuẩn "đạt" là 80%</h1>
   <div class="grid g3" style="flex:0 0 auto; margin-bottom:20px">
     <div class="card"><div class="big">30</div><div class="cap">câu thử: thường 11 · khó 15 · từ chối 4 · 10/30 từ người dùng / data thật</div></div>
@@ -126,13 +141,13 @@
     <div class="card"><div class="big">30<small>/30</small></div><div class="cap">lượt 2 (100%) · run-2@20261128-080301 · từ chối 4/4 · 0 mã đoạn bịa</div></div>
   </div>
   <p style="margin:0 0 8px"><b>Chuẩn "đạt" (khoá 19:30 T6):</b> ≥ 80% câu đạt, 100% câu từ chối, 0 mã đoạn không có thật.</p>
-  <p style="margin:0 0 8px"><b>Lượt 1 trượt 1 câu:</b> B30 — câu hỏi hai vế của học viên. Nhóm sửa đúng nhóm lỗi này trước lượt 2 → trang 6.</p>
-  <div class="src"><span>Nguồn: eval/README.md · eval/report.md · eval/run-1.csv · eval/run-2.csv · eval/metric_spec.yaml · spec.md §7</span><span>5/9</span></div>
+  <p style="margin:0 0 8px"><b>Lượt 1 trượt 1 câu:</b> B30 — câu hỏi hai vế của học viên. Nhóm sửa đúng nhóm lỗi này trước lượt 2 → trang 7.</p>
+  <div class="src"><span>Nguồn: eval/README.md · eval/report.md · eval/run-1.csv · eval/run-2.csv · eval/metric_spec.yaml · spec.md §7</span><span>6/10</span></div>
 </section>
 
-<!-- 6 · Cải tiến -->
+<!-- 7 · Cải tiến -->
 <section class="slide">
-  <p class="kicker">6 · Một cải tiến giữa lượt 1 và lượt 2</p>
+  <p class="kicker">7 · Một cải tiến giữa lượt 1 và lượt 2</p>
   <h1>Câu hỏi hai vế: trả lời phần có trong bài, nói rõ phần không có</h1>
   <div class="grid g2" style="flex:0 0 auto; margin-bottom:18px">
     <div class="card" style="border-left:5px solid #b02e66"><span class="tag">Trước · lượt 1 · trượt</span>
@@ -147,12 +162,12 @@
   <p style="margin:0 0 6px; font-size:19px"><b>Đã sửa gì:</b> ① tra bài thêm cho từng vế của câu (tách theo "hay", "còn", dấu phẩy…) · ② luật prompt: câu "A hay B" không phải câu mơ hồ, trả lời phần có căn cứ, không hứa "sẽ trả lời sau".</p>
   <p style="margin:0 0 6px; font-size:19px"><b>Kết quả:</b> B30 0 → 1 · B03 từ thiếu vế RAG → đủ cả hai vế [D01-L1-P01] + [D07-L1-P01] · tổng <b>29/30 → 30/30</b>, không câu nào tụt.</p>
   <p class="cap" style="margin:0"><b>Đánh đổi:</b> B06 (LoRA) dài dòng hơn trước khi nói "không có trong bài"; token vào +21% (665 → 804 / câu).</p>
-  <div class="src"><span>Nguồn: eval/report.md mục 3 · eval/run-1.csv · eval/run-2.csv (B30, B03) · codebase/agent.py (PR #68) · spec.md §10</span><span>6/9</span></div>
+  <div class="src"><span>Nguồn: eval/report.md mục 3 · eval/run-1.csv · eval/run-2.csv (B30, B03) · codebase/agent.py (PR #68) · spec.md §10</span><span>7/10</span></div>
 </section>
 
-<!-- 7 · Chi phí khi dùng thật -->
+<!-- 8 · Chi phí khi dùng thật -->
 <section class="slide">
-  <p class="kicker">7 · Chi phí khi dùng thật</p>
+  <p class="kicker">8 · Chi phí khi dùng thật</p>
   <h1>Cả khoá 436 người: khoảng $1 / tháng tiền model với Haiku 5.5</h1>
   <table>
     <tr><th>Chi phí (USD)</th><th>Claude Haiku 5.5 (đang dùng)</th><th>Claude Sonnet 5.5</th><th>gemini-3.1-flash-lite</th></tr>
@@ -163,33 +178,33 @@
   </table>
   <p style="margin:18px 0 8px"><b>So với impact:</b> $0.0023 / người / tháng (cơ sở, Haiku 5.5) để đổi lấy ≈ 10 phút học viên / người / tháng → <b>đáng làm</b>. Nếu tỉ lệ đạt chỉ 80% thì vẫn ≈ $0.00071 / task.</p>
   <p class="cap" style="margin:0">Mô phỏng 50 phiên chạy thật qua agent.py, 4 persona từ data (hỏi ít 26,6% · vừa 32,2% · nhiều 30,1% · dồn 11,2%), tỉ lệ đạt 30/30 từ lượt 2. Chi phí lớn hơn là giờ người soạn bài có mã đoạn — chưa ước tính.</p>
-  <div class="src"><span>Nguồn: cost/cost-estimate.md · cost/simulate-1.csv (simulate-1@20261128-102706) · cost/personas.yaml · spec.md §8</span><span>7/9</span></div>
+  <div class="src"><span>Nguồn: cost/cost-estimate.md · cost/simulate-1.csv (simulate-1@20261128-102706) · cost/personas.yaml · spec.md §8</span><span>8/10</span></div>
 </section>
 
-<!-- 8 · Kết luận -->
+<!-- 9 · Kết luận -->
 <section class="slide">
-  <p class="kicker">8 · Kết luận</p>
+  <p class="kicker">9 · Kết luận</p>
   <h1>Iterate: đạt chuẩn và rẻ, nhưng cần đủ bài 13 ngày trước khi dùng thật</h1>
   <ul>
     <li><b>Pain có thật:</b> 97/98 câu thiếu căn cứ vẫn được trả lời; 13/16 học viên đã hỏi trợ giảng vẫn phải kiểm ở chỗ khác (trang 1).</li>
-    <li><b>Bản chạy thử đạt chuẩn:</b> lượt 2 30/30 (100%) so với chuẩn 80%, 0 mã đoạn bịa (trang 5); cải tiến câu hai vế sửa đúng câu trượt (trang 6).</li>
+    <li><b>Bản chạy thử đạt chuẩn:</b> lượt 2 30/30 (100%) so với chuẩn 80%, 0 mã đoạn bịa (trang 6); cải tiến câu hai vế sửa đúng câu trượt (trang 7).</li>
     <li><b>Chưa chắc:</b> mới 3/13 ngày học có bài gắn mã đoạn (synthetic); tìm theo từ khoá nên câu diễn đạt khác chữ trong bài bị báo nhầm "không có".</li>
-    <li><b>Rẻ:</b> $0.00057 / task thành công, khoảng $1 / tháng cho cả 436 học viên với Haiku 5.5 (trang 7).</li>
-    <li><b>Vì sao chưa Go:</b> thiếu bài có mã đoạn cho 10/13 ngày học là lý do lớn nhất — làm xong việc 1 ở trang 9 rồi chạy lại bộ câu thử với câu hỏi thật của các ngày đó.</li>
+    <li><b>Rẻ:</b> $0.00057 / task thành công, khoảng $1 / tháng cho cả 436 học viên với Haiku 5.5 (trang 8).</li>
+    <li><b>Vì sao chưa Go:</b> thiếu bài có mã đoạn cho 10/13 ngày học là lý do lớn nhất — làm xong việc 1 ở trang 10 rồi chạy lại bộ câu thử với câu hỏi thật của các ngày đó.</li>
   </ul>
-  <div class="src"><span>Nguồn: trang 1, 5, 6, 7 · eval/report.md mục 4</span><span>8/9</span></div>
+  <div class="src"><span>Nguồn: trang 1, 4, 6, 7, 8 · eval/report.md mục 4</span><span>9/10</span></div>
 </section>
 
-<!-- 9 · Nếu có thêm 1 tuần -->
+<!-- 10 · Nếu có thêm 1 tuần -->
 <section class="slide">
-  <p class="kicker">9 · Nếu có thêm 1 tuần</p>
+  <p class="kicker">10 · Nếu có thêm 1 tuần</p>
   <h1>Ba việc tiếp theo, trỏ về lỗi còn lại</h1>
   <ol>
     <li><b>Tìm kiếm lai (từ khoá + embedding), lọc theo đúng video đang xem,</b> và gắn mã đoạn + mốc giây cho cả 13 ngày học — 5/7 câu thật của học viên (B24–B28) hỏi bài chưa có dữ liệu.</li>
     <li><b>Tách "bối cảnh dẫn nhập" khỏi ý hỏi chính</b> trong prompt, giữ dòng gợi ý hỏi TA khi còn vế ngoài bài — sửa chỗ dài dòng của B06.</li>
     <li><b>Nhớ đúng 1 câu trước khi vừa hỏi lại,</b> và nút "Báo câu trả lời chưa khớp đoạn bài" gửi mã đoạn về hàng đợi của TA.</li>
   </ol>
-  <div class="src"><span>Nguồn: eval/report.md mục 4</span><span>9/9</span></div>
+  <div class="src"><span>Nguồn: eval/report.md mục 4</span><span>10/10</span></div>
 </section>
 
 </body>

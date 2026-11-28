@@ -211,3 +211,4 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 |---|---|---|
 | 14:20 T7 28/11 | `demo-slides.pdf` trang 4: thay "video dự phòng: đang cập nhật" bằng link video demo dự phòng https://youtu.be/G0yzc40KdWY | Link đã có ở README (#73) sau khi slide được merge (#50); không đổi số nào trên slide |
 | 14:30 T7 28/11 | `demo-slides.pdf` thêm trang 6 "Một cải tiến" (Trước → Sau câu B30, lấy nguyên văn từ `eval/run-1.csv` và `eval/run-2.csv`), slide thành 9 trang | Làm nổi bật lần cải tiến giữa lượt 1 và lượt 2 khi thuyết trình; số giữ nguyên theo `eval/report.md` mục 3 |
+| 14:45 T7 28/11 | `demo-slides.pdf` thêm trang 4 "Điểm mới so với trợ giảng hiện tại" (bảng hiện tại ↔ của nhóm) và viết lại trang Demo theo 5 nút trên `web/`, slide thành 10 trang | Làm rõ điểm mới khi thuyết trình, khớp brief thuyết trình và trang web demo (#72); không đổi số nào, chỉ ghép lại số đã có trong `evidence/data-mining.md` và `eval/report.md` |
