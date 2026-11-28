@@ -1,4 +1,4 @@
-# AI SPEC — Trợ giảng dưới video có căn cứ trong bài · Nhóm Probably-Functional · Phòng __ · Zone __
+# AI SPEC — Trợ giảng dưới video có căn cứ trong bài · Nhóm Probably-Functional · Phòng H210 · Zone 6
 
 > Mốc nộp: §7 chốt chuẩn "đạt" tại **CP2 19:30 Thứ Sáu 27/11** · §0–§7 nộp **CP3 10:00 Thứ Bảy 28/11** · đủ §0–§10 **CP4 14:30 Thứ Bảy 28/11** · §10 changelog ghi tiếp đến **23:59 Thứ Bảy 28/11**.
 > Bản CP1: §0–§2 là bản nháp đầu, cập nhật đến CP3 khi có thêm bằng chứng.
