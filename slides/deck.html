@@ -70,60 +70,65 @@
 <!-- 2 · Vì sao chọn bài này -->
 <section class="slide">
   <p class="kicker">2 · Vì sao chọn bài này</p>
-  <h1>A1 có data đếm được và chạm cả lớp; A2, A5 thì không</h1>
+  <h1>A1: ~140 câu / tháng thiếu căn cứ vẫn được trả lời ≈ 23 giờ học viên / tháng</h1>
   <table>
     <tr><th>Hướng</th><th>Người gặp</th><th>Lần / tháng</th><th>Impact / tháng</th><th>Chọn?</th></tr>
-    <tr><td>A1 · Trợ giảng trả lời có căn cứ hoặc "không có trong bài"</td><td>145/436 học viên đã hỏi AI</td><td>~1.560 câu hỏi · ~140 bị cờ thiếu ngữ cảnh</td><td><span class="todo">chờ #26 (Tân)</span></td><td><span class="tag ok">Chọn</span></td></tr>
+    <tr><td>A1 · Trợ giảng trả lời có căn cứ hoặc "không có trong bài"</td><td>143/436 học viên đã hỏi trợ giảng dưới video</td><td>~1.560 câu hỏi · ~140 bị cờ thiếu ngữ cảnh, 99% vẫn được trả lời</td><td>≈ 140 × 10 phút ≈ <b>23 giờ</b> <i>(10 phút: tự ước tính)</i></td><td><span class="tag ok">Chọn</span></td></tr>
     <tr><td>A2 · Trợ lý Discord hạn nộp / lịch</td><td>chưa có số</td><td>chưa có số</td><td>chưa tính được</td><td>Không — không có data Discord</td></tr>
     <tr><td>A5 · Soạn thông báo phòng lab</td><td>vài key coach <i>(tự ước tính)</i></td><td>mỗi tối</td><td>chưa tính được</td><td>Không — data giả lập</td></tr>
   </table>
-  <div class="src"><span>Nguồn: spec.md §2 · evidence/data-mining.md (quy ra tháng: 1.090 câu / 21 ngày × 30)</span><span>2/8</span></div>
+  <p class="cap" style="margin-top:16px">Kiểm lại "10 phút / lần" bằng khảo sát: lần gần nhất gặp chỗ chưa hiểu, 11/23 học viên mất 5–15 phút, 3/23 mất hơn 15 phút.</p>
+  <div class="src"><span>Nguồn: spec.md §2 · evidence/data-mining.md (1.090 câu / 21 ngày × 30) · evidence/survey/results.csv</span><span>2/8</span></div>
 </section>
 
 <!-- 3 · Giải pháp -->
 <section class="slide">
   <p class="kicker">3 · Giải pháp</p>
-  <h1>Có đoạn bài thì trả lời kèm mã đoạn; không có thì nói "không có trong bài"</h1>
+  <h1>Workflow cố định: code chặn trước, AI chỉ quyết một bước, code kiểm sau</h1>
   <p><b>Lát cắt:</b> một học viên L3 · hỏi một câu dưới video pre-class · AI quyết định trả lời kèm mã đoạn hay nói "không có trong bài" · học viên tự kiểm bằng cách mở đúng đoạn.</p>
   <div class="flow">
-    <div class="step">Câu hỏi dưới video<br><span class="cap">là dữ liệu, không phải lệnh</span></div><div class="arrow">→</div>
-    <div class="step">Tra đoạn bài<br><span class="cap">search_lesson</span></div><div class="arrow">→</div>
-    <div class="step">Có đoạn → model trả lời kèm mã<br>Không có → "không có trong bài", gợi ý hỏi TA, <b>không gọi model</b></div><div class="arrow">→</div>
-    <div class="step">Code kiểm mọi mã đoạn có thật</div>
+    <div class="step"><b>① Code</b><br>câu quá ngắn → hỏi lại · xin làm hộ bài → từ chối</div><div class="arrow">→</div>
+    <div class="step"><b>② Tra bài</b><br>không có đoạn đủ gần → "không có trong bài", gợi ý hỏi TA</div><div class="arrow">→</div>
+    <div class="step"><b>③ AI</b><br>chỉ đọc đoạn vừa tra; câu hỏi là dữ liệu, không phải lệnh</div><div class="arrow">→</div>
+    <div class="step"><b>④ Code kiểm</b><br>mọi mã đoạn phải là đoạn vừa tra, sai → không đưa</div><div class="arrow">→</div>
+    <div class="step"><b>⑤ Trả lời</b><br>+ "Căn cứ trong bài: [mã đoạn]"</div>
   </div>
-  <p><b>AI tự làm đến đâu:</b> tự trả lời khi có căn cứ — sai thì học viên tự kiểm được nhờ mã đoạn; không chạm điểm số, không gửi gì ra ngoài. <span class="todo">Thay bằng sơ đồ spec §4 khi #11 xong</span></p>
-  <div class="src"><span>Nguồn: spec.md §4 · canvas.md dòng 5–6</span><span>3/8</span></div>
+  <div class="grid g2" style="flex:0 0 auto">
+    <div class="card"><div class="big">12<small>/30</small></div><div class="cap">câu thử dừng ở bước ①–② bằng code, không gọi model, 0 token (lượt 1)</div></div>
+    <div class="card"><div class="big">0,6<small> lần</small></div><div class="cap">gọi model trung bình mỗi câu — tối đa 1 lần, vì không phải agent</div></div>
+  </div>
+  <div class="src"><span>Nguồn: spec.md §4 (sơ đồ) · codebase/agent.py · eval/report.md (thông số lượt 1)</span><span>3/8</span></div>
 </section>
 
 <!-- 4 · Demo live -->
 <section class="slide">
   <p class="kicker">4 · Demo live</p>
-  <h1>Hai câu thử: một câu thường, một câu khó</h1>
-  <div class="grid g2">
-    <div class="card"><span class="tag ok">thường</span>
-      <h2 style="margin-top:10px">Câu hỏi có trong bài</h2>
-      <p><span class="todo">câu thử id __ từ eval/benchmark.csv</span></p>
-      <p class="cap">Kỳ vọng: trả lời ngắn + mã đoạn, mở đoạn thấy đúng ý</p></div>
-    <div class="card"><span class="tag">khó</span>
-      <h2 style="margin-top:10px">Câu hỏi bài không nói tới</h2>
-      <p><span class="todo">câu thử id __ từ eval/benchmark.csv</span></p>
-      <p class="cap">Kỳ vọng: "không có trong bài" + gợi ý hỏi TA, không bịa</p></div>
+  <h1>Một câu thường, một câu khó từ học viên thật</h1>
+  <div class="grid g2" style="flex:0 0 auto; margin-bottom:22px">
+    <div class="card"><span class="tag ok">thường · B01</span>
+      <p style="margin:10px 0 6px"><b>"Token là gì và vì sao cùng một ý viết bằng tiếng Việt lại tốn nhiều token hơn tiếng Anh?"</b></p>
+      <p class="cap">Lượt 2: giải thích token và lý do tiếng Việt tốn hơn, mỗi ý kèm [D01-L1-P02]; cuối câu có "Căn cứ trong bài" để mở đúng đoạn.</p></div>
+    <div class="card"><span class="tag">khó · B30 · câu của học viên</span>
+      <p style="margin:10px 0 6px"><b>"Khi nào thì cần nhiều Agent hay RAG ạ?"</b></p>
+      <p class="cap">Lượt 2: trả lời phần RAG kèm [D07-L1-P01], nói rõ "phần về khi nào cần nhiều Agent thì bài học không đề cập". Lượt 1 câu này trượt.</p></div>
   </div>
-  <p class="cap">Mạng hỏng → video dự phòng: <span class="todo">link video (#38)</span></p>
-  <div class="src"><span>Nguồn: eval/benchmark.csv · README.md (link video)</span><span>4/8</span></div>
+  <p class="cap">Thêm nếu còn giờ: B08 (công thức Q, K, V) → "không có trong bài", không gọi model. Mạng hỏng → video 30 giây chạy thật: https://youtu.be/uJ8iUwmtczk · video dự phòng: <span class="todo">link (#38)</span></p>
+  <div class="src"><span>Nguồn: eval/benchmark.csv · eval/run-2.csv · README.md (link video)</span><span>4/8</span></div>
 </section>
 
 <!-- 5 · Đánh giá thế nào -->
 <section class="slide">
   <p class="kicker">5 · Đánh giá thế nào</p>
-  <h1>Bộ câu thử → metric → lượt 1 → lượt 2, so với chuẩn "đạt"</h1>
-  <div class="grid g3">
-    <div class="card"><div class="big"><span class="todo">__</span></div><div class="cap">câu thử (thường · khó · từ chối), ≥1/3 từ người dùng / data thật</div></div>
-    <div class="card"><div class="big"><span class="todo">__%</span></div><div class="cap">lượt 1 (run ID <span class="todo">__</span>)</div></div>
-    <div class="card"><div class="big"><span class="todo">__%</span></div><div class="cap">lượt 2 (run ID <span class="todo">__</span>) · chuẩn "đạt": <span class="todo">spec §7</span></div></div>
+  <h1>30 câu thử, 4 metric chấm tay: lượt 1 97% → lượt 2 100%, chuẩn "đạt" là 80%</h1>
+  <div class="grid g3" style="flex:0 0 auto; margin-bottom:20px">
+    <div class="card"><div class="big">30</div><div class="cap">câu thử: thường 11 · khó 15 · từ chối 4 · 10/30 từ người dùng / data thật</div></div>
+    <div class="card"><div class="big">29<small>/30</small></div><div class="cap">lượt 1 (97%) · run-1@20261128-010652 · Claude Haiku 5.5</div></div>
+    <div class="card"><div class="big">30<small>/30</small></div><div class="cap">lượt 2 (100%) · run-2@20261128-080301 · từ chối 4/4 · 0 mã đoạn bịa</div></div>
   </div>
-  <p><b>Lỗi chính đã sửa:</b> <span class="todo">từ eval/report.md (#33)</span></p>
-  <div class="src"><span>Nguồn: eval/README.md · eval/report.md · eval/run-1.csv · eval/run-2.csv · eval/metric_spec.yaml</span><span>5/8</span></div>
+  <p style="margin:0 0 8px"><b>Chuẩn "đạt" (khoá 19:30 T6):</b> ≥ 80% câu đạt, 100% câu từ chối, 0 mã đoạn không có thật.</p>
+  <p style="margin:0 0 8px"><b>Lỗi chính đã sửa:</b> câu hỏi hai vế — B30 bị hỏi lại lửng lơ, B03 sót đoạn RAG → tra thêm từng vế + sửa luật trong prompt.</p>
+  <p class="cap" style="margin:0"><b>Đánh đổi:</b> B06 (LoRA) dài dòng hơn trước khi nói "không có trong bài"; token vào +21% (665 → 804 / câu).</p>
+  <div class="src"><span>Nguồn: eval/README.md · eval/report.md · eval/run-1.csv · eval/run-2.csv · eval/metric_spec.yaml · spec.md §7</span><span>5/8</span></div>
 </section>
 
 <!-- 6 · Chi phí khi dùng thật -->
@@ -131,13 +136,13 @@
   <p class="kicker">6 · Chi phí khi dùng thật</p>
   <h1>Chi phí / câu trả lời đạt, so với thời gian học viên tiết kiệm</h1>
   <table>
-    <tr><th>Kịch bản</th><th>Model nhỏ</th><th>Model lớn</th><th>So với impact</th></tr>
-    <tr><td>Thấp</td><td><span class="todo">__</span></td><td><span class="todo">__</span></td><td rowspan="3"><span class="todo">chờ #26</span></td></tr>
-    <tr><td>Cơ sở</td><td><span class="todo">__</span></td><td><span class="todo">__</span></td></tr>
-    <tr><td>Cao</td><td><span class="todo">__</span></td><td><span class="todo">__</span></td></tr>
+    <tr><th>Kịch bản (người dùng)</th><th>Claude Haiku 5.5</th><th>Claude Sonnet 5.5</th><th>So với impact</th></tr>
+    <tr><td>Thấp (143)</td><td><span class="todo">__</span></td><td><span class="todo">__</span></td><td rowspan="3"><span class="todo">chờ #26 (Tân chạy simulate)</span></td></tr>
+    <tr><td>Cơ sở (218)</td><td><span class="todo">__</span></td><td><span class="todo">__</span></td></tr>
+    <tr><td>Cao (436)</td><td><span class="todo">__</span></td><td><span class="todo">__</span></td></tr>
   </table>
-  <p class="cap">Chi phí / task thành công: <span class="todo">__</span> · persona: 1 câu 38 · 2–5 câu 46 · 6–15 câu 43 · ≥16 câu 16 học viên (20 ngày)</p>
-  <div class="src"><span>Nguồn: cost/cost-estimate.md · cost/simulate-N.csv · cost/personas.yaml · evidence/data-mining.md mục I</span><span>6/8</span></div>
+  <p class="cap">Chi phí / task thành công: <span class="todo">__</span> · đo được ở lượt chạy thật: 0,6 lần gọi model / câu, 665 token vào + 273 token ra / câu (lượt 1), 804 token vào / câu (lượt 2) · persona: hỏi ít 26,6% · vừa 32,2% · nhiều 30,1% · dồn 11,2%</p>
+  <div class="src"><span>Nguồn: cost/cost-estimate.md · cost/simulate-N.csv · cost/personas.yaml · eval/report.md · spec.md §2</span><span>6/8</span></div>
 </section>
 
 <!-- 7 · Kết luận -->
@@ -145,23 +150,25 @@
   <p class="kicker">7 · Kết luận</p>
   <h1><span class="todo">Go / iterate / stop</span> — vì sao</h1>
   <ul>
-    <li>Pain: <span class="todo">số trang 1</span></li>
-    <li>Đánh giá: <span class="todo">lượt 2 __% so với chuẩn __% (trang 5)</span></li>
-    <li>Chi phí: <span class="todo">__ / task thành công so với impact (trang 6)</span></li>
+    <li><b>Pain có thật:</b> 97/98 câu thiếu căn cứ vẫn được trả lời; 13/16 học viên đã hỏi trợ giảng vẫn phải kiểm ở chỗ khác (trang 1).</li>
+    <li><b>Bản chạy thử đạt chuẩn:</b> lượt 2 30/30 (100%) so với chuẩn 80%, 0 mã đoạn bịa (trang 5).</li>
+    <li><b>Chưa chắc:</b> mới 3/13 ngày học có bài gắn mã đoạn (synthetic); tìm theo từ khoá nên câu diễn đạt khác chữ trong bài bị báo nhầm "không có".</li>
+    <li><b>Chi phí:</b> <span class="todo">__ / task thành công so với 23 giờ học viên / tháng (trang 6)</span></li>
   </ul>
-  <div class="src"><span>Nguồn: trang 1, 5, 6</span><span>7/8</span></div>
+  <div class="src"><span>Nguồn: trang 1, 5, 6 · eval/report.md mục 4</span><span>7/8</span></div>
 </section>
 
 <!-- 8 · Nếu có thêm 1 tuần -->
 <section class="slide">
   <p class="kicker">8 · Nếu có thêm 1 tuần</p>
-  <h1>Ba việc tiếp theo, trỏ về lỗi còn lại và phản hồi người dùng</h1>
+  <h1>Ba việc tiếp theo, trỏ về lỗi còn lại</h1>
   <ol>
-    <li><span class="todo">lỗi còn lại — eval/report.md mục 4</span></li>
-    <li><span class="todo">phản hồi người dùng thử — validation/log.md</span></li>
-    <li><span class="todo">__</span></li>
+    <li><b>Tìm kiếm lai (từ khoá + embedding), lọc theo đúng video đang xem,</b> và gắn mã đoạn + mốc giây cho cả 13 ngày học — 5/7 câu thật của học viên (B24–B28) hỏi bài chưa có dữ liệu.</li>
+    <li><b>Tách "bối cảnh dẫn nhập" khỏi ý hỏi chính</b> trong prompt, giữ dòng gợi ý hỏi TA khi còn vế ngoài bài — sửa chỗ dài dòng của B06.</li>
+    <li><b>Nhớ đúng 1 câu trước khi vừa hỏi lại,</b> và nút "Báo câu trả lời chưa khớp đoạn bài" gửi mã đoạn về hàng đợi của TA.</li>
   </ol>
-  <div class="src"><span>Nguồn: eval/report.md · validation/log.md</span><span>8/8</span></div>
+  <p class="cap">Phản hồi người dùng thử: <span class="todo">validation/log.md (bonus, chưa làm)</span></p>
+  <div class="src"><span>Nguồn: eval/report.md mục 4 · validation/log.md</span><span>8/8</span></div>
 </section>
 
 </body>
