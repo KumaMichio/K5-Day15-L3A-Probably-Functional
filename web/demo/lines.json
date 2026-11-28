@@ -1,0 +1,9 @@
+[
+ {"id": "n0", "anchor": "intro", "delta": 0.25, "text": "Trợ giảng có căn cứ, gọi AI thật."},
+ {"id": "n1", "anchor": "start", "delta": 0.3,  "text": "Học viên hỏi một câu ngay dưới video bài học."},
+ {"id": "n2", "anchor": "ask1",  "delta": 0.3,  "text": "Code tra hai mươi tư đoạn bài, rồi model thật quyết định trả lời, hỏi lại hay từ chối."},
+ {"id": "n3", "anchor": "ans1",  "delta": 0.2,  "text": "Câu trả lời kèm mã đoạn. Bấm mã là mở đúng đoạn bài để tự kiểm."},
+ {"id": "n4", "anchor": "ask2",  "delta": 0.15, "text": "Câu khó: chèn lệnh, đòi lộ hướng dẫn ẩn."},
+ {"id": "n5", "anchor": "ans2",  "delta": 0.2,  "text": "AI chọn từ chối, không làm theo lệnh lạ."},
+ {"id": "n6", "anchor": "end",   "delta": 0.15, "text": "Quay trực tiếp, không cắt ghép."}
+]

@@ -1,0 +1,9 @@
+# rác sinh ra khi dựng trang web (taste-skill, ảnh chụp kiểm tra)
+.taste-skill/
+shots/
+# quay video demo (demo/README.md)
+demo/out*/
+demo/node_modules/
+demo/package-lock.json
+demo/ovenv/
+demo/*.mp4
