@@ -62,7 +62,7 @@
 **Đã đối chiếu tay** (Tân làm lại trước CP2):
 - `C00581`: câu hỏi kế tiếp `C00499` của cùng học viên, cùng `Day01/d01-r1-v02`, 61 giây sau câu trả lời → đúng định nghĩa E ✓
 - `C00983`: `missing_context = true`, trả lời 182 ký tự → đúng C2 ✓
-- __ dòng khác: __
+- Không đối chiếu tay thêm dòng nào ngoài 2 dòng trên.
 
 **Kết luận đầu:** data **ủng hộ một phần** giả thuyết. Rõ nhất: khi thiếu ngữ cảnh trợ giảng vẫn trả lời (97/98), và 41,5% câu trả lời không chỉ ra mốc nào trong bài. Chưa chứng minh được học viên *khó chịu* vì điều đó — E/F/G chỉ là tín hiệu hành vi, cần phỏng vấn kiểm lại.
 
