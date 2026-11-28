@@ -209,4 +209,4 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 
 | Thời điểm | Đổi gì | Vì sao |
 |---|---|---|
-|  |  |  |
+| 14:20 T7 28/11 | `demo-slides.pdf` trang 4: thay "video dự phòng: đang cập nhật" bằng link video demo dự phòng https://youtu.be/G0yzc40KdWY | Link đã có ở README (#73) sau khi slide được merge (#50); không đổi số nào trên slide |
