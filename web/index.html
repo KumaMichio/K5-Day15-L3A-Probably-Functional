@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- Trang demo của nhóm Probably-Functional (AI20K K5 · L3A · Track A1). Không sửa khung: chỉ gọi answer() qua web/server.py.
-     Không chạy server (mở thẳng file) → chế độ phát lại lượt 1 từ replay.js. -->
+     Không chạy server (mở thẳng file) → chế độ phát lại lượt 2 từ replay.js. -->
 <html lang="vi" data-type="software" data-radius="soft" data-buttons="pill" data-motion>
 <head>
 <meta charset="utf-8">
@@ -157,7 +157,7 @@
           <span class="app__sp"></span>
           <div class="seg" role="group" aria-label="Chế độ">
             <button type="button" class="seg__btn" data-mode="live" aria-pressed="true">Hỏi trực tiếp</button>
-            <button type="button" class="seg__btn" data-mode="replay" aria-pressed="false">Phát lại lượt 1</button>
+            <button type="button" class="seg__btn" data-mode="replay" aria-pressed="false">Phát lại lượt 2</button>
           </div>
         </div>
         <div class="app__body">
@@ -174,7 +174,7 @@
               <button type="button" class="chip" data-sample="chen-lenh">Chèn lệnh</button>
             </div>
             <div class="chat__replay" data-replay hidden>
-              <label for="replay-case">Câu thử của lượt 1</label>
+              <label for="replay-case">Câu thử của lượt 2</label>
               <select id="replay-case" data-case></select>
             </div>
             <form class="chat__form" data-form>
@@ -212,7 +212,7 @@
         <div class="dg" data-diagram data-dg-still><script type="application/json">{"layout": "free", "alt": "Câu hỏi qua bước lọc, tra 24 đoạn bài, AI quyết định, code kiểm mã đoạn rồi trả lời kèm căn cứ; không có đoạn nào đủ gần thì nói bài không có.", "nodes": [{"id": "q", "label": "Câu hỏi", "icon": "ui:message-circle", "at": [0.08, 0.5], "atCompact": [0.5, 0.08]}, {"id": "loc", "label": "Lọc câu", "icon": "ui:filter", "at": [0.25, 0.5], "atCompact": [0.5, 0.26]}, {"id": "tra", "label": "Tra 24 đoạn", "icon": "ui:search", "at": [0.43, 0.5], "atCompact": [0.5, 0.44]}, {"id": "ai", "label": "AI quyết định", "icon": "ui:sparkles", "meta": "1 lần gọi", "at": [0.62, 0.5], "atCompact": [0.5, 0.62]}, {"id": "kiem", "label": "Kiểm mã đoạn", "icon": "ui:shield-check", "at": [0.79, 0.5], "atCompact": [0.5, 0.8]}, {"id": "tl", "label": "Trả lời kèm mã", "icon": "ui:check", "done": true, "at": [0.94, 0.22], "atCompact": [0.27, 0.95]}, {"id": "kc", "label": "Bài không có", "icon": "ui:circle-slash", "meta": "0 lần gọi AI", "at": [0.43, 0.86], "atCompact": [0.85, 0.44]}], "edges": [{"from": "q", "to": "loc"}, {"from": "loc", "to": "tra"}, {"from": "tra", "to": "ai"}, {"from": "ai", "to": "kiem"}, {"from": "kiem", "to": "tl", "curve": "elbow"}, {"from": "tra", "to": "kc", "idle": true}]}</script></div>
       </div>
       <ul class="facts">
-        <li><b>12 / 30</b> câu ở lượt 1 dừng trước khi gọi AI</li>
+        <li><b>12 / 30</b> câu ở lượt 2 dừng trước khi gọi AI</li>
         <li><b>Tối đa 1</b> lần gọi AI cho mỗi câu hỏi</li>
         <li><b>Mã đoạn lạ</b> thì bỏ câu trả lời, chỉ đưa đoạn liên quan</li>
       </ul>
@@ -246,7 +246,7 @@
         <ul class="tags"><li>Token</li><li>Cửa sổ ngữ cảnh</li><li>Temperature</li><li>Ảo giác</li><li>Embedding</li><li>System prompt</li><li>Few-shot</li><li>Chain-of-thought</li><li>Tool calling</li><li>Prompt injection</li><li>RAG</li><li>Chunking</li><li>BM25</li><li>Reranking</li></ul>
       </div>
       <ul class="facts">
-        <li><b>30 câu thử</b> ở lượt 1 với model thật, 0 câu lỗi</li>
+        <li><b>30 câu thử</b> ở lượt 2 với model thật, 0 câu lỗi</li>
         <li><b>11 thường, 15 khó, 4 từ chối</b> trong eval/benchmark.csv</li>
         <li><b>Chấm tay</b> theo 4 metric trong eval/metric_spec.yaml</li>
       </ul>
@@ -258,7 +258,7 @@
   <div class="wrap">
     <div class="closing__cta close--word">
       <div class="section-head--split">
-        <div><h2 id="close-h">Hỏi thử trợ giảng</h2><p class="t-lead">Chạy python web/server.py để hỏi bằng model thật, hoặc mở thẳng trang để xem lại 30 câu của lượt 1.</p></div>
+        <div><h2 id="close-h">Hỏi thử trợ giảng</h2><p class="t-lead">Chạy python web/server.py để hỏi bằng model thật, hoặc mở thẳng trang để xem lại 30 câu của lượt 2.</p></div>
         <a class="btn btn--primary" href="#hoi-thu">Hỏi thử trợ giảng<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
       </div>
       <p class="close__word" aria-hidden="true">Có căn cứ</p>
@@ -271,7 +271,7 @@
         </div>
         <div class="span-2 footer__col"><h3>Trang</h3><ul><li><a href="#van-de">Vấn đề</a></li><li><a href="#hoi-thu">Hỏi thử</a></li></ul></div>
         <div class="span-2 footer__col"><h3>Cách làm</h3><ul><li><a href="#luong">Luồng</a></li><li><a href="#du-lieu">Dữ liệu</a></li></ul></div>
-        <div class="span-4 footer__col"><h3>Nguồn số liệu</h3><ul class="sources"><li>evidence/scripts/count_preclass.py, mục B C D</li><li>evidence/survey/summarize.py</li><li>eval/run-1.csv, traces/run-1.jsonl</li></ul></div>
+        <div class="span-4 footer__col"><h3>Nguồn số liệu</h3><ul class="sources"><li>evidence/scripts/count_preclass.py, mục B C D</li><li>evidence/survey/summarize.py</li><li>eval/run-1.csv (cảnh B13), eval/run-2.csv, traces/run-2.jsonl</li></ul></div>
       </div>
       <div class="footer__legal">
         <span>&copy; 2026 Nhóm Probably-Functional</span>

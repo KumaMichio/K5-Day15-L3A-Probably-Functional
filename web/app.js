@@ -1,4 +1,4 @@
-/* Màn hình hỏi thử: gửi câu hỏi tới web/server.py (hoặc phát lại lượt 1 từ replay.js),
+/* Màn hình hỏi thử: gửi câu hỏi tới web/server.py (hoặc phát lại lượt 2 từ replay.js),
    đọc các sự kiện trace để tô luồng ①→⑤, biến mã đoạn thành nút mở đúng đoạn bài. */
 (function () {
   'use strict';
@@ -16,7 +16,7 @@
   const STEP_MS = reduced ? 0 : 160;
   let live = false, busy = false;
 
-  /* câu mẫu: câu chạy trực tiếp, và câu tương ứng trong lượt 1 khi phát lại */
+  /* câu mẫu: câu chạy trực tiếp, và câu tương ứng trong lượt 2 khi phát lại */
   const SAMPLES = {
     'co-trong-bai': { q: 'Cửa sổ ngữ cảnh gồm những gì và vượt quá thì chuyện gì xảy ra?', replay: 'B13' },
     'khong-co': { q: 'LoRA rank nên chọn bao nhiêu?', replay: 'B05' },
@@ -146,17 +146,17 @@
       const r = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ q }) });
       const data = await r.json();
       typing.remove();
-      if (data.error) { add('Không gọi được trợ giảng: ' + esc(data.error) + '\nKiểm tra mạng và file .env, hoặc chuyển sang Phát lại lượt 1.', 'msg--bot msg--error'); return; }
+      if (data.error) { add('Không gọi được trợ giảng: ' + esc(data.error) + '\nKiểm tra mạng và file .env, hoặc chuyển sang Phát lại lượt 2.', 'msg--bot msg--error'); return; }
       const flow = readFlow(data.events, data.passages);
       await showFlow(flow);
       add(renderAnswer(data.output), 'msg--bot' + (flow.kind === 'stop' ? ' msg--stop' : ''));
     } catch (e) {
       typing.remove();
-      add('Mất kết nối tới web/server.py. Chạy lại server, hoặc chuyển sang Phát lại lượt 1.', 'msg--bot msg--error');
+      add('Mất kết nối tới web/server.py. Chạy lại server, hoặc chuyển sang Phát lại lượt 2.', 'msg--bot msg--error');
     } finally { busy = false; send.disabled = false; input.focus(); }
   }
 
-  /* ---------- phát lại lượt 1 ---------- */
+  /* ---------- phát lại lượt 2 ---------- */
   async function replay(id) {
     const c = REPLAY.cases.find(x => x.id === id);
     if (!c || busy) return;
