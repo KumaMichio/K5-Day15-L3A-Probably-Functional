@@ -86,7 +86,7 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm | **Giả** (đến CP2) → **Thật** (bắt buộc từ CP3) | Model: chưa chọn (dự kiến model tầng Nhỏ, xem `cost/`) |
+| Lời gọi AI ở quyết định trung tâm | **Thật** (từ 28/11, `codebase/ai.py`) | Model: Claude Haiku 5.5 qua OpenRouter (`anthropic/claude-haiku-5.5`) · lượt 1: `run-1@20261128-010652`, 29/30 · video 30 giây chạy thật: https://youtu.be/uJ8iUwmtczk |
 | Bài học có mã đoạn để tra | Giả — nhóm tự dựng | Trích ngắn / viết lại từ bài khoá, không commit nguyên tài liệu |
 | Số liệu bằng chứng từ `data/preclass/` | Thật (đã ẩn danh, BTC cấp) | Chỉ số tổng hợp, script ở `evidence/scripts/` |
 
