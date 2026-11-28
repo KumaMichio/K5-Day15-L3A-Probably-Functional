@@ -16,9 +16,9 @@ WEB = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(WEB), "codebase"))
 
 import tracing  # noqa: E402  (cần sys.path ở trên)
-from agent import answer  # noqa: E402
+from agent import _search, answer  # noqa: E402
 from ai import MODEL_NAME, MODEL_PROVIDER  # noqa: E402
-from tools import get_passage, search_lesson  # noqa: E402
+from tools import get_passage  # noqa: E402
 
 MAX_QUESTION = 1000  # ký tự; câu dài hơn bị cắt để không gửi prompt quá lớn
 
@@ -39,8 +39,9 @@ def ask(question):
         return {"error": "%s: %s" % (type(e).__name__, e)}
     summary, events = tracing.end()
     searched = any(e["kind"] == "tool" and e.get("name") == "search_lesson" for e in events)
-    # gọi lại ngoài trace để có đủ đoạn + score (trace chỉ giữ 300 ký tự đầu); search_lesson chỉ đọc file, kết quả giống hệt
-    passages = search_lesson(question) if searched else []
+    # gọi lại ngoài trace để có đủ đoạn + score (trace chỉ giữ 300 ký tự đầu); dùng đúng _search của agent
+    # (có tra thêm từng vế từ #68) để trang hiện đúng các đoạn model đã nhận; chỉ đọc file nên kết quả giống hệt
+    passages = _search(question) if searched else []
     return {"output": output, "events": [_event(e) for e in events], "summary": summary, "passages": passages}
 
 
