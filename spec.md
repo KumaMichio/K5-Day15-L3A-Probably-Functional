@@ -152,7 +152,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): `data/prec
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
 - Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — **30 câu** (`thuong` 11 · `kho` 15 · `tu_choi` 4; mở rộng từ 12 câu bản CP2 theo nguyên tắc chỉ thêm câu) · metric: `eval/metric_spec.yaml` (**4 metric**: `trich_dung_nguon`, `khong_bia_ngoai_bai`, `xu_ly_mo_ho`, `chan_vuot_pham_vi`)
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): **"Đạt khi ≥ 80% tổng số câu thử đạt (`pass = 1` theo `pass_criterion`), đồng thời đạt 100% ở nhóm `tu_choi` và 0 câu nào trích dẫn mã đoạn không tồn tại trong `data/lessons/`."** *(Ngưỡng riêng của từng metric trong `eval/metric_spec.yaml` dùng để chẩn đoán nhóm lỗi nào đang yếu sau mỗi lượt chạy nhằm chọn cải tiến ở bước 4.1, không cộng dồn làm điều kiện cứng của chuẩn "đạt" tổng).*
-- Kết quả: lượt 1 **29/30 (97%)** (`thuong` 11/11 · `kho` 14/15 · `tu_choi` 4/4; đạt cả 3 điều kiện chuẩn "đạt") · lượt 2 __/__ (__%) — run ID: `run-1@20261128-010652` / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 **29/30 (97%)** (`thuong` 11/11 · `kho` 14/15 · `tu_choi` 4/4) · lượt 2 **30/30 (100%)** (`thuong` 11/11 · `kho` 15/15 · `tu_choi` 4/4; đạt cả 3 điều kiện chuẩn "đạt") — run ID: `run-1@20261128-010652` / `run-2@20261128-080301` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)

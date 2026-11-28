@@ -46,10 +46,11 @@
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
 | 1 | `run-1@20261128-010652` | `anthropic/claude-haiku-5.5` (OpenRouter) | Bản đầu trên `main` (`bd361ba`): workflow 5 bước (`MIN_LETTERS=3`, `HOMEWORK_RE`, `search_lesson` `MIN_SCORE=0.3` + `RELATIVE=1/3`, prompt JSON 4 quyết định, code kiểm mã đoạn) | **29/30** (`thuong` 11/11 · `kho` 14/15 · `tu_choi` 4/4) | **97%** | **Đạt** (≥ 80% tổng, 100% `tu_choi`, 0 mã bịa) |
-| 2 | *(chờ #32)* | | | __/__ | | |
+| 2 | `run-2@20261128-080301` | `anthropic/claude-haiku-5.5` (OpenRouter) | Bản cải tiến #68 (`16c7c9a`): `_search` tách vế tra thêm đoạn chung từ chủ đề (`DF ≤ 2`, tối đa 4 đoạn) + sửa prompt luật 3–4 (câu nhiều phần trả lời phần có căn cứ và nói rõ phần ngoài bài; câu "A hay B" không phải mơ hồ; không hứa trả lời sau) | **30/30** (`thuong` 11/11 · `kho` 15/15 · `tu_choi` 4/4) | **100%** | **Đạt** (≥ 80% tổng, 100% `tu_choi`, 0 mã bịa) |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
 
 ## 6. Lỗi chính
 
-- **Lượt 1 (`run-1@20261128-010652`):** Nhóm lỗi chính cần sửa ở #32 là **xử lý câu hỏi hai vế / giao thoa giữa hai chủ đề**: (1) `B30` (*"Khi nào thì cần nhiều Agent hay RAG ạ?"* — **trượt `0`**): model chọn `hoi_lai` lửng lơ (*"mình sẽ trả lời theo phần đó"*) thay vì giải thích ngay phần RAG có căn cứ `[D07-L1-P01]` và nói rõ phần nhiều Agent không có trong bài; (2) `B03` (chấm `1` theo tiêu chí *"hoặc cả hai"* nhưng **bỏ sót nửa căn cứ**): `search_lesson` sót đoạn `[D07-L1-P01]` (điểm 0,153 < ngưỡng `RELATIVE` 0,185) nên model báo nhầm vế RAG không có trong bài; (3) `B09` lệch nhẹ đường đi thiết kế (`tra_loi` nêu cả 2 mức temperature thay vì `hoi_lai`). *(Cập nhật kết quả sau cải tiến ở Lượt 2).*
+- **Lượt 1 (`run-1@20261128-010652` — 29/30, 97%):** Nhóm lỗi đau nhất là **câu hỏi hai vế / giao thoa giữa hai chủ đề**: `B30` (*"Khi nào thì cần nhiều Agent hay RAG ạ?"*) trượt (`0`) vì model chọn `hoi_lai` hứa trả lời sau thay vì giải thích phần RAG `[D07-L1-P01]` và từ chối phần nhiều Agent; `B03` bỏ sót đoạn `[D07-L1-P01]` ở bước tra bài nên báo nhầm vế RAG không có trong bài.
+- **Sau 1 lần cải tiến → Lượt 2 (`run-2@20261128-080301` — 30/30, 100%):** Đã sửa dứt điểm cả `B30` (`0 → 1`) và `B03` (trả lời đủ cả 2 vế `[D01-L1-P01]` + `[D07-L1-P01]`). **Đánh đổi & còn lại:** `B06` (LoRA) vẫn đạt nhưng dài dòng hơn (giải thích thêm phần bối cảnh `D01-L1-P06` trước khi báo không có LoRA) và token vào trung bình tăng `665 → 804`; tìm kiếm từ khoá chưa hiểu từ đồng nghĩa hoàn toàn khác chữ và 5 câu `B24`–`B28` ngoài 3 bài hiện dừng sớm ở Bước ②. Chi tiết: [`eval/report.md`](report.md).
